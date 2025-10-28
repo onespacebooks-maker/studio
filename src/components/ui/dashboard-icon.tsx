@@ -1,24 +1,30 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import type { HTMLMotionProps, Variants } from "framer-motion";
+import type { HTMLMotionProps } from "framer-motion";
 import { motion } from "framer-motion";
 
 interface DashboardIconProps extends HTMLMotionProps<"div"> {
 	size?: number;
-	variants?: Variants;
 }
+
+const iconVariants = {
+	hover: {
+		scale: 1.1,
+		transition: { type: "spring", stiffness: 300 },
+	},
+};
 
 const DashboardIcon = ({
 	className,
 	size = 28,
-	variants,
 	...props
 }: DashboardIconProps) => {
 
 	return (
 		<motion.div
 			className={cn("inline-flex items-center justify-center", className)}
+			whileHover="hover"
 			{...props}
 		>
 			<motion.svg
@@ -31,6 +37,7 @@ const DashboardIcon = ({
 				strokeWidth="2"
 				strokeLinecap="round"
 				strokeLinejoin="round"
+				variants={iconVariants}
 			>
 				<motion.rect
 					width="7"
@@ -38,7 +45,6 @@ const DashboardIcon = ({
 					x="3"
 					y="3"
 					rx="1"
-					variants={variants}
 				/>
 				<motion.rect
 					width="7"
@@ -46,7 +52,6 @@ const DashboardIcon = ({
 					x="14"
 					y="3"
 					rx="1"
-					variants={variants}
 				/>
 				<motion.rect
 					width="7"
@@ -54,7 +59,6 @@ const DashboardIcon = ({
 					x="14"
 					y="12"
 					rx="1"
-					variants={variants}
 				/>
 				<motion.rect
 					width="7"
@@ -62,7 +66,6 @@ const DashboardIcon = ({
 					x="3"
 					y="16"
 					rx="1"
-					variants={variants}
 				/>
 			</motion.svg>
 		</motion.div>

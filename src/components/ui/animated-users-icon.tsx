@@ -6,6 +6,10 @@ import { motion } from "framer-motion";
 
 interface AnimatedUsersIconProps extends HTMLMotionProps<"div"> {}
 
+const usersVariants = {
+  hover: { x: [0, -1, 1, 0], transition: { duration: 0.5 } },
+};
+
 export function AnimatedUsersIcon({
   className,
   ...props
@@ -14,6 +18,7 @@ export function AnimatedUsersIcon({
   return (
     <motion.div
       className={cn("inline-flex items-center justify-center", className)}
+      whileHover="hover"
       {...props}
     >
       <motion.svg
@@ -26,6 +31,7 @@ export function AnimatedUsersIcon({
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
+        variants={usersVariants}
       >
         <motion.g>
           <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />

@@ -1,17 +1,20 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import type { HTMLMotionProps, Variants } from "framer-motion";
+import type { HTMLMotionProps } from "framer-motion";
 import { motion } from "framer-motion";
 
-interface AnimatedBotIconProps extends HTMLMotionProps<"div"> {
-  variants?: Variants;
-}
+interface AnimatedBotIconProps extends HTMLMotionProps<"div"> {}
 
-export function AnimatedBotIcon({ className, variants, ...props }: AnimatedBotIconProps) {
+const botVariants = {
+  hover: { rotate: [0, 15, -15, 0], transition: { duration: 0.5 } },
+};
+
+export function AnimatedBotIcon({ className, ...props }: AnimatedBotIconProps) {
   return (
     <motion.div
       className={cn("inline-flex items-center justify-center", className)}
+      whileHover="hover"
       {...props}
     >
       <motion.svg
@@ -25,8 +28,8 @@ export function AnimatedBotIcon({ className, variants, ...props }: AnimatedBotIc
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <motion.path d="M12 8V4H8" variants={variants} />
-        <motion.path d="m8 4 4 4" variants={variants} />
+        <motion.path d="M12 8V4H8" variants={botVariants} />
+        <motion.path d="m8 4 4 4" variants={botVariants} />
         <rect width="16" height="12" x="4" y="12" rx="2" />
         <path d="M2 14h2" />
         <path d="M20 14h2" />
