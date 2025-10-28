@@ -42,7 +42,7 @@ export function AppSidebar() {
           <Button
             key={item.href}
             variant={pathname === item.href ? 'secondary' : 'ghost'}
-            className="w-full justify-start"
+            className="w-full justify-start group"
             asChild
           >
             <Link href={item.href}>
