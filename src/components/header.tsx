@@ -20,7 +20,6 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import {
   Bot,
   CalendarDays,
-  HeartPulse,
   Menu,
   Scale,
   Users,
@@ -28,6 +27,7 @@ import {
   Wallet,
 } from 'lucide-react';
 import { DashboardIcon } from './ui/dashboard-icon';
+import { HeartIcon } from './ui/HeartIcon';
 
 const navItems = [
   { href: '/dashboard', icon: DashboardIcon, label: 'Dashboard' },
@@ -56,7 +56,7 @@ export function Header({ title }: { title: string }) {
                 href="/"
                 className="flex items-center gap-2 text-lg font-semibold mb-4"
               >
-                <HeartPulse className="h-6 w-6 text-primary" />
+                <HeartIcon className="h-6 w-6 text-primary" />
                 <span className="font-headline text-primary">CuraNet</span>
               </Link>
               {navItems.map((item) => (

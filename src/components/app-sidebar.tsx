@@ -14,6 +14,7 @@ import {
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { DashboardIcon } from './ui/dashboard-icon';
+import { HeartIcon } from './ui/HeartIcon';
 
 const navItems = [
   { href: '/dashboard', icon: DashboardIcon, label: 'Dashboard' },
@@ -31,7 +32,7 @@ export function AppSidebar() {
     <aside className="hidden md:flex flex-col w-64 bg-card border-r">
       <div className="p-4 border-b">
         <Link href="/" className="flex items-center gap-2">
-          <HeartPulse className="h-8 w-8 text-primary" />
+          <HeartIcon className="text-primary" size={32} />
           <h1 className="text-2xl font-bold font-headline text-primary">
             CuraNet
           </h1>
