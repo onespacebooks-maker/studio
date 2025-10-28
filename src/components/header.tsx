@@ -19,7 +19,6 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import {
   Menu,
-  Users,
 } from 'lucide-react';
 import { DashboardIcon } from './ui/dashboard-icon';
 import { HeartIcon } from './ui/HeartIcon';
@@ -28,6 +27,7 @@ import { AnimatedCalendarDaysIcon } from './ui/animated-calendar-days-icon';
 import { AnimatedScaleIcon } from './ui/animated-scale-icon';
 import { AnimatedVideoIcon } from './ui/animated-video-icon';
 import { AnimatedWalletIcon } from './ui/animated-wallet-icon';
+import { motion } from 'framer-motion';
 
 const navItems = [
   { href: '/dashboard', icon: DashboardIcon, label: 'Dashboard' },
@@ -82,13 +82,15 @@ export function Header({ title }: { title: string }) {
       </div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="secondary" size="icon" className="rounded-full">
-            <Avatar>
-              <AvatarImage src="https://picsum.photos/seed/user/100/100" />
-              <AvatarFallback>U</AvatarFallback>
-            </Avatar>
-            <span className="sr-only">Toggle user menu</span>
-          </Button>
+           <motion.div whileHover={{ rotate: [0, 10, -10, 0], scale: 1.1 }}>
+              <Button variant="secondary" size="icon" className="rounded-full">
+                <Avatar>
+                  <AvatarImage src="https://picsum.photos/seed/user/100/100" />
+                  <AvatarFallback>U</AvatarFallback>
+                </Avatar>
+                <span className="sr-only">Toggle user menu</span>
+              </Button>
+            </motion.div>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
