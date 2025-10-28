@@ -21,16 +21,16 @@ import {
   Bot,
   CalendarDays,
   HeartPulse,
-  LayoutDashboard,
   Menu,
   Scale,
   Users,
   Video,
   Wallet,
 } from 'lucide-react';
+import { DashboardIcon } from './ui/dashboard-icon';
 
 const navItems = [
-  { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+  { href: '/dashboard', icon: DashboardIcon, label: 'Dashboard' },
   { href: '/symptom-guide', icon: Bot, label: 'AI Symptom Guide' },
   { href: '/appointments', icon: CalendarDays, label: 'Appointments' },
   { href: '/compare-prices', icon: Scale, label: 'Compare Prices' },
