@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import {
   ArrowRight,
+  IndianRupee,
   Users,
   Wallet,
 } from 'lucide-react';
@@ -18,6 +19,7 @@ import { AnimatedBotIcon } from '@/components/ui/animated-bot-icon';
 import { AnimatedCalendarDaysIcon } from '@/components/ui/animated-calendar-days-icon';
 import { AnimatedScaleIcon } from '@/components/ui/animated-scale-icon';
 import { AnimatedVideoIcon } from '@/components/ui/animated-video-icon';
+import { AnimatedWalletIcon } from '@/components/ui/animated-wallet-icon';
 
 const quickAccess = [
   {
@@ -62,7 +64,7 @@ export default function DashboardPage() {
               <CardTitle className="text-sm font-medium">
                 Health Wallet
               </CardTitle>
-              <Wallet className="h-4 w-4 text-muted-foreground" />
+              <AnimatedWalletIcon className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold flex items-center">
