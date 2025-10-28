@@ -2,27 +2,24 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import {
-  Bot,
-  CalendarDays,
-  HeartPulse,
-  Scale,
-  Users,
-  Video,
-  Wallet,
-} from 'lucide-react';
+import { Users } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { DashboardIcon } from './ui/dashboard-icon';
 import { HeartIcon } from './ui/HeartIcon';
+import { AnimatedBotIcon } from './ui/animated-bot-icon';
+import { AnimatedCalendarDaysIcon } from './ui/animated-calendar-days-icon';
+import { AnimatedScaleIcon } from './ui/animated-scale-icon';
+import { AnimatedVideoIcon } from './ui/animated-video-icon';
+import { AnimatedWalletIcon } from './ui/animated-wallet-icon';
 
 const navItems = [
   { href: '/dashboard', icon: DashboardIcon, label: 'Dashboard' },
-  { href: '/symptom-guide', icon: Bot, label: 'AI Symptom Guide' },
-  { href: '/appointments', icon: CalendarDays, label: 'Appointments' },
-  { href: '/compare-prices', icon: Scale, label: 'Compare Prices' },
-  { href: '/teleconsultation', icon: Video, label: 'Teleconsultation' },
-  { href: '/wallet', icon: Wallet, label: 'Health Wallet' },
+  { href: '/symptom-guide', icon: AnimatedBotIcon, label: 'AI Symptom Guide' },
+  { href: '/appointments', icon: AnimatedCalendarDaysIcon, label: 'Appointments' },
+  { href: '/compare-prices', icon: AnimatedScaleIcon, label: 'Compare Prices' },
+  { href: '/teleconsultation', icon: AnimatedVideoIcon, label: 'Teleconsultation' },
+  { href: '/wallet', icon: AnimatedWalletIcon, label: 'Health Wallet' },
 ];
 
 export function AppSidebar() {
