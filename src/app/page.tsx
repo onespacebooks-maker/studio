@@ -2,41 +2,41 @@ import Image from 'next/image';
 import Link from 'next/link';
 import {
   ArrowRight,
-  Bot,
-  CalendarDays,
   HeartPulse,
-  Scale,
   Users,
-  Video,
-  Wallet,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { AnimatedCalendarDaysIcon } from '@/components/ui/animated-calendar-days-icon';
+import { AnimatedScaleIcon } from '@/components/ui/animated-scale-icon';
+import { AnimatedBotIcon } from '@/components/ui/animated-bot-icon';
+import { AnimatedVideoIcon } from '@/components/ui/animated-video-icon';
+import { AnimatedWalletIcon } from '@/components/ui/animated-wallet-icon';
 
 const features = [
   {
-    icon: <CalendarDays className="h-8 w-8 text-primary" />,
+    icon: <AnimatedCalendarDaysIcon className="h-8 w-8 text-primary" />,
     title: 'Appointment Booking',
     description: 'Book appointments with top doctors and hospitals in real-time.',
   },
   {
-    icon: <Scale className="h-8 w-8 text-primary" />,
+    icon: <AnimatedScaleIcon className="h-8 w-8 text-primary" />,
     title: 'Service Price Comparison',
     description: 'Compare treatment costs and insurance details across hospitals.',
   },
   {
-    icon: <Bot className="h-8 w-8 text-primary" />,
+    icon: <AnimatedBotIcon className="h-8 w-8 text-primary" />,
     title: 'AI Symptom Guide',
     description: 'Get guidance on the right medical department for your symptoms.',
   },
   {
-    icon: <Video className="h-8 w-8 text-primary" />,
+    icon: <AnimatedVideoIcon className="h-8 w-8 text-primary" />,
     title: 'Teleconsultation',
     description: 'Schedule low-cost video calls with healthcare professionals.',
   },
   {
-    icon: <Wallet className="h-8 w-8 text-primary" />,
+    icon: <AnimatedWalletIcon className="h-8 w-8 text-primary" />,
     title: 'Medical EMI & Health Wallet',
     description: 'Split bills into monthly payments and save for expenses.',
   },

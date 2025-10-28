@@ -1,12 +1,7 @@
 import Link from 'next/link';
 import {
   ArrowRight,
-  Bot,
-  CalendarDays,
-  IndianRupee,
-  Scale,
   Users,
-  Video,
   Wallet,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -19,30 +14,34 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Header } from '@/components/header';
+import { AnimatedBotIcon } from '@/components/ui/animated-bot-icon';
+import { AnimatedCalendarDaysIcon } from '@/components/ui/animated-calendar-days-icon';
+import { AnimatedScaleIcon } from '@/components/ui/animated-scale-icon';
+import { AnimatedVideoIcon } from '@/components/ui/animated-video-icon';
 
 const quickAccess = [
   {
     title: 'AI Symptom Guide',
     description: 'Confused about your symptoms?',
-    icon: Bot,
+    icon: AnimatedBotIcon,
     href: '/symptom-guide',
   },
   {
     title: 'Book an Appointment',
     description: 'Find top doctors near you.',
-    icon: CalendarDays,
+    icon: AnimatedCalendarDaysIcon,
     href: '/appointments',
   },
   {
     title: 'Compare Prices',
     description: 'Check costs for treatments.',
-    icon: Scale,
+    icon: AnimatedScaleIcon,
     href: '/compare-prices',
   },
   {
     title: 'Start a Teleconsultation',
     description: 'Consult a doctor from home.',
-    icon: Video,
+    icon: AnimatedVideoIcon,
     href: '/teleconsultation',
   },
 ];
@@ -80,7 +79,7 @@ export default function DashboardPage() {
               <CardTitle className="text-sm font-medium">
                 Upcoming Appointments
               </CardTitle>
-              <CalendarDays className="h-4 w-4 text-muted-foreground" />
+              <AnimatedCalendarDaysIcon className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">2</div>
@@ -108,7 +107,7 @@ export default function DashboardPage() {
                 <CardTitle className="text-sm font-medium">
                     Need Help?
                 </CardTitle>
-                <Bot className="h-4 w-4 text-primary-foreground/70" />
+                <AnimatedBotIcon className="h-4 w-4 text-primary-foreground/70" />
             </CardHeader>
             <CardContent>
                 <p className="text-sm">Try our AI Symptom Guide to find the right specialist.</p>
