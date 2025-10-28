@@ -83,10 +83,12 @@ export function Header({ title }: { title: string }) {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="secondary" size="icon" className="rounded-full">
+            <motion.div whileHover={{ rotate: [0, 10, -10, 0] }}>
              <Avatar>
                <AvatarImage src="https://picsum.photos/seed/user/100/100" />
                <AvatarFallback>U</AvatarFallback>
              </Avatar>
+            </motion.div>
             <span className="sr-only">Toggle user menu</span>
           </Button>
         </DropdownMenuTrigger>

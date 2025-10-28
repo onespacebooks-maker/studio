@@ -40,7 +40,7 @@ export function AppSidebar() {
           <Button
             key={item.href}
             variant={pathname === item.href ? 'secondary' : 'ghost'}
-            className="w-full justify-start group"
+            className="w-full justify-start"
             asChild
           >
             <Link href={item.href}>
@@ -51,7 +51,7 @@ export function AppSidebar() {
         ))}
       </nav>
       <div className="p-4 border-t">
-        <Button variant="outline" className="w-full justify-start group">
+        <Button variant="outline" className="w-full justify-start">
           <AnimatedUsersIcon className="mr-2 h-4 w-4" />
           Family Members
         </Button>

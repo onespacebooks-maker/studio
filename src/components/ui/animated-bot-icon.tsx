@@ -35,7 +35,6 @@ export function AnimatedBotIcon({ className, ...props }: AnimatedBotIconProps) {
         strokeLinecap="round"
         strokeLinejoin="round"
         variants={iconVariants}
-        className="group-hover:animate-none"
       >
         <path d="M12 8V4H8" />
         <motion.path

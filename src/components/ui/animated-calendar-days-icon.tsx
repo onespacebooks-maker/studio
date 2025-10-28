@@ -42,7 +42,6 @@ export function AnimatedCalendarDaysIcon({ className, ...props }: AnimatedCalend
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className="group-hover:animate-none"
       >
         <motion.rect
           width="18"

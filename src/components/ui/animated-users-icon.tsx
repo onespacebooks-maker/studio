@@ -49,7 +49,6 @@ export function AnimatedUsersIcon({
         strokeLinecap="round"
         strokeLinejoin="round"
         variants={iconVariants}
-        className="group-hover:animate-none"
       >
         <motion.g variants={person1Variants}>
           <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
