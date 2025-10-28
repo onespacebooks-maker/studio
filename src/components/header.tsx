@@ -20,7 +20,7 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import {
   Menu,
 } from 'lucide-react';
-import { DashboardIcon } from './ui/dashboard-icon';
+import { AnimatedDashboardIcon } from './ui/animated-dashboard-icon';
 import { HeartIcon } from './ui/HeartIcon';
 import { AnimatedBotIcon } from './ui/animated-bot-icon';
 import { AnimatedCalendarDaysIcon } from './ui/animated-calendar-days-icon';
@@ -30,7 +30,7 @@ import { AnimatedWalletIcon } from './ui/animated-wallet-icon';
 import { motion } from 'framer-motion';
 
 const navItems = [
-  { href: '/dashboard', icon: DashboardIcon, label: 'Dashboard' },
+  { href: '/dashboard', icon: AnimatedDashboardIcon, label: 'Dashboard' },
   { href: '/symptom-guide', icon: AnimatedBotIcon, label: 'AI Symptom Guide' },
   { href: '/appointments', icon: AnimatedCalendarDaysIcon, label: 'Appointments' },
   { href: '/compare-prices', icon: AnimatedScaleIcon, label: 'Compare Prices' },
@@ -46,7 +46,9 @@ export function Header({ title }: { title: string }) {
         <Sheet>
           <SheetTrigger asChild>
             <Button variant="outline" size="icon" className="shrink-0 md:hidden">
-              <Menu className="h-5 w-5" />
+              <motion.div whileHover={{ scale: 1.2 }}>
+                <Menu className="h-5 w-5" />
+              </motion.div>
               <span className="sr-only">Toggle navigation menu</span>
             </Button>
           </SheetTrigger>
@@ -69,7 +71,7 @@ export function Header({ title }: { title: string }) {
                       : 'text-muted-foreground'
                   }`}
                 >
-                  <item.icon className="h-4 w-4" />
+                  <item.icon />
                   {item.label}
                 </Link>
               ))}

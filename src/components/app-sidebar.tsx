@@ -2,19 +2,18 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { DashboardIcon } from './ui/dashboard-icon';
 import { HeartIcon } from './ui/HeartIcon';
 import { AnimatedBotIcon } from './ui/animated-bot-icon';
 import { AnimatedCalendarDaysIcon } from './ui/animated-calendar-days-icon';
 import { AnimatedScaleIcon } from './ui/animated-scale-icon';
 import { AnimatedVideoIcon } from './ui/animated-video-icon';
 import { AnimatedWalletIcon } from './ui/animated-wallet-icon';
+import { AnimatedDashboardIcon } from './ui/animated-dashboard-icon';
 import { AnimatedUsersIcon } from './ui/animated-users-icon';
 
 const navItems = [
-  { href: '/dashboard', icon: DashboardIcon, label: 'Dashboard' },
+  { href: '/dashboard', icon: AnimatedDashboardIcon, label: 'Dashboard' },
   { href: '/symptom-guide', icon: AnimatedBotIcon, label: 'AI Symptom Guide' },
   { href: '/appointments', icon: AnimatedCalendarDaysIcon, label: 'Appointments' },
   { href: '/compare-prices', icon: AnimatedScaleIcon, label: 'Compare Prices' },
@@ -45,7 +44,7 @@ export function AppSidebar() {
               asChild
             >
               <Link href={item.href}>
-                  <item.icon className="mr-2 h-4 w-4" />
+                  <item.icon />
                 {item.label}
               </Link>
             </Button>
@@ -53,7 +52,7 @@ export function AppSidebar() {
       </nav>
       <div className="p-4 border-t">
         <Button variant="outline" className="w-full justify-start">
-            <AnimatedUsersIcon className="mr-2 h-4 w-4" />
+            <AnimatedUsersIcon />
           Family Members
         </Button>
       </div>

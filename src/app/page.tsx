@@ -13,6 +13,8 @@ import { AnimatedBotIcon } from '@/components/ui/animated-bot-icon';
 import { AnimatedVideoIcon } from '@/components/ui/animated-video-icon';
 import { AnimatedWalletIcon } from '@/components/ui/animated-wallet-icon';
 import { AnimatedUsersIcon } from '@/components/ui/animated-users-icon';
+import { motion } from 'framer-motion';
+import { HeartIcon } from '@/components/ui/HeartIcon';
 
 const features = [
   {
@@ -54,7 +56,7 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       <header className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
         <Link href="/" className="flex items-center gap-2">
-          <HeartPulse className="h-8 w-8 text-primary" />
+          <HeartIcon className="text-primary" size={32} />
           <h1 className="text-2xl font-bold font-headline text-primary">
             CuraNet
           </h1>
@@ -65,7 +67,7 @@ export default function Home() {
           </Button>
           <Button asChild>
             <Link href="/dashboard">
-              Get Started <ArrowRight className="ml-2 h-4 w-4" />
+              Get Started <motion.div whileHover={{ x: 5 }}><ArrowRight className="ml-2 h-4 w-4" /></motion.div>
             </Link>
           </Button>
         </nav>
@@ -89,7 +91,7 @@ export default function Home() {
                 <Button size="lg" asChild>
                   <Link href="/dashboard">
                     Explore Dashboard
-                    <ArrowRight className="ml-2" />
+                    <motion.div whileHover={{ x: 5 }}><ArrowRight className="ml-2" /></motion.div>
                   </Link>
                 </Button>
               </div>
