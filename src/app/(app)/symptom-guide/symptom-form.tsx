@@ -21,23 +21,6 @@ const initialState = {
   error: null,
 };
 
-function SubmitButton() {
-  const { pending } = useFormStatus();
-
-  return (
-    <Button type="submit" disabled={pending} className="w-full sm:w-auto">
-      {pending ? (
-        <>
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          Analyzing...
-        </>
-      ) : (
-        'Get Suggestion'
-      )}
-    </Button>
-  );
-}
-
 export function SymptomForm() {
   const [state, formAction] = useActionState(getDepartmentSuggestion, initialState);
   const formRef = useRef<HTMLFormElement>(null);
@@ -51,6 +34,23 @@ export function SymptomForm() {
         formRef.current?.reset();
     }
   }, [state.data])
+
+  function SubmitButton() {
+    const { pending } = useFormStatus();
+  
+    return (
+      <Button type="submit" disabled={pending} className="w-full sm:w-auto">
+        {pending ? (
+          <>
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            Analyzing...
+          </>
+        ) : (
+          'Get Suggestion'
+        )}
+      </Button>
+    );
+  }
 
   return (
     <div className="space-y-6">
