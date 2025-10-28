@@ -1,3 +1,5 @@
+'use client';
+
 import { Header } from '@/components/header';
 import {
   Card,
@@ -20,7 +22,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
   ChartConfig,
-  ChartStyle
 } from '@/components/ui/chart';
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
 
