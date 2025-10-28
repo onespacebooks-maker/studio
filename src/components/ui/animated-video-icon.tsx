@@ -1,31 +1,16 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import type { HTMLMotionProps, Variants } from "framer-motion";
+import type { HTMLMotionProps } from "framer-motion";
 import { motion } from "framer-motion";
 
 interface AnimatedVideoIconProps extends HTMLMotionProps<"div"> {}
 
 export function AnimatedVideoIcon({ className, ...props }: AnimatedVideoIconProps) {
-  const iconVariants: Variants = {
-    initial: {},
-    hover: {},
-  };
-
-  const playButtonVariants: Variants = {
-    initial: { scale: 0, opacity: 0 },
-    hover: {
-      scale: [1, 1.2, 1],
-      opacity: [1, 0.8, 1],
-      transition: { duration: 0.6, ease: "easeOut" },
-    },
-  };
 
   return (
     <motion.div
       className={cn("inline-flex items-center justify-center relative", className)}
-      initial="initial"
-      variants={iconVariants}
       {...props}
     >
       <motion.svg
@@ -47,7 +32,6 @@ export function AnimatedVideoIcon({ className, ...props }: AnimatedVideoIconProp
           r="3"
           fill="currentColor"
           className="text-primary"
-          variants={playButtonVariants}
           style={{transformOrigin: "center"}}
         />
       </motion.svg>

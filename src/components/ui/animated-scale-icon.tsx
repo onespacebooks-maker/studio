@@ -1,24 +1,16 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import type { HTMLMotionProps, Variants } from "framer-motion";
+import type { HTMLMotionProps } from "framer-motion";
 import { motion } from "framer-motion";
 
 interface AnimatedScaleIconProps extends HTMLMotionProps<"div"> {}
 
 export function AnimatedScaleIcon({ className, ...props }: AnimatedScaleIconProps) {
-  const beamVariants: Variants = {
-    initial: { rotate: 0 },
-    hover: {
-      rotate: [0, 5, -5, 3, -3, 0],
-      transition: { duration: 1.2, ease: "easeInOut" },
-    },
-  };
 
   return (
     <motion.div
       className={cn("inline-flex items-center justify-center", className)}
-      initial="initial"
       {...props}
     >
       <motion.svg
@@ -44,7 +36,6 @@ export function AnimatedScaleIcon({ className, ...props }: AnimatedScaleIconProp
         />
         <motion.path
           d="M3 7h18"
-          variants={beamVariants}
           style={{ transformOrigin: "center" }}
         />
       </motion.svg>

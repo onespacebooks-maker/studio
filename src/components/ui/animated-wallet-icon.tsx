@@ -1,31 +1,16 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import type { HTMLMotionProps, Variants } from "framer-motion";
+import type { HTMLMotionProps } from "framer-motion";
 import { motion } from "framer-motion";
 
 interface AnimatedWalletIconProps extends HTMLMotionProps<"div"> {}
 
 export function AnimatedWalletIcon({ className, ...props }: AnimatedWalletIconProps) {
-  const walletVariants: Variants = {
-    initial: {},
-    hover: {},
-  };
-
-  const cardVariants: Variants = {
-    initial: { y: 0, rotate: 0 },
-    hover: {
-      y: -4,
-      rotate: -5,
-      transition: { duration: 0.4, ease: "easeOut" },
-    },
-  };
 
   return (
     <motion.div
       className={cn("inline-flex items-center justify-center", className)}
-      initial="initial"
-      variants={walletVariants}
       {...props}
     >
       <motion.svg
@@ -43,7 +28,6 @@ export function AnimatedWalletIcon({ className, ...props }: AnimatedWalletIconPr
         <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />
         <motion.path
           d="M18 12a2 2 0 0 0 0 4h4v-4Z"
-          variants={cardVariants}
           style={{transformOrigin: "bottom right"}}
         />
       </motion.svg>
