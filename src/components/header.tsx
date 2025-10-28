@@ -27,6 +27,7 @@ import { AnimatedCalendarDaysIcon } from './ui/animated-calendar-days-icon';
 import { AnimatedScaleIcon } from './ui/animated-scale-icon';
 import { AnimatedVideoIcon } from './ui/animated-video-icon';
 import { AnimatedWalletIcon } from './ui/animated-wallet-icon';
+import { motion } from 'framer-motion';
 
 const navItems = [
   { href: '/dashboard', icon: DashboardIcon, label: 'Dashboard' },
@@ -82,10 +83,10 @@ export function Header({ title }: { title: string }) {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="secondary" size="icon" className="rounded-full">
-            <Avatar>
-              <AvatarImage src="https://picsum.photos/seed/user/100/100" />
-              <AvatarFallback>U</AvatarFallback>
-            </Avatar>
+             <Avatar>
+               <AvatarImage src="https://picsum.photos/seed/user/100/100" />
+               <AvatarFallback>U</AvatarFallback>
+             </Avatar>
             <span className="sr-only">Toggle user menu</span>
           </Button>
         </DropdownMenuTrigger>
