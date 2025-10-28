@@ -1,3 +1,5 @@
+'use client';
+
 import { Header } from '@/components/header';
 import { Button } from '@/components/ui/button';
 import {
@@ -7,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { PlusCircle } from 'lucide-react';
+import { AnimatedPlusCircleIcon } from '@/components/ui/animated-plus-circle-icon';
 
 const upcomingAppointments = [
   {
@@ -54,7 +56,7 @@ export default function AppointmentsPage() {
             </p>
           </div>
           <Button>
-            <PlusCircle className="mr-2 h-4 w-4" />
+            <AnimatedPlusCircleIcon className="mr-2 h-4 w-4" />
             Book New Appointment
           </Button>
         </div>

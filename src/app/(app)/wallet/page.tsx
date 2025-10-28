@@ -16,7 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { IndianRupee } from 'lucide-react';
+import { AnimatedIndianRupeeIcon } from '@/components/ui/animated-indian-rupee-icon';
 import {
   ChartContainer,
   ChartTooltip,

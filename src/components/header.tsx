@@ -17,9 +17,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import {
-  Menu,
-} from 'lucide-react';
+import { AnimatedMenuIcon } from '@/components/ui/animated-menu-icon';
 import { AnimatedDashboardIcon } from './ui/animated-dashboard-icon';
 import { HeartIcon } from './ui/HeartIcon';
 import { AnimatedBotIcon } from './ui/animated-bot-icon';
@@ -47,7 +45,7 @@ export function Header({ title }: { title: string }) {
           <SheetTrigger asChild>
             <Button variant="outline" size="icon" className="shrink-0 md:hidden">
               <motion.div whileHover={{ scale: 1.2 }}>
-                <Menu className="h-5 w-5" />
+                <AnimatedMenuIcon className="h-5 w-5" />
               </motion.div>
               <span className="sr-only">Toggle navigation menu</span>
             </Button>

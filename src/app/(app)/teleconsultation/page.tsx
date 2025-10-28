@@ -1,3 +1,5 @@
+'use client';
+
 import { Header } from '@/components/header';
 import { Button } from '@/components/ui/button';
 import {
@@ -8,7 +10,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Video } from 'lucide-react';
+import { AnimatedVideoIcon } from '@/components/ui/animated-video-icon';
 
 const doctors = [
   {
@@ -94,7 +96,7 @@ export default function TeleconsultationPage() {
               </CardContent>
               <CardContent>
                 <Button className="w-full">
-                  <Video className="mr-2 h-4 w-4" />
+                  <AnimatedVideoIcon className="mr-2 h-4 w-4" />
                   Book Call
                 </Button>
               </CardContent>

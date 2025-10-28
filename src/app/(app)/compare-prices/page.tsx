@@ -1,3 +1,5 @@
+'use client';
+
 import { Header } from '@/components/header';
 import {
   Card,
@@ -16,7 +18,9 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { IndianRupee, Percent } from 'lucide-react';
+import { AnimatedIndianRupeeIcon } from '@/components/ui/animated-indian-rupee-icon';
+import { AnimatedPercentIcon } from '@/components/ui/animated-percent-icon';
+
 
 const priceData = [
   {
@@ -112,7 +116,7 @@ export default function ComparePricesPage() {
           </CardContent>
           <CardFooter>
             <div className="text-sm text-muted-foreground flex items-center gap-2">
-                <Percent className="w-4 h-4" />
+                <AnimatedPercentIcon className="w-4 h-4" />
                 <p>
                     <span className="font-semibold text-foreground">Flexible Medical EMI:</span> Split your medical bills into easy monthly payments during checkout. No hidden costs.
                 </p>
