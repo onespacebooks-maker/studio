@@ -1,9 +1,8 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
-import {
-  ArrowRight,
-  HeartPulse,
-} from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
@@ -20,17 +19,20 @@ const features = [
   {
     icon: <AnimatedCalendarDaysIcon className="h-8 w-8 text-primary" />,
     title: 'Appointment Booking',
-    description: 'Book appointments with top doctors and hospitals in real-time.',
+    description:
+      'Book appointments with top doctors and hospitals in real-time.',
   },
   {
     icon: <AnimatedScaleIcon className="h-8 w-8 text-primary" />,
     title: 'Service Price Comparison',
-    description: 'Compare treatment costs and insurance details across hospitals.',
+    description:
+      'Compare treatment costs and insurance details across hospitals.',
   },
   {
     icon: <AnimatedBotIcon className="h-8 w-8 text-primary" />,
     title: 'AI Symptom Guide',
-    description: 'Get guidance on the right medical department for your symptoms.',
+    description:
+      'Get guidance on the right medical department for your symptoms.',
   },
   {
     icon: <AnimatedVideoIcon className="h-8 w-8 text-primary" />,
@@ -67,7 +69,10 @@ export default function Home() {
           </Button>
           <Button asChild>
             <Link href="/dashboard">
-              Get Started <motion.div whileHover={{ x: 5 }}><ArrowRight className="ml-2 h-4 w-4" /></motion.div>
+              Get Started{' '}
+              <motion.div whileHover={{ x: 5 }}>
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </motion.div>
             </Link>
           </Button>
         </nav>
@@ -91,7 +96,9 @@ export default function Home() {
                 <Button size="lg" asChild>
                   <Link href="/dashboard">
                     Explore Dashboard
-                    <motion.div whileHover={{ x: 5 }}><ArrowRight className="ml-2" /></motion.div>
+                    <motion.div whileHover={{ x: 5 }}>
+                      <ArrowRight className="ml-2" />
+                    </motion.div>
                   </Link>
                 </Button>
               </div>
