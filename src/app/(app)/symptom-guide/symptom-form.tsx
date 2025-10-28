@@ -1,6 +1,7 @@
 'use client';
 
-import { useFormState, useFormStatus } from 'react-dom';
+import { useActionState, useEffect, useRef } from 'react';
+import { useFormStatus } from 'react-dom';
 import { getDepartmentSuggestion } from './actions';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -14,7 +15,6 @@ import {
 } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle, CheckCircle2, Lightbulb, Loader2 } from 'lucide-react';
-import React from 'react';
 
 const initialState = {
   data: null,
@@ -39,14 +39,14 @@ function SubmitButton() {
 }
 
 export function SymptomForm() {
-  const [state, formAction] = useFormState(getDepartmentSuggestion, initialState);
-  const formRef = React.useRef<HTMLFormElement>(null);
+  const [state, formAction] = useActionState(getDepartmentSuggestion, initialState);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const handleFormAction = (formData: FormData) => {
     formAction(formData);
   };
   
-  React.useEffect(() => {
+  useEffect(() => {
     if (state.data) {
         formRef.current?.reset();
     }
