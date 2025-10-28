@@ -21,7 +21,7 @@ export function AnimatedBotIcon({ className, ...props }: AnimatedBotIconProps) {
     <motion.div
       className={cn("inline-flex items-center justify-center", className)}
       initial="initial"
-      whileHover="hover"
+      variants={iconVariants}
       {...props}
     >
       <motion.svg
@@ -34,7 +34,6 @@ export function AnimatedBotIcon({ className, ...props }: AnimatedBotIconProps) {
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
-        variants={iconVariants}
       >
         <path d="M12 8V4H8" />
         <motion.path

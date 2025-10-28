@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { cn } from '@/lib/utils';
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { DashboardIcon } from './ui/dashboard-icon';
 import { HeartIcon } from './ui/HeartIcon';
@@ -22,6 +22,8 @@ const navItems = [
   { href: '/wallet', icon: AnimatedWalletIcon, label: 'Health Wallet' },
 ];
 
+const MotionButton = motion(Button);
+
 export function AppSidebar() {
   const pathname = usePathname();
 
@@ -37,24 +39,25 @@ export function AppSidebar() {
       </div>
       <nav className="flex-grow p-4 space-y-2">
         {navItems.map((item) => (
-          <Button
+          <MotionButton
             key={item.href}
             variant={pathname === item.href ? 'secondary' : 'ghost'}
             className="w-full justify-start"
             asChild
+            whileHover="hover"
           >
             <Link href={item.href}>
               <item.icon className="mr-2 h-4 w-4" />
               {item.label}
             </Link>
-          </Button>
+          </MotionButton>
         ))}
       </nav>
       <div className="p-4 border-t">
-        <Button variant="outline" className="w-full justify-start">
+        <MotionButton whileHover="hover" variant="outline" className="w-full justify-start">
           <AnimatedUsersIcon className="mr-2 h-4 w-4" />
           Family Members
-        </Button>
+        </MotionButton>
       </div>
     </aside>
   );

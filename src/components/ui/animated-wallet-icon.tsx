@@ -25,7 +25,7 @@ export function AnimatedWalletIcon({ className, ...props }: AnimatedWalletIconPr
     <motion.div
       className={cn("inline-flex items-center justify-center", className)}
       initial="initial"
-      whileHover="hover"
+      variants={walletVariants}
       {...props}
     >
       <motion.svg
@@ -38,7 +38,6 @@ export function AnimatedWalletIcon({ className, ...props }: AnimatedWalletIconPr
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
-        variants={walletVariants}
       >
         <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" />
         <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />

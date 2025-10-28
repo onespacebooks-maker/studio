@@ -19,7 +19,6 @@ export function AnimatedScaleIcon({ className, ...props }: AnimatedScaleIconProp
     <motion.div
       className={cn("inline-flex items-center justify-center", className)}
       initial="initial"
-      whileHover="hover"
       {...props}
     >
       <motion.svg

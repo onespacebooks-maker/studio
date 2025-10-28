@@ -35,7 +35,7 @@ export function AnimatedUsersIcon({
     <motion.div
       className={cn("inline-flex items-center justify-center", className)}
       initial="initial"
-      whileHover="hover"
+      variants={iconVariants}
       {...props}
     >
       <motion.svg
@@ -48,7 +48,6 @@ export function AnimatedUsersIcon({
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
-        variants={iconVariants}
       >
         <motion.g variants={person1Variants}>
           <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />

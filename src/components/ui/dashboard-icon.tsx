@@ -43,7 +43,7 @@ const DashboardIcon = ({
 		<motion.div
 			className={cn("inline-flex items-center justify-center", className)}
 			initial="initial"
-			whileHover="hover"
+			variants={iconVariants}
 			{...props}
 		>
 			<motion.svg
@@ -56,7 +56,6 @@ const DashboardIcon = ({
 				strokeWidth="2"
 				strokeLinecap="round"
 				strokeLinejoin="round"
-				variants={iconVariants}
 			>
 				<motion.rect
 					width="7"
