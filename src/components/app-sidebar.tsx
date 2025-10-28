@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Users } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { DashboardIcon } from './ui/dashboard-icon';
@@ -12,6 +11,7 @@ import { AnimatedCalendarDaysIcon } from './ui/animated-calendar-days-icon';
 import { AnimatedScaleIcon } from './ui/animated-scale-icon';
 import { AnimatedVideoIcon } from './ui/animated-video-icon';
 import { AnimatedWalletIcon } from './ui/animated-wallet-icon';
+import { AnimatedUsersIcon } from './ui/animated-users-icon';
 
 const navItems = [
   { href: '/dashboard', icon: DashboardIcon, label: 'Dashboard' },
@@ -28,7 +28,7 @@ export function AppSidebar() {
   return (
     <aside className="hidden md:flex flex-col w-64 bg-card border-r">
       <div className="p-4 border-b">
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2 group">
           <HeartIcon className="text-primary" size={32} />
           <h1 className="text-2xl font-bold font-headline text-primary">
             CuraNet
@@ -51,8 +51,8 @@ export function AppSidebar() {
         ))}
       </nav>
       <div className="p-4 border-t">
-        <Button variant="outline" className="w-full justify-start">
-          <Users className="mr-2 h-4 w-4" />
+        <Button variant="outline" className="w-full justify-start group">
+          <AnimatedUsersIcon className="mr-2 h-4 w-4" />
           Family Members
         </Button>
       </div>

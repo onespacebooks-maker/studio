@@ -2,8 +2,6 @@ import Link from 'next/link';
 import {
   ArrowRight,
   IndianRupee,
-  Users,
-  Wallet,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -20,6 +18,7 @@ import { AnimatedCalendarDaysIcon } from '@/components/ui/animated-calendar-days
 import { AnimatedScaleIcon } from '@/components/ui/animated-scale-icon';
 import { AnimatedVideoIcon } from '@/components/ui/animated-video-icon';
 import { AnimatedWalletIcon } from '@/components/ui/animated-wallet-icon';
+import { AnimatedUsersIcon } from '@/components/ui/animated-users-icon';
 
 const quickAccess = [
   {
@@ -95,7 +94,7 @@ export default function DashboardPage() {
               <CardTitle className="text-sm font-medium">
                 Family Members
               </CardTitle>
-              <Users className="h-4 w-4 text-muted-foreground" />
+              <AnimatedUsersIcon className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">4</div>

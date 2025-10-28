@@ -3,7 +3,6 @@ import Link from 'next/link';
 import {
   ArrowRight,
   HeartPulse,
-  Users,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -13,6 +12,7 @@ import { AnimatedScaleIcon } from '@/components/ui/animated-scale-icon';
 import { AnimatedBotIcon } from '@/components/ui/animated-bot-icon';
 import { AnimatedVideoIcon } from '@/components/ui/animated-video-icon';
 import { AnimatedWalletIcon } from '@/components/ui/animated-wallet-icon';
+import { AnimatedUsersIcon } from '@/components/ui/animated-users-icon';
 
 const features = [
   {
@@ -41,7 +41,7 @@ const features = [
     description: 'Split bills into monthly payments and save for expenses.',
   },
   {
-    icon: <Users className="h-8 w-8 text-primary" />,
+    icon: <AnimatedUsersIcon className="h-8 w-8 text-primary" />,
     title: 'Family Health Dashboard',
     description: 'Manage your entire family’s health records and appointments.',
   },
