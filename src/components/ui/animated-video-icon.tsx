@@ -1,12 +1,14 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import type { HTMLMotionProps } from "framer-motion";
+import type { HTMLMotionProps, Variants } from "framer-motion";
 import { motion } from "framer-motion";
 
-interface AnimatedVideoIconProps extends HTMLMotionProps<"div"> {}
+interface AnimatedVideoIconProps extends HTMLMotionProps<"div"> {
+    variants?: Variants;
+}
 
-export function AnimatedVideoIcon({ className, ...props }: AnimatedVideoIconProps) {
+export function AnimatedVideoIcon({ className, variants, ...props }: AnimatedVideoIconProps) {
 
   return (
     <motion.div
@@ -24,8 +26,8 @@ export function AnimatedVideoIcon({ className, ...props }: AnimatedVideoIconProp
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <path d="m22 8-6 4 6 4V8Z" />
-        <rect width="14" height="12" x="2" y="6" rx="2" ry="2" />
+        <motion.path d="m22 8-6 4 6 4V8Z" variants={variants} />
+        <motion.rect width="14" height="12" x="2" y="6" rx="2" ry="2" variants={variants} />
          <motion.circle
           cx="8"
           cy="12"
@@ -33,6 +35,7 @@ export function AnimatedVideoIcon({ className, ...props }: AnimatedVideoIconProp
           fill="currentColor"
           className="text-primary"
           style={{transformOrigin: "center"}}
+          variants={variants}
         />
       </motion.svg>
     </motion.div>

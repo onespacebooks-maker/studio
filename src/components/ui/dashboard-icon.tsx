@@ -1,16 +1,18 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import type { HTMLMotionProps } from "framer-motion";
+import type { HTMLMotionProps, Variants } from "framer-motion";
 import { motion } from "framer-motion";
 
 interface DashboardIconProps extends HTMLMotionProps<"div"> {
 	size?: number;
+	variants?: Variants;
 }
 
 const DashboardIcon = ({
 	className,
 	size = 28,
+	variants,
 	...props
 }: DashboardIconProps) => {
 
@@ -36,6 +38,7 @@ const DashboardIcon = ({
 					x="3"
 					y="3"
 					rx="1"
+					variants={variants}
 				/>
 				<motion.rect
 					width="7"
@@ -43,6 +46,7 @@ const DashboardIcon = ({
 					x="14"
 					y="3"
 					rx="1"
+					variants={variants}
 				/>
 				<motion.rect
 					width="7"
@@ -50,6 +54,7 @@ const DashboardIcon = ({
 					x="14"
 					y="12"
 					rx="1"
+					variants={variants}
 				/>
 				<motion.rect
 					width="7"
@@ -57,6 +62,7 @@ const DashboardIcon = ({
 					x="3"
 					y="16"
 					rx="1"
+					variants={variants}
 				/>
 			</motion.svg>
 		</motion.div>

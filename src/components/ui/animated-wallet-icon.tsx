@@ -1,12 +1,14 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import type { HTMLMotionProps } from "framer-motion";
+import type { HTMLMotionProps, Variants } from "framer-motion";
 import { motion } from "framer-motion";
 
-interface AnimatedWalletIconProps extends HTMLMotionProps<"div"> {}
+interface AnimatedWalletIconProps extends HTMLMotionProps<"div"> {
+    variants?: Variants;
+}
 
-export function AnimatedWalletIcon({ className, ...props }: AnimatedWalletIconProps) {
+export function AnimatedWalletIcon({ className, variants, ...props }: AnimatedWalletIconProps) {
 
   return (
     <motion.div
@@ -24,11 +26,12 @@ export function AnimatedWalletIcon({ className, ...props }: AnimatedWalletIconPr
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" />
-        <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />
+        <motion.path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" variants={variants}/>
+        <motion.path d="M3 5v14a2 2 0 0 0 2 2h16v-5" variants={variants}/>
         <motion.path
           d="M18 12a2 2 0 0 0 0 4h4v-4Z"
           style={{transformOrigin: "bottom right"}}
+          variants={variants}
         />
       </motion.svg>
     </motion.div>

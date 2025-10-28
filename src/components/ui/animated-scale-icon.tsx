@@ -1,12 +1,14 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import type { HTMLMotionProps } from "framer-motion";
+import type { HTMLMotionProps, Variants } from "framer-motion";
 import { motion } from "framer-motion";
 
-interface AnimatedScaleIconProps extends HTMLMotionProps<"div"> {}
+interface AnimatedScaleIconProps extends HTMLMotionProps<"div"> {
+    variants?: Variants;
+}
 
-export function AnimatedScaleIcon({ className, ...props }: AnimatedScaleIconProps) {
+export function AnimatedScaleIcon({ className, variants, ...props }: AnimatedScaleIconProps) {
 
   return (
     <motion.div
@@ -24,19 +26,22 @@ export function AnimatedScaleIcon({ className, ...props }: AnimatedScaleIconProp
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" />
-        <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" />
+        <motion.path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" variants={variants} />
+        <motion.path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" variants={variants} />
         <motion.path
           d="M7 21h10"
           style={{ transformOrigin: "center" }}
+          variants={variants}
         />
          <motion.path
           d="M12 3v18"
           style={{ transformOrigin: "center" }}
+          variants={variants}
         />
         <motion.path
           d="M3 7h18"
           style={{ transformOrigin: "center" }}
+          variants={variants}
         />
       </motion.svg>
     </motion.div>

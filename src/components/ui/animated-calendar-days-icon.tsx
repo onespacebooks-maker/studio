@@ -1,12 +1,14 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import type { HTMLMotionProps } from "framer-motion";
+import type { HTMLMotionProps, Variants } from "framer-motion";
 import { motion } from "framer-motion";
 
-interface AnimatedCalendarDaysIconProps extends HTMLMotionProps<"div"> {}
+interface AnimatedCalendarDaysIconProps extends HTMLMotionProps<"div"> {
+    variants?: Variants;
+}
 
-export function AnimatedCalendarDaysIcon({ className, ...props }: AnimatedCalendarDaysIconProps) {
+export function AnimatedCalendarDaysIcon({ className, variants, ...props }: AnimatedCalendarDaysIconProps) {
 
   return (
     <motion.div
@@ -31,16 +33,17 @@ export function AnimatedCalendarDaysIcon({ className, ...props }: AnimatedCalend
           y="4"
           rx="2"
           ry="2"
+          variants={variants}
         />
-        <line x1="16" x2="16" y1="2" y2="6" />
-        <line x1="8" x2="8" y1="2" y2="6" />
-        <line x1="3" x2="21" y1="10" y2="10" />
-        <motion.path d="M8 14h.01" />
-        <motion.path d="M12 14h.01"/>
-        <motion.path d="M16 14h.01"/>
-        <motion.path d="M8 18h.01" />
-        <motion.path d="M12 18h.01"/>
-        <motion.path d="M16 18h.01"/>
+        <motion.line x1="16" x2="16" y1="2" y2="6" variants={variants} />
+        <motion.line x1="8" x2="8" y1="2" y2="6" variants={variants} />
+        <motion.line x1="3" x2="21" y1="10" y2="10" variants={variants} />
+        <motion.path d="M8 14h.01" variants={variants} />
+        <motion.path d="M12 14h.01" variants={variants}/>
+        <motion.path d="M16 14h.01" variants={variants}/>
+        <motion.path d="M8 18h.01" variants={variants} />
+        <motion.path d="M12 18h.01" variants={variants}/>
+        <motion.path d="M16 18h.01" variants={variants}/>
       </motion.svg>
     </motion.div>
   );
