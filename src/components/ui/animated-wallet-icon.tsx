@@ -1,10 +1,9 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import type { HTMLMotionProps } from 'framer-motion';
 import { motion } from 'framer-motion';
 
-interface AnimatedWalletIconProps extends HTMLMotionProps<'svg'> {}
+interface AnimatedWalletIconProps extends React.SVGProps<SVGSVGElement> {}
 
 const walletVariants = {
   hover: { y: [-2, 0], transition: { duration: 0.4 } },
@@ -26,7 +25,6 @@ export function AnimatedWalletIcon({
       strokeLinecap="round"
       strokeLinejoin="round"
       variants={walletVariants}
-      whileHover="hover"
       className={cn('mr-2 h-4 w-4', className)}
       {...props}
     >

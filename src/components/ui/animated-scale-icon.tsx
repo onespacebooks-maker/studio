@@ -1,10 +1,9 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import type { HTMLMotionProps } from 'framer-motion';
 import { motion } from 'framer-motion';
 
-interface AnimatedScaleIconProps extends HTMLMotionProps<'svg'> {}
+interface AnimatedScaleIconProps extends React.SVGProps<SVGSVGElement> {}
 
 const scaleVariants = {
   hover: { y: [-2, 2, -2, 0], transition: { duration: 0.5 } },
@@ -26,7 +25,6 @@ export function AnimatedScaleIcon({
       strokeLinecap="round"
       strokeLinejoin="round"
       variants={scaleVariants}
-      whileHover="hover"
       className={cn('mr-2 h-4 w-4', className)}
       {...props}
     >

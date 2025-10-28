@@ -11,10 +11,11 @@ import { AnimatedVideoIcon } from './ui/animated-video-icon';
 import { AnimatedWalletIcon } from './ui/animated-wallet-icon';
 import { AnimatedDashboardIcon } from './ui/animated-dashboard-icon';
 import { AnimatedUsersIcon } from './ui/animated-users-icon';
+import { Lightbulb } from 'lucide-react';
 
 const navItems = [
   { href: '/dashboard', icon: AnimatedDashboardIcon, label: 'Dashboard' },
-  { href: '/symptom-guide', icon: AnimatedBotIcon, label: 'AI Symptom Guide' },
+  { href: '/symptom-guide', icon: Lightbulb, label: 'AI Symptom Guide' },
   { href: '/appointments', icon: AnimatedCalendarDaysIcon, label: 'Appointments' },
   { href: '/compare-prices', icon: AnimatedScaleIcon, label: 'Compare Prices' },
   { href: '/teleconsultation', icon: AnimatedVideoIcon, label: 'Teleconsultation' },
@@ -40,7 +41,7 @@ export function AppSidebar() {
             <Button
               key={item.href}
               variant={pathname === item.href ? 'secondary' : 'ghost'}
-              className="w-full justify-start"
+              className="w-full justify-start group"
               asChild
             >
               <Link href={item.href}>
@@ -51,7 +52,7 @@ export function AppSidebar() {
         ))}
       </nav>
       <div className="p-4 border-t">
-        <Button variant="outline" className="w-full justify-start">
+        <Button variant="outline" className="w-full justify-start group">
             <AnimatedUsersIcon />
           Family Members
         </Button>

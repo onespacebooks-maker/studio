@@ -1,10 +1,9 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import type { HTMLMotionProps } from 'framer-motion';
 import { motion } from 'framer-motion';
 
-interface AnimatedBotIconProps extends HTMLMotionProps<'svg'> {}
+interface AnimatedBotIconProps extends React.SVGProps<SVGSVGElement> {}
 
 const botVariants = {
   hover: { rotate: [0, 15, -15, 0], transition: { duration: 0.5 } },
@@ -16,14 +15,13 @@ export function AnimatedBotIcon({ className, ...props }: AnimatedBotIconProps) {
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
-      viewBox="0 0 24"
+      viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
       variants={botVariants}
-      whileHover="hover"
       className={cn("mr-2 h-4 w-4", className)}
       {...props}
     >

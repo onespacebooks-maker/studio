@@ -1,10 +1,9 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import type { HTMLMotionProps } from 'framer-motion';
 import { motion } from 'framer-motion';
 
-interface AnimatedVideoIconProps extends HTMLMotionProps<'svg'> {}
+interface AnimatedVideoIconProps extends React.SVGProps<SVGSVGElement> {}
 
 const videoVariants = {
   hover: { scale: [1, 1.1, 1], transition: { duration: 0.5 } },
@@ -26,7 +25,6 @@ export function AnimatedVideoIcon({
       strokeLinecap="round"
       strokeLinejoin="round"
       variants={videoVariants}
-      whileHover="hover"
       className={cn('mr-2 h-4 w-4', className)}
       {...props}
     >

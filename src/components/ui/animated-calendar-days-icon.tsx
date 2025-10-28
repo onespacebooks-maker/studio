@@ -1,10 +1,9 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import type { HTMLMotionProps } from 'framer-motion';
 import { motion } from 'framer-motion';
 
-interface AnimatedCalendarDaysIconProps extends HTMLMotionProps<'svg'> {}
+interface AnimatedCalendarDaysIconProps extends React.SVGProps<SVGSVGElement> {}
 
 const calendarVariants = {
   hover: { rotate: [0, 5, -5, 0], transition: { duration: 0.5 } },
@@ -26,7 +25,6 @@ export function AnimatedCalendarDaysIcon({
       strokeLinecap="round"
       strokeLinejoin="round"
       variants={calendarVariants}
-      whileHover="hover"
       className={cn('mr-2 h-4 w-4', className)}
       {...props}
     >

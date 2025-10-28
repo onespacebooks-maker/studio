@@ -1,10 +1,9 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import type { HTMLMotionProps } from 'framer-motion';
 import { motion } from 'framer-motion';
 
-interface AnimatedDashboardIconProps extends HTMLMotionProps<'svg'> {}
+interface AnimatedDashboardIconProps extends React.SVGProps<SVGSVGElement> {}
 
 const iconVariants = {
   hover: {
@@ -29,7 +28,6 @@ export function AnimatedDashboardIcon({
       strokeLinecap="round"
       strokeLinejoin="round"
       variants={iconVariants}
-      whileHover="hover"
       className={cn('mr-2 h-4 w-4', className)}
       {...props}
     >
