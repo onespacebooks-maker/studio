@@ -17,7 +17,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { AnimatedMenuIcon } from '@/components/ui/animated-menu-icon';
+import { AnimatedMenuIcon } from './ui/animated-menu-icon';
 import { AnimatedDashboardIcon } from './ui/animated-dashboard-icon';
 import { HeartIcon } from './ui/HeartIcon';
 import { AnimatedBotIcon } from './ui/animated-bot-icon';
