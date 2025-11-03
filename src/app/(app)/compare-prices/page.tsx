@@ -18,45 +18,43 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { AnimatedIndianRupeeIcon } from '@/components/ui/animated-indian-rupee-icon';
 import { AnimatedPercentIcon } from '@/components/ui/animated-percent-icon';
-
 
 const priceData = [
   {
-    medicine: 'Paracetamol (500mg, 15 tablets)',
-    pharmacyA: 20,
-    pharmacyB: 22,
-    pharmacyC: 18,
-    insurancePrice: 15,
+    treatment: 'Knee Replacement',
+    hospitalA: 250000,
+    hospitalB: 275000,
+    hospitalC: 260000,
+    insurancePrice: 220000,
   },
   {
-    medicine: 'Atorvastatin (10mg, 30 tablets)',
-    pharmacyA: 150,
-    pharmacyB: 145,
-    pharmacyC: 155,
-    insurancePrice: 120,
+    treatment: 'Cataract Surgery (per eye)',
+    hospitalA: 40000,
+    hospitalB: 45000,
+    hospitalC: 38000,
+    insurancePrice: 32000,
   },
   {
-    medicine: 'Metformin (500mg, 30 tablets)',
-    pharmacyA: 45,
-    pharmacyB: 50,
-    pharmacyC: 48,
-    insurancePrice: 35,
+    treatment: 'Angioplasty (with one stent)',
+    hospitalA: 350000,
+    hospitalB: 370000,
+    hospitalC: 360000,
+    insurancePrice: 300000,
   },
   {
-    medicine: 'Amlodipine (5mg, 30 tablets)',
-    pharmacyA: 60,
-    pharmacyB: 55,
-    pharmacyC: 62,
-    insurancePrice: 45,
+    treatment: 'Maternity Package (Normal Delivery)',
+    hospitalA: 75000,
+    hospitalB: 85000,
+    hospitalC: 80000,
+    insurancePrice: 65000,
   },
   {
-    medicine: 'Cetirizine (10mg, 10 tablets)',
-    pharmacyA: 25,
-    pharmacyB: 28,
-    pharmacyC: 24,
-    insurancePrice: 20,
+    treatment: 'Chemotherapy (per cycle)',
+    hospitalA: 60000,
+    hospitalB: 65000,
+    hospitalC: 58000,
+    insurancePrice: 50000,
   },
 ];
 
@@ -65,30 +63,31 @@ const formatCurrency = (amount: number) => {
     style: 'currency',
     currency: 'INR',
     minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
   }).format(amount);
 };
 
 export default function ComparePricesPage() {
   return (
     <>
-      <Header title="Compare Medicine Prices" />
+      <Header title="Compare Treatment Prices" />
       <main className="flex-1 space-y-8 p-4 md:p-8">
         <Card>
           <CardHeader>
-            <CardTitle>Medicine Price Comparison</CardTitle>
+            <CardTitle>Treatment Cost Comparison</CardTitle>
             <CardDescription>
-              Make informed decisions by comparing medicine prices from popular online pharmacies.
-              Prices shown are estimates.
+              Make informed decisions by comparing procedure costs from top hospitals. 
+              Prices shown are estimates for standard packages.
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-[300px]">Medicine</TableHead>
-                  <TableHead>Apollo Pharmacy</TableHead>
-                  <TableHead>Netmeds</TableHead>
-                  <TableHead>1mg</TableHead>
+                  <TableHead className="w-[300px]">Treatment / Procedure</TableHead>
+                  <TableHead>Apollo Hospital</TableHead>
+                  <TableHead>Fortis Hospital</TableHead>
+                  <TableHead>Max Healthcare</TableHead>
                   <TableHead className="text-right text-primary font-semibold">
                     Your Price (with Insurance)
                   </TableHead>
@@ -96,11 +95,11 @@ export default function ComparePricesPage() {
               </TableHeader>
               <TableBody>
                 {priceData.map((row) => (
-                  <TableRow key={row.medicine}>
-                    <TableCell className="font-medium">{row.medicine}</TableCell>
-                    <TableCell>{formatCurrency(row.pharmacyA)}</TableCell>
-                    <TableCell>{formatCurrency(row.pharmacyB)}</TableCell>
-                    <TableCell>{formatCurrency(row.pharmacyC)}</TableCell>
+                  <TableRow key={row.treatment}>
+                    <TableCell className="font-medium">{row.treatment}</TableCell>
+                    <TableCell>{formatCurrency(row.hospitalA)}</TableCell>
+                    <TableCell>{formatCurrency(row.hospitalB)}</TableCell>
+                    <TableCell>{formatCurrency(row.hospitalC)}</TableCell>
                     <TableCell className="text-right">
                       <Badge
                         variant="default"
