@@ -47,6 +47,7 @@ const formatCurrency = (amount: number) => {
   return new Intl.NumberFormat('en-IN', {
     style: 'currency',
     currency: 'INR',
+    currencyDisplay: 'symbol',
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   }).format(amount);
@@ -61,14 +62,17 @@ export default function ComparePricesPage() {
           <CardHeader>
             <CardTitle>Your Covered Treatment Prices</CardTitle>
             <CardDescription>
-              Review the estimated costs for various procedures with your insurance plan.
+              Review the estimated costs for various procedures with your
+              insurance plan.
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-[300px]">Treatment / Procedure</TableHead>
+                  <TableHead className="w-[300px]">
+                    Treatment / Procedure
+                  </TableHead>
                   <TableHead className="text-right text-primary font-semibold">
                     Your Price (with Insurance)
                   </TableHead>
@@ -77,7 +81,9 @@ export default function ComparePricesPage() {
               <TableBody>
                 {priceData.map((row) => (
                   <TableRow key={row.treatment}>
-                    <TableCell className="font-medium">{row.treatment}</TableCell>
+                    <TableCell className="font-medium">
+                      {row.treatment}
+                    </TableCell>
                     <TableCell className="text-right">
                       <Badge
                         variant="default"
@@ -93,10 +99,14 @@ export default function ComparePricesPage() {
           </CardContent>
           <CardFooter>
             <div className="text-sm text-muted-foreground flex items-center gap-2">
-                <AnimatedPercentIcon className="w-4 h-4" />
-                <p>
-                    <span className="font-semibold text-foreground">Save More:</span> Use your Health Wallet balance or flexible EMIs at checkout for extra discounts.
-                </p>
+              <AnimatedPercentIcon className="w-4 h-4" />
+              <p>
+                <span className="font-semibold text-foreground">
+                  Save More:
+                </span>{' '}
+                Use your Health Wallet balance or flexible EMIs at checkout for
+                extra discounts.
+              </p>
             </div>
           </CardFooter>
         </Card>
