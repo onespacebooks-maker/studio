@@ -11,6 +11,7 @@ import { AnimatedDashboardIcon } from './ui/animated-dashboard-icon';
 import { AnimatedUsersIcon } from './ui/animated-users-icon';
 import { AnimatedLightbulbIcon } from './ui/animated-lightbulb-icon';
 import { AnimatedPillIcon } from './ui/animated-pill-icon';
+import { Stethoscope } from 'lucide-react';
 
 const navItems = [
   { href: '/dashboard', icon: AnimatedDashboardIcon, label: 'Dashboard' },
@@ -24,7 +25,12 @@ const navItems = [
     icon: AnimatedCalendarDaysIcon,
     label: 'Appointments',
   },
-  { href: '/compare-prices', icon: AnimatedPillIcon, label: 'Medicine Prices' },
+  { href: '/medicines', icon: AnimatedPillIcon, label: 'Medicines' },
+  {
+    href: '/compare-prices',
+    icon: () => <Stethoscope className="mr-2 h-4 w-4" />,
+    label: 'Treatment Prices',
+  },
   {
     href: '/teleconsultation',
     icon: AnimatedVideoIcon,

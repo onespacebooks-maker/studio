@@ -1,0 +1,144 @@
+'use client';
+
+import { useState } from 'react';
+import { Header } from '@/components/header';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { SearchIcon, PlusIcon } from 'lucide-react';
+
+const allMedicines = [
+  {
+    name: 'Paracetamol 500mg',
+    manufacturer: 'Cipla Ltd.',
+    packSize: '15 tablets',
+    price: 25.5,
+  },
+  {
+    name: 'Atorvastatin 10mg',
+    manufacturer: 'Sun Pharma',
+    packSize: '10 tablets',
+    price: 90.0,
+  },
+  {
+    name: 'Metformin 500mg',
+    manufacturer: 'Mankind Pharma',
+    packSize: '10 tablets',
+    price: 30.0,
+  },
+  {
+    name: 'Amlodipine 5mg',
+    manufacturer: 'Dr. Reddy\'s Labs',
+    packSize: '30 tablets',
+    price: 65.0,
+  },
+  {
+    name: 'Omeprazole 20mg',
+    manufacturer: 'Zydus Cadila',
+    packSize: '15 capsules',
+    price: 55.0,
+  },
+  {
+    name: 'Levocetirizine 5mg',
+    manufacturer: 'Glenmark Pharma',
+    packSize: '10 tablets',
+    price: 45.0,
+  },
+  {
+    name: 'Telmisartan 40mg',
+    manufacturer: 'Lupin Ltd.',
+    packSize: '15 tablets',
+    price: 150.0,
+  },
+  {
+    name: 'Azithromycin 500mg',
+    manufacturer: 'Alembic Pharma',
+    packSize: '3 tablets',
+    price: 119.5,
+  },
+];
+
+const formatCurrency = (amount: number) => {
+  return `₹${amount.toLocaleString('en-IN', {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2,
+  })}`;
+};
+
+export default function MedicinesPage() {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const filteredMedicines = allMedicines.filter((med) =>
+    med.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  return (
+    <>
+      <Header title="Medicines" />
+      <main className="flex-1 space-y-8 p-4 md:p-8">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div>
+            <h2 className="text-3xl font-bold font-headline tracking-tight">
+              Find Your Medicine
+            </h2>
+            <p className="text-muted-foreground">
+              Search for available medicines from the pharmacy.
+            </p>
+          </div>
+          <div className="relative w-full md:w-auto">
+            <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+            <Input
+              type="search"
+              placeholder="Search for medicines..."
+              className="pl-8 sm:w-[300px]"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {filteredMedicines.map((med) => (
+            <Card key={med.name} className="flex flex-col">
+              <CardHeader>
+                <CardTitle>{med.name}</CardTitle>
+                <CardDescription>{med.manufacturer}</CardDescription>
+              </CardHeader>
+              <CardContent className="flex-grow">
+                <p className="text-sm text-muted-foreground">
+                  Pack Size: {med.packSize}
+                </p>
+                <p className="text-2xl font-bold mt-2">
+                  {formatCurrency(med.price)}
+                </p>
+              </CardContent>
+              <CardFooter>
+                <Button className="w-full">
+                  <PlusIcon className="mr-2 h-4 w-4" />
+                  Add to Cart
+                </Button>
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
+        {filteredMedicines.length === 0 && (
+            <Card className="flex flex-col items-center justify-center p-8 text-center">
+                <CardHeader>
+                    <CardTitle>No Medicines Found</CardTitle>
+                    <CardDescription>
+                        Your search for "{searchTerm}" did not return any results. Please try a different search term.
+                    </CardDescription>
+                </CardHeader>
+            </Card>
+        )}
+      </main>
+    </>
+  );
+}

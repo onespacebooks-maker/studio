@@ -21,6 +21,13 @@ import { motion } from 'framer-motion';
 import { IndianRupeeIcon } from '@/components/ui/IndianRupeeIcon';
 import { AnimatedPillIcon } from '@/components/ui/animated-pill-icon';
 
+const formatCurrency = (amount: number) => {
+  return amount.toLocaleString('en-IN', {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2,
+  });
+};
+
 const quickAccess = [
   {
     title: 'AI Symptom Guide',
@@ -35,8 +42,8 @@ const quickAccess = [
     href: '/appointments',
   },
   {
-    title: 'Compare Medicine Prices',
-    description: 'Check costs for medicines.',
+    title: 'Compare Treatment Prices',
+    description: 'Check costs for treatments.',
     icon: AnimatedPillIcon,
     href: '/compare-prices',
   },
@@ -81,7 +88,7 @@ export default function DashboardPage() {
             <CardContent>
               <div className="text-2xl font-bold flex items-center">
                 <IndianRupeeIcon size={24} className="mr-1" />
-                5,231.89
+                {formatCurrency(5231.89)}
               </div>
               <p className="text-xs text-muted-foreground">
                 +20.1% from last month
