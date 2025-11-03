@@ -72,7 +72,9 @@ export default function DashboardPage() {
               <CardTitle className="text-sm font-medium">
                 Health Wallet
               </CardTitle>
-              <AnimatedWalletIcon />
+              <motion.div initial="initial" whileHover="hover">
+                <AnimatedWalletIcon />
+              </motion.div>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
@@ -88,7 +90,9 @@ export default function DashboardPage() {
               <CardTitle className="text-sm font-medium">
                 Upcoming Appointments
               </CardTitle>
-              <AnimatedCalendarDaysIcon />
+              <motion.div initial="initial" whileHover="hover">
+                <AnimatedCalendarDaysIcon />
+              </motion.div>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">2</div>
@@ -102,7 +106,9 @@ export default function DashboardPage() {
               <CardTitle className="text-sm font-medium">
                 Family Members
               </CardTitle>
-              <AnimatedUsersIcon />
+              <motion.div initial="initial" whileHover="hover">
+                <AnimatedUsersIcon />
+              </motion.div>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">4</div>
@@ -116,7 +122,9 @@ export default function DashboardPage() {
                 <CardTitle className="text-sm font-medium">
                     Need Help?
                 </CardTitle>
-                <AnimatedBotIcon className="text-primary-foreground/70" />
+                <motion.div initial="initial" whileHover="hover" className="text-primary-foreground/70">
+                    <AnimatedBotIcon />
+                </motion.div>
             </CardHeader>
             <CardContent>
                 <p className="text-sm">Try our AI Symptom Guide to find the right specialist.</p>
@@ -163,9 +171,11 @@ export default function DashboardPage() {
           <div className="space-y-8">
             {quickAccess.map((item) => (
               <Link href={item.href} key={item.title}>
-                <Card className="hover:bg-muted transition-colors">
+                <Card className="hover:bg-muted transition-colors group">
                   <CardHeader className="flex flex-row items-center gap-4">
-                    <item.icon className="h-8 w-8 text-primary" />
+                    <motion.div initial="initial" whileHover="hover" className="h-8 w-8 text-primary">
+                      <item.icon className="w-full h-full" />
+                    </motion.div>
                     <div>
                       <CardTitle className="font-headline">
                         {item.title}
