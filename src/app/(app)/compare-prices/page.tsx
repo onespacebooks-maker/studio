@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { AnimatedPercentIcon } from '@/components/ui/animated-percent-icon';
+import { IndianRupeeIcon } from '@/components/ui/IndianRupeeIcon';
 
 const priceData = [
   {
@@ -44,10 +45,10 @@ const priceData = [
 ];
 
 const formatCurrency = (amount: number) => {
-  return `₹${amount.toLocaleString('en-IN', {
+  return amount.toLocaleString('en-IN', {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
-  })}`;
+  });
 };
 
 export default function ComparePricesPage() {
@@ -84,8 +85,9 @@ export default function ComparePricesPage() {
                     <TableCell className="text-right">
                       <Badge
                         variant="default"
-                        className="bg-green-600 hover:bg-green-700"
+                        className="bg-green-600 hover:bg-green-700 text-base"
                       >
+                        <IndianRupeeIcon size={16} className="mr-1" />
                         {formatCurrency(row.insurancePrice)}
                       </Badge>
                     </TableCell>

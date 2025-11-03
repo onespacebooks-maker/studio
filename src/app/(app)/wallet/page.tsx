@@ -38,6 +38,7 @@ const chartConfig = {
   savings: {
     label: 'Savings',
     color: 'hsl(var(--primary))',
+    icon: () => <IndianRupeeIcon size={12} className="mr-1" />,
   },
 } satisfies ChartConfig;
 
@@ -74,7 +75,7 @@ const formatCurrency = (amount: number) => {
     maximumFractionDigits: 2,
   });
   const sign = amount < 0 ? '-' : '';
-  return `${sign}₹${absAmount}`;
+  return `${sign}${absAmount}`;
 };
 
 export default function WalletPage() {
@@ -91,7 +92,8 @@ export default function WalletPage() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="text-5xl font-bold">
+              <div className="text-5xl font-bold flex items-center">
+                <IndianRupeeIcon size={44} className="mr-2" />
                 {formatCurrency(5231.89)}
               </div>
             </CardContent>
@@ -145,12 +147,13 @@ export default function WalletPage() {
                     <TableCell className="font-medium">{t.description}</TableCell>
                     <TableCell className="text-muted-foreground">{t.date}</TableCell>
                     <TableCell
-                      className={`text-right font-semibold ${
+                      className={`text-right font-semibold flex justify-end items-center ${
                         t.type === 'credit'
                           ? 'text-green-600'
                           : 'text-destructive'
                       }`}
                     >
+                      <IndianRupeeIcon size={16} className="mr-1" />
                       {formatCurrency(t.amount)}
                     </TableCell>
                   </TableRow>

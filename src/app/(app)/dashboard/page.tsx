@@ -21,6 +21,7 @@ import { AnimatedVideoIcon } from '@/components/ui/animated-video-icon';
 import { AnimatedWalletIcon } from '@/components/ui/animated-wallet-icon';
 import { AnimatedUsersIcon } from '@/components/ui/animated-users-icon';
 import { motion } from 'framer-motion';
+import { IndianRupeeIcon } from '@/components/ui/IndianRupeeIcon';
 
 const quickAccess = [
   {
@@ -55,10 +56,10 @@ const appointments = [
 ];
 
 const formatCurrency = (amount: number) => {
-    return `₹${amount.toLocaleString('en-IN', {
+    return amount.toLocaleString('en-IN', {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
-    })}`;
+    });
   };
 
 export default function DashboardPage() {
@@ -77,7 +78,8 @@ export default function DashboardPage() {
               </motion.div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">
+              <div className="text-2xl font-bold flex items-center">
+                <IndianRupeeIcon size={24} className="mr-1" />
                 {formatCurrency(5231.89)}
               </div>
               <p className="text-xs text-muted-foreground">
