@@ -45,7 +45,7 @@ export function AppSidebar() {
               asChild
             >
               <Link href={item.href}>
-                  <item.icon initial="initial" whileHover="hover" />
+                  <item.icon />
                 {item.label}
               </Link>
             </Button>
@@ -53,7 +53,7 @@ export function AppSidebar() {
       </nav>
       <div className="p-4 border-t">
         <Button variant="outline" className="w-full justify-start group">
-            <AnimatedUsersIcon initial="initial" whileHover="hover" />
+            <AnimatedUsersIcon />
           Family Members
         </Button>
       </div>
