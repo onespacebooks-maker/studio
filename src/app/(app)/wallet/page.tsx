@@ -7,6 +7,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  CardFooter,
 } from '@/components/ui/card';
 import {
   Table,
@@ -24,6 +25,9 @@ import {
 } from '@/components/ui/chart';
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
 import { IndianRupeeIcon } from '@/components/ui/IndianRupeeIcon';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 const chartData = [
   { month: 'January', savings: 186 },
@@ -70,12 +74,10 @@ const transactions = [
 ];
 
 const formatCurrency = (amount: number) => {
-  const absAmount = Math.abs(amount).toLocaleString('en-IN', {
+  return `${Math.abs(amount).toLocaleString('en-IN', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  });
-  const sign = amount < 0 ? '-' : '';
-  return `${sign}${absAmount}`;
+  })}`;
 };
 
 export default function WalletPage() {
@@ -84,20 +86,48 @@ export default function WalletPage() {
       <Header title="Health Wallet" />
       <main className="flex-1 space-y-8 p-4 md:p-8">
         <div className="grid gap-8 md:grid-cols-3">
-          <Card className="md:col-span-1">
-            <CardHeader>
-              <CardTitle>Current Balance</CardTitle>
-              <CardDescription>
-                Your available funds for healthcare expenses.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="text-5xl font-bold flex items-center">
-                <IndianRupeeIcon size={44} className="mr-2" />
-                {formatCurrency(5231.89)}
-              </div>
-            </CardContent>
-          </Card>
+          <div className="md:col-span-1 space-y-8">
+            <Card>
+              <CardHeader>
+                <CardTitle>Current Balance</CardTitle>
+                <CardDescription>
+                  Your available funds for healthcare expenses.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-5xl font-bold flex items-center">
+                  <IndianRupeeIcon size={44} className="mr-2" />
+                  {formatCurrency(5231.89)}
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Add Funds to Wallet</CardTitle>
+                <CardDescription>
+                  Top up your wallet using UPI.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="amount">Amount</Label>
+                  <div className="relative">
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">
+                      ₹
+                    </span>
+                    <Input id="amount" type="number" placeholder="0.00" className="pl-7" />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="upi-id">Your UPI ID</Label>
+                  <Input id="upi-id" placeholder="yourname@bank" />
+                </div>
+              </CardContent>
+              <CardFooter>
+                 <Button className="w-full">Add Funds via UPI</Button>
+              </CardFooter>
+            </Card>
+          </div>
           <Card className="md:col-span-2">
             <CardHeader>
               <CardTitle>Monthly Savings</CardTitle>
@@ -106,7 +136,7 @@ export default function WalletPage() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <ChartContainer config={chartConfig} className="h-48 w-full">
+              <ChartContainer config={chartConfig} className="h-64 w-full">
                 <BarChart accessibilityLayer data={chartData}>
                   <CartesianGrid vertical={false} />
                   <XAxis
@@ -147,13 +177,14 @@ export default function WalletPage() {
                     <TableCell className="font-medium">{t.description}</TableCell>
                     <TableCell className="text-muted-foreground">{t.date}</TableCell>
                     <TableCell
-                      className={`text-right font-semibold flex justify-end items-center ${
+                      className={`text-right font-semibold flex justify-end items-center gap-1.5 ${
                         t.type === 'credit'
                           ? 'text-green-600'
                           : 'text-destructive'
                       }`}
                     >
-                      <IndianRupeeIcon size={16} className="mr-1" />
+                      {t.amount < 0 ? '-' : ''}
+                      <IndianRupeeIcon size={16} />
                       {formatCurrency(t.amount)}
                     </TableCell>
                   </TableRow>
