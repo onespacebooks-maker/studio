@@ -55,13 +55,10 @@ const appointments = [
 ];
 
 const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: 'INR',
-      currencyDisplay: 'symbol',
+    return `₹${amount.toLocaleString('en-IN', {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
-    }).format(amount);
+    })}`;
   };
 
 export default function DashboardPage() {

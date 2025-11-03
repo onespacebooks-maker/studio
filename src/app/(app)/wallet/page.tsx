@@ -69,12 +69,12 @@ const transactions = [
 ];
 
 const formatCurrency = (amount: number) => {
-  const formattedAmount = new Intl.NumberFormat('en-IN', {
+  const absAmount = Math.abs(amount).toLocaleString('en-IN', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  }).format(Math.abs(amount));
+  });
   const sign = amount < 0 ? '-' : '';
-  return `${sign}₹${formattedAmount}`;
+  return `${sign}₹${absAmount}`;
 };
 
 export default function WalletPage() {
