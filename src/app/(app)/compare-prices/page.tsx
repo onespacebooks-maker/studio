@@ -44,10 +44,11 @@ const priceData = [
 ];
 
 const formatCurrency = (amount: number) => {
-  return `₹${new Intl.NumberFormat('en-IN', {
+  const formattedAmount = new Intl.NumberFormat('en-IN', {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
-  }).format(amount)}`;
+  }).format(amount);
+  return `₹${formattedAmount}`;
 };
 
 export default function ComparePricesPage() {
