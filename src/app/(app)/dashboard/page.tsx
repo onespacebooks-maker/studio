@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import {
   ArrowRight,
-  IndianRupee,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -55,6 +54,13 @@ const appointments = [
     { doctor: 'Dr. Vikram Singh', speciality: 'Dermatologist', time: 'June 28, 2024, 3:00 PM', hospital: 'Fortis Clinic' },
 ];
 
+const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+    }).format(amount);
+  };
+
 export default function DashboardPage() {
   return (
     <>
@@ -69,11 +75,8 @@ export default function DashboardPage() {
               <AnimatedWalletIcon />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold flex items-center">
-                <motion.div whileHover={{ scale: 1.2, rotate: 10 }}>
-                  <IndianRupee className="h-6 w-6" />
-                </motion.div>
-                5,231.89
+              <div className="text-2xl font-bold">
+                {formatCurrency(5231.89)}
               </div>
               <p className="text-xs text-muted-foreground">
                 +20.1% from last month

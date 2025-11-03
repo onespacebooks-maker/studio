@@ -23,37 +23,22 @@ import { AnimatedPercentIcon } from '@/components/ui/animated-percent-icon';
 const priceData = [
   {
     treatment: 'Knee Replacement',
-    hospitalA: 250000,
-    hospitalB: 275000,
-    hospitalC: 260000,
     insurancePrice: 220000,
   },
   {
     treatment: 'Cataract Surgery (per eye)',
-    hospitalA: 40000,
-    hospitalB: 45000,
-    hospitalC: 38000,
     insurancePrice: 32000,
   },
   {
     treatment: 'Angioplasty (with one stent)',
-    hospitalA: 350000,
-    hospitalB: 370000,
-    hospitalC: 360000,
     insurancePrice: 300000,
   },
   {
     treatment: 'Maternity Package (Normal Delivery)',
-    hospitalA: 75000,
-    hospitalB: 85000,
-    hospitalC: 80000,
     insurancePrice: 65000,
   },
   {
     treatment: 'Chemotherapy (per cycle)',
-    hospitalA: 60000,
-    hospitalB: 65000,
-    hospitalC: 58000,
     insurancePrice: 50000,
   },
 ];

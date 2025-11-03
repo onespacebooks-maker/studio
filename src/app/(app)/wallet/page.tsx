@@ -68,6 +68,13 @@ const transactions = [
   },
 ];
 
+const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+    }).format(amount);
+  };
+
 export default function WalletPage() {
   return (
     <>
@@ -82,9 +89,8 @@ export default function WalletPage() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="flex items-baseline gap-2">
-                <span className="text-5xl font-bold">₹5,231</span>
-                <span className="text-muted-foreground text-3xl">.89</span>
+              <div className="text-5xl font-bold">
+                {formatCurrency(5231.89)}
               </div>
             </CardContent>
           </Card>
@@ -143,8 +149,7 @@ export default function WalletPage() {
                           : 'text-destructive'
                       }`}
                     >
-                      {t.type === 'credit' ? '+' : ''}₹
-                      {t.amount.toLocaleString('en-IN')}
+                      {formatCurrency(t.amount)}
                     </TableCell>
                   </TableRow>
                 ))}
