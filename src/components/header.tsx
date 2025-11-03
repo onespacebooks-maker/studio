@@ -22,17 +22,25 @@ import { AnimatedDashboardIcon } from './ui/animated-dashboard-icon';
 import { HeartIcon } from './ui/HeartIcon';
 import { AnimatedBotIcon } from './ui/animated-bot-icon';
 import { AnimatedCalendarDaysIcon } from './ui/animated-calendar-days-icon';
-import { AnimatedScaleIcon } from './ui/animated-scale-icon';
 import { AnimatedVideoIcon } from './ui/animated-video-icon';
 import { AnimatedWalletIcon } from './ui/animated-wallet-icon';
 import { motion } from 'framer-motion';
+import { AnimatedPillIcon } from './ui/animated-pill-icon';
 
 const navItems = [
   { href: '/dashboard', icon: AnimatedDashboardIcon, label: 'Dashboard' },
   { href: '/symptom-guide', icon: AnimatedBotIcon, label: 'AI Symptom Guide' },
-  { href: '/appointments', icon: AnimatedCalendarDaysIcon, label: 'Appointments' },
-  { href: '/compare-prices', icon: AnimatedScaleIcon, label: 'Compare Prices' },
-  { href: '/teleconsultation', icon: AnimatedVideoIcon, label: 'Teleconsultation' },
+  {
+    href: '/appointments',
+    icon: AnimatedCalendarDaysIcon,
+    label: 'Appointments',
+  },
+  { href: '/compare-prices', icon: AnimatedPillIcon, label: 'Medicine Prices' },
+  {
+    href: '/teleconsultation',
+    icon: AnimatedVideoIcon,
+    label: 'Teleconsultation',
+  },
   { href: '/wallet', icon: AnimatedWalletIcon, label: 'Health Wallet' },
 ];
 

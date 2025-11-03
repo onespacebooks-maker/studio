@@ -7,13 +7,13 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { AnimatedCalendarDaysIcon } from '@/components/ui/animated-calendar-days-icon';
-import { AnimatedScaleIcon } from '@/components/ui/animated-scale-icon';
 import { AnimatedBotIcon } from '@/components/ui/animated-bot-icon';
 import { AnimatedVideoIcon } from '@/components/ui/animated-video-icon';
 import { AnimatedWalletIcon } from '@/components/ui/animated-wallet-icon';
 import { AnimatedUsersIcon } from '@/components/ui/animated-users-icon';
 import { motion } from 'framer-motion';
 import { HeartIcon } from '@/components/ui/HeartIcon';
+import { AnimatedPillIcon } from '@/components/ui/animated-pill-icon';
 
 const features = [
   {
@@ -23,10 +23,9 @@ const features = [
       'Book appointments with top doctors and hospitals in real-time.',
   },
   {
-    icon: <AnimatedScaleIcon className="h-8 w-8 text-primary" />,
-    title: 'Service Price Comparison',
-    description:
-      'Compare treatment costs and insurance details across hospitals.',
+    icon: <AnimatedPillIcon className="h-8 w-8 text-primary" />,
+    title: 'Medicine Price Comparison',
+    description: 'Compare medicine costs across different pharmacies.',
   },
   {
     icon: <AnimatedBotIcon className="h-8 w-8 text-primary" />,
