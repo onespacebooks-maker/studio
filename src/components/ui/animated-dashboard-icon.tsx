@@ -6,6 +6,9 @@ import { motion } from 'framer-motion';
 interface AnimatedDashboardIconProps extends React.SVGProps<SVGSVGElement> {}
 
 const iconVariants = {
+  initial: {
+    scale: 1,
+  },
   hover: {
     scale: 1.1,
     transition: { type: 'spring', stiffness: 300 },
