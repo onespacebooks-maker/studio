@@ -24,39 +24,39 @@ import { AnimatedPercentIcon } from '@/components/ui/animated-percent-icon';
 
 const priceData = [
   {
-    service: 'Full Body Checkup',
-    hospitalA: 4500,
-    hospitalB: 5000,
-    hospitalC: 4200,
-    insurancePrice: 3800,
+    medicine: 'Paracetamol (500mg, 15 tablets)',
+    pharmacyA: 20,
+    pharmacyB: 22,
+    pharmacyC: 18,
+    insurancePrice: 15,
   },
   {
-    service: 'Dental Scaling & Polishing',
-    hospitalA: 2000,
-    hospitalB: 1800,
-    hospitalC: 2200,
-    insurancePrice: 1500,
+    medicine: 'Atorvastatin (10mg, 30 tablets)',
+    pharmacyA: 150,
+    pharmacyB: 145,
+    pharmacyC: 155,
+    insurancePrice: 120,
   },
   {
-    service: 'Cataract Surgery (per eye)',
-    hospitalA: 35000,
-    hospitalB: 40000,
-    hospitalC: 32000,
-    insurancePrice: 28000,
+    medicine: 'Metformin (500mg, 30 tablets)',
+    pharmacyA: 45,
+    pharmacyB: 50,
+    pharmacyC: 48,
+    insurancePrice: 35,
   },
   {
-    service: 'Knee Replacement Surgery',
-    hospitalA: 250000,
-    hospitalB: 220000,
-    hospitalC: 275000,
-    insurancePrice: 190000,
+    medicine: 'Amlodipine (5mg, 30 tablets)',
+    pharmacyA: 60,
+    pharmacyB: 55,
+    pharmacyC: 62,
+    insurancePrice: 45,
   },
   {
-    service: 'MRI Scan (Brain)',
-    hospitalA: 8000,
-    hospitalB: 7500,
-    hospitalC: 8200,
-    insurancePrice: 6000,
+    medicine: 'Cetirizine (10mg, 10 tablets)',
+    pharmacyA: 25,
+    pharmacyB: 28,
+    pharmacyC: 24,
+    insurancePrice: 20,
   },
 ];
 
@@ -71,13 +71,13 @@ const formatCurrency = (amount: number) => {
 export default function ComparePricesPage() {
   return (
     <>
-      <Header title="Compare Service Prices" />
+      <Header title="Compare Medicine Prices" />
       <main className="flex-1 space-y-8 p-4 md:p-8">
         <Card>
           <CardHeader>
-            <CardTitle>Treatment Cost Comparison</CardTitle>
+            <CardTitle>Medicine Price Comparison</CardTitle>
             <CardDescription>
-              Make informed decisions by comparing prices from top hospitals.
+              Make informed decisions by comparing medicine prices from popular online pharmacies.
               Prices shown are estimates.
             </CardDescription>
           </CardHeader>
@@ -85,10 +85,10 @@ export default function ComparePricesPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-[300px]">Service</TableHead>
-                  <TableHead>Apollo Hospital</TableHead>
-                  <TableHead>Fortis Hospital</TableHead>
-                  <TableHead>Max Healthcare</TableHead>
+                  <TableHead className="w-[300px]">Medicine</TableHead>
+                  <TableHead>Apollo Pharmacy</TableHead>
+                  <TableHead>Netmeds</TableHead>
+                  <TableHead>1mg</TableHead>
                   <TableHead className="text-right text-primary font-semibold">
                     Your Price (with Insurance)
                   </TableHead>
@@ -96,11 +96,11 @@ export default function ComparePricesPage() {
               </TableHeader>
               <TableBody>
                 {priceData.map((row) => (
-                  <TableRow key={row.service}>
-                    <TableCell className="font-medium">{row.service}</TableCell>
-                    <TableCell>{formatCurrency(row.hospitalA)}</TableCell>
-                    <TableCell>{formatCurrency(row.hospitalB)}</TableCell>
-                    <TableCell>{formatCurrency(row.hospitalC)}</TableCell>
+                  <TableRow key={row.medicine}>
+                    <TableCell className="font-medium">{row.medicine}</TableCell>
+                    <TableCell>{formatCurrency(row.pharmacyA)}</TableCell>
+                    <TableCell>{formatCurrency(row.pharmacyB)}</TableCell>
+                    <TableCell>{formatCurrency(row.pharmacyC)}</TableCell>
                     <TableCell className="text-right">
                       <Badge
                         variant="default"
@@ -118,7 +118,7 @@ export default function ComparePricesPage() {
             <div className="text-sm text-muted-foreground flex items-center gap-2">
                 <AnimatedPercentIcon className="w-4 h-4" />
                 <p>
-                    <span className="font-semibold text-foreground">Flexible Medical EMI:</span> Split your medical bills into easy monthly payments during checkout. No hidden costs.
+                    <span className="font-semibold text-foreground">Save More:</span> Use your Health Wallet balance or flexible EMIs at checkout for extra discounts.
                 </p>
             </div>
           </CardFooter>
