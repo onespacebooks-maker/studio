@@ -70,14 +70,13 @@ const formatCurrency = (amount: number) => {
 export default function ComparePricesPage() {
   return (
     <>
-      <Header title="Compare Treatment Prices" />
+      <Header title="Treatment Prices" />
       <main className="flex-1 space-y-8 p-4 md:p-8">
         <Card>
           <CardHeader>
-            <CardTitle>Treatment Cost Comparison</CardTitle>
+            <CardTitle>Your Covered Treatment Prices</CardTitle>
             <CardDescription>
-              Make informed decisions by comparing procedure costs from top hospitals. 
-              Prices shown are estimates for standard packages.
+              Review the estimated costs for various procedures with your insurance plan.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -85,9 +84,6 @@ export default function ComparePricesPage() {
               <TableHeader>
                 <TableRow>
                   <TableHead className="w-[300px]">Treatment / Procedure</TableHead>
-                  <TableHead>Apollo Hospital</TableHead>
-                  <TableHead>Fortis Hospital</TableHead>
-                  <TableHead>Max Healthcare</TableHead>
                   <TableHead className="text-right text-primary font-semibold">
                     Your Price (with Insurance)
                   </TableHead>
@@ -97,9 +93,6 @@ export default function ComparePricesPage() {
                 {priceData.map((row) => (
                   <TableRow key={row.treatment}>
                     <TableCell className="font-medium">{row.treatment}</TableCell>
-                    <TableCell>{formatCurrency(row.hospitalA)}</TableCell>
-                    <TableCell>{formatCurrency(row.hospitalB)}</TableCell>
-                    <TableCell>{formatCurrency(row.hospitalC)}</TableCell>
                     <TableCell className="text-right">
                       <Badge
                         variant="default"
