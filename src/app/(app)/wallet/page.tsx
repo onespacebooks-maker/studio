@@ -16,7 +16,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { AnimatedIndianRupeeIcon } from '@/components/ui/animated-indian-rupee-icon';
 import {
   ChartContainer,
   ChartTooltip,
@@ -24,6 +23,7 @@ import {
   ChartConfig,
 } from '@/components/ui/chart';
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
+import { IndianRupeeIcon } from '@/components/ui/IndianRupeeIcon';
 
 const chartData = [
   { month: 'January', savings: 186 },
