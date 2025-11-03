@@ -18,52 +18,68 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { AnimatedPercentIcon } from '@/components/ui/animated-percent-icon';
 import { IndianRupeeIcon } from '@/components/ui/IndianRupeeIcon';
 
 const priceData = [
   {
-    medicine: 'Atorvastatin 20mg',
-    form: 'Tablet',
-    quantity: '30 tablets',
-    price: 150,
+    procedure: 'Angioplasty',
+    yourPrice: 250000,
   },
   {
-    medicine: 'Metformin 500mg',
-    form: 'Tablet',
-    quantity: '60 tablets',
-    price: 95,
+    procedure: 'Knee Replacement',
+    yourPrice: 350000,
   },
   {
-    medicine: 'Amlodipine 5mg',
-    form: 'Tablet',
-    quantity: '30 tablets',
-    price: 60,
+    procedure: 'Cataract Surgery',
+    yourPrice: 40000,
   },
   {
-    medicine: 'Paracetamol 650mg',
-    form: 'Tablet',
-    quantity: '15 tablets',
-    price: 30,
+    procedure: 'Maternity Package (Normal Delivery)',
+    yourPrice: 75000,
   },
   {
-    medicine: 'Salbutamol Inhaler',
-    form: 'Inhaler',
-    quantity: '200 doses',
-    price: 250,
+    procedure: 'MRI Scan',
+    yourPrice: 8000,
+  },
+  {
+    procedure: 'Heart Bypass Surgery',
+    yourPrice: 450000,
+  },
+  {
+    procedure: 'Gallbladder Removal',
+    yourPrice: 120000,
+  },
+  {
+    procedure: 'Hernia Repair',
+    yourPrice: 90000,
+  },
+  {
+    procedure: 'Appendectomy',
+    yourPrice: 85000,
+  },
+  {
+    procedure: 'Chemotherapy (per cycle)',
+    yourPrice: 50000,
   },
 ];
+
+
+const formatCurrency = (amount: number) => {
+  return amount.toLocaleString('en-IN', {
+    maximumFractionDigits: 0,
+  });
+};
 
 export default function ComparePricesPage() {
   return (
     <>
-      <Header title="Medicine Prices" />
+      <Header title="Treatment Prices" />
       <main className="flex-1 space-y-8 p-4 md:p-8">
         <Card>
           <CardHeader>
-            <CardTitle>Your Covered Medicine Prices</CardTitle>
+            <CardTitle>Your Covered Treatment Prices</CardTitle>
             <CardDescription>
-              Review the estimated costs for common medicines with your
+              Review the estimated costs for common medical procedures with your
               insurance plan.
             </CardDescription>
           </CardHeader>
@@ -71,9 +87,7 @@ export default function ComparePricesPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Medicine</TableHead>
-                  <TableHead>Form</TableHead>
-                  <TableHead>Quantity</TableHead>
+                  <TableHead>Procedure</TableHead>
                   <TableHead className="text-right text-primary font-semibold">
                     Your Price (with Insurance)
                   </TableHead>
@@ -81,19 +95,17 @@ export default function ComparePricesPage() {
               </TableHeader>
               <TableBody>
                 {priceData.map((row) => (
-                  <TableRow key={row.medicine}>
+                  <TableRow key={row.procedure}>
                     <TableCell className="font-medium">
-                      {row.medicine}
+                      {row.procedure}
                     </TableCell>
-                    <TableCell>{row.form}</TableCell>
-                    <TableCell>{row.quantity}</TableCell>
                     <TableCell className="text-right">
                       <Badge
                         variant="default"
                         className="bg-green-600 hover:bg-green-700 text-base"
                       >
                         <IndianRupeeIcon size={16} className="mr-1" />
-                        {row.price.toFixed(2)}
+                        {formatCurrency(row.yourPrice)}
                       </Badge>
                     </TableCell>
                   </TableRow>
@@ -102,16 +114,10 @@ export default function ComparePricesPage() {
             </Table>
           </CardContent>
           <CardFooter>
-            <div className="text-sm text-muted-foreground flex items-center gap-2">
-              <AnimatedPercentIcon className="w-4 h-4" />
-              <p>
-                <span className="font-semibold text-foreground">
-                  Save More:
-                </span>{' '}
-                Use your Health Wallet balance or flexible EMIs at checkout for
-                extra discounts.
-              </p>
-            </div>
+            <p className="text-xs text-muted-foreground">
+              *Prices are estimates and may vary based on hospital, room type,
+              and specific medical needs.
+            </p>
           </CardFooter>
         </Card>
       </main>
