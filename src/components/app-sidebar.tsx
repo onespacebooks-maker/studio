@@ -12,10 +12,12 @@ import { AnimatedWalletIcon } from './ui/animated-wallet-icon';
 import { AnimatedDashboardIcon } from './ui/animated-dashboard-icon';
 import { AnimatedUsersIcon } from './ui/animated-users-icon';
 import { Lightbulb } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { AnimatedLightbulbIcon } from './ui/animated-lightbulb-icon';
 
 const navItems = [
   { href: '/dashboard', icon: AnimatedDashboardIcon, label: 'Dashboard' },
-  { href: '/symptom-guide', icon: Lightbulb, label: 'AI Symptom Guide' },
+  { href: '/symptom-guide', icon: AnimatedLightbulbIcon, label: 'AI Symptom Guide' },
   { href: '/appointments', icon: AnimatedCalendarDaysIcon, label: 'Appointments' },
   { href: '/compare-prices', icon: AnimatedScaleIcon, label: 'Compare Prices' },
   { href: '/teleconsultation', icon: AnimatedVideoIcon, label: 'Teleconsultation' },

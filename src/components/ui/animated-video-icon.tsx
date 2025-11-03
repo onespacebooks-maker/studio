@@ -25,6 +25,7 @@ export function AnimatedVideoIcon({
       strokeLinecap="round"
       strokeLinejoin="round"
       variants={videoVariants}
+      whileHover="hover"
       className={cn('mr-2 h-4 w-4', className)}
       {...props}
     >

@@ -25,6 +25,7 @@ export function AnimatedCalendarDaysIcon({
       strokeLinecap="round"
       strokeLinejoin="round"
       variants={calendarVariants}
+      whileHover="hover"
       className={cn('mr-2 h-4 w-4', className)}
       {...props}
     >

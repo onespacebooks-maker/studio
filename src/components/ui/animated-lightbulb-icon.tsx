@@ -3,16 +3,20 @@
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 
-interface AnimatedWalletIconProps extends React.SVGProps<SVGSVGElement> {}
+interface AnimatedLightbulbIconProps extends React.SVGProps<SVGSVGElement> {}
 
-const walletVariants = {
-  hover: { y: [-2, 0], transition: { duration: 0.4 } },
+const lightbulbVariants = {
+  hover: {
+    scale: [1, 1.2, 1],
+    rotate: [0, 10, -10, 0],
+    transition: { duration: 0.7 },
+  },
 };
 
-export function AnimatedWalletIcon({
+export function AnimatedLightbulbIcon({
   className,
   ...props
-}: AnimatedWalletIconProps) {
+}: AnimatedLightbulbIconProps) {
   return (
     <motion.svg
       xmlns="http://www.w3.org/2000/svg"
@@ -24,14 +28,14 @@ export function AnimatedWalletIcon({
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      variants={walletVariants}
+      variants={lightbulbVariants}
       whileHover="hover"
       className={cn('mr-2 h-4 w-4', className)}
       {...props}
     >
-      <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" />
-      <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />
-      <path d="M18 12a2 2 0 0 0 0 4h4v-4Z" />
+      <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
+      <path d="M9 18h6" />
+      <path d="M10 22h4" />
     </motion.svg>
   );
 }
