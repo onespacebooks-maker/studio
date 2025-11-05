@@ -48,7 +48,7 @@ export function AppSidebar() {
         <Link href="/" className="flex items-center gap-2 group">
           <HeartIcon className="text-primary" size={32} />
           <h1 className="text-2xl font-bold font-headline text-primary">
-            CuraNet
+            Care Nexus
           </h1>
         </Link>
       </div>

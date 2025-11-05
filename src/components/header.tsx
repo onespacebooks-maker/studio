@@ -71,7 +71,7 @@ export function Header({ title }: { title: string }) {
                 className="flex items-center gap-2 text-lg font-semibold mb-4"
               >
                 <HeartIcon className="h-6 w-6 text-primary" />
-                <span className="font-headline text-primary">CuraNet</span>
+                <span className="font-headline text-primary">Care Nexus</span>
               </Link>
               {navItems.map((item) => (
                 <Link

@@ -59,7 +59,7 @@ export default function Home() {
         <Link href="/" className="flex items-center gap-2">
           <HeartIcon className="text-primary" size={32} />
           <h1 className="text-2xl font-bold font-headline text-primary">
-            CuraNet
+            Care Nexus
           </h1>
         </Link>
         <nav className="flex items-center gap-4">
@@ -87,7 +87,7 @@ export default function Home() {
                 <span className="text-primary">Connected & Simplified.</span>
               </h2>
               <p className="text-lg text-muted-foreground max-w-lg">
-                CuraNet is your trusted partner in navigating the complexities
+                Care Nexus is your trusted partner in navigating the complexities
                 of healthcare. From booking appointments to managing family
                 health, we provide a seamless experience.
               </p>
@@ -126,7 +126,7 @@ export default function Home() {
                 A Better Way to Manage Healthcare
               </h3>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                CuraNet brings all your healthcare needs into one simple,
+                Care Nexus brings all your healthcare needs into one simple,
                 powerful platform.
               </p>
             </div>
@@ -157,7 +157,7 @@ export default function Home() {
 
       <footer className="bg-card/50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} CuraNet. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Care Nexus. All rights reserved.</p>
         </div>
       </footer>
     </div>

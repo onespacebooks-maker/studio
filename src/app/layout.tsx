@@ -3,7 +3,7 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'CuraNet: Healthcare Connection',
+  title: 'Care Nexus: Healthcare Connection',
   description: 'Your one-stop solution for managing healthcare.',
 };
 
