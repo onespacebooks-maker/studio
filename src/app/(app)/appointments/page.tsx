@@ -10,6 +10,16 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { AnimatedPlusCircleIcon } from '@/components/ui/animated-plus-circle-icon';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 
 const upcomingAppointments = [
   {
@@ -107,9 +117,27 @@ export default function AppointmentsPage() {
                 <div>
                   <p className="font-semibold">{appt.doctor}</p>
                   <p className="text-muted-foreground">{appt.speciality}</p>
-                  <p className="text-sm text-muted-foreground">{appt.time} at {appt.hospital}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {appt.time} at {appt.hospital}
+                  </p>
                 </div>
-                <Button variant="outline" disabled>View Report</Button>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="outline">View Report</Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Report Not Available</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        The medical report for this appointment is not yet
+                        available. Please check back later.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogAction>OK</AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </div>
             ))}
           </CardContent>
