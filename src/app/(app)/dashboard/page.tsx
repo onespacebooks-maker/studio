@@ -22,10 +22,10 @@ import { IndianRupeeIcon } from '@/components/ui/IndianRupeeIcon';
 import { AnimatedPillIcon } from '@/components/ui/animated-pill-icon';
 
 const formatCurrency = (amount: number) => {
-  return amount.toLocaleString('en-IN', {
+  return `₹${amount.toLocaleString('en-IN', {
     maximumFractionDigits: 2,
     minimumFractionDigits: 2,
-  });
+  })}`;
 };
 
 const quickAccess = [
@@ -88,7 +88,7 @@ export default function DashboardPage() {
             <CardContent>
               <div className="text-2xl font-bold flex items-center">
                 <IndianRupeeIcon size={24} className="mr-1" />
-                {formatCurrency(5231.89)}
+                5,231.89
               </div>
               <p className="text-xs text-muted-foreground">
                 +20.1% from last month
@@ -177,8 +177,8 @@ export default function DashboardPage() {
                         {appt.hospital}
                       </p>
                     </div>
-                    <Button variant="outline" size="sm">
-                      Details
+                    <Button variant="outline" size="sm" asChild>
+                      <Link href="/appointments">Details</Link>
                     </Button>
                   </div>
                 ))}
