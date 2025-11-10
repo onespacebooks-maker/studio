@@ -109,7 +109,7 @@ export default function AppointmentsPage() {
                   <p className="text-muted-foreground">{appt.speciality}</p>
                   <p className="text-sm text-muted-foreground">{appt.time} at {appt.hospital}</p>
                 </div>
-                <Button variant="outline">View Report</Button>
+                <Button variant="outline" disabled>View Report</Button>
               </div>
             ))}
           </CardContent>
