@@ -20,6 +20,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import { Separator } from '@/components/ui/separator';
 
 const upcomingAppointments = [
   {
@@ -48,6 +49,16 @@ const pastAppointments = [
     speciality: 'Orthopedist',
     time: 'May 15, 2024',
     hospital: 'City Hospital, Pune',
+    report: {
+      patient: 'Rohan Sharma',
+      age: 42,
+      gender: 'Male',
+      diagnosis: 'Left Knee - Grade 2 Meniscus Tear',
+      notes:
+        'Patient reported sharp pain and swelling in the left knee after a fall. MRI confirms a grade 2 tear of the medial meniscus. Advised conservative treatment with physiotherapy for 6 weeks. NSAIDs prescribed for pain management. Follow-up scheduled to assess progress and determine if surgical intervention is necessary.',
+      prescription: 'Ibuprofen 400mg (as needed for pain)',
+      followUp: 'Follow-up appointment in 6 weeks.',
+    },
   },
 ];
 
@@ -125,16 +136,67 @@ export default function AppointmentsPage() {
                   <AlertDialogTrigger asChild>
                     <Button variant="outline">View Report</Button>
                   </AlertDialogTrigger>
-                  <AlertDialogContent>
+                  <AlertDialogContent className="max-w-2xl">
                     <AlertDialogHeader>
-                      <AlertDialogTitle>Report Not Available</AlertDialogTitle>
+                      <AlertDialogTitle className="font-headline text-2xl">
+                        Medical Report
+                      </AlertDialogTitle>
                       <AlertDialogDescription>
-                        The medical report for this appointment is not yet
-                        available. Please check back later.
+                        Consultation with {appt.doctor} on {appt.time}.
                       </AlertDialogDescription>
                     </AlertDialogHeader>
+                    <Separator />
+                    <div className="space-y-4 text-sm max-h-[60vh] overflow-y-auto pr-4">
+                      <div className="grid grid-cols-3 gap-2">
+                        <div>
+                          <p className="font-semibold text-muted-foreground">
+                            Patient Name
+                          </p>
+                          <p>{appt.report.patient}</p>
+                        </div>
+                        <div>
+                          <p className="font-semibold text-muted-foreground">
+                            Age
+                          </p>
+                          <p>{appt.report.age}</p>
+                        </div>
+                        <div>
+                          <p className="font-semibold text-muted-foreground">
+                            Gender
+                          </p>
+                          <p>{appt.report.gender}</p>
+                        </div>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-muted-foreground">
+                          Diagnosis
+                        </p>
+                        <p className="font-bold text-primary">
+                          {appt.report.diagnosis}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-muted-foreground">
+                          Doctor's Notes
+                        </p>
+                        <p>{appt.report.notes}</p>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-muted-foreground">
+                          Prescription
+                        </p>
+                        <p>{appt.report.prescription}</p>
+                      </div>
+                      <div>
+                        <p className="font-semibold text-muted-foreground">
+                          Follow-up Advice
+                        </p>
+                        <p>{appt.report.followUp}</p>
+                      </div>
+                    </div>
+                    <Separator />
                     <AlertDialogFooter>
-                      <AlertDialogAction>OK</AlertDialogAction>
+                      <AlertDialogAction>Close</AlertDialogAction>
                     </AlertDialogFooter>
                   </AlertDialogContent>
                 </AlertDialog>
