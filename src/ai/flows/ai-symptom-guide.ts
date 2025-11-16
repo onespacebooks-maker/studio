@@ -25,6 +25,9 @@ const SuggestDepartmentOutputSchema = z.object({
   reasoning: z
     .string()
     .describe('The reasoning behind the department suggestion.'),
+  isDoctorVisitRecommended: z
+    .boolean()
+    .describe('Whether a visit to a doctor is recommended based on the symptoms.'),
 });
 export type SuggestDepartmentOutput = z.infer<typeof SuggestDepartmentOutputSchema>;
 
@@ -42,7 +45,7 @@ const prompt = ai.definePrompt({
 
   Consider various medical departments such as Cardiology, Dermatology, Gastroenterology, Neurology, Oncology, Ophthalmology, Orthopedics, Otolaryngology, Pediatrics, Psychiatry, Pulmonology, Rheumatology, Urology, and others.
 
-  Suggest the most relevant medical department and explain your reasoning.`,
+  Suggest the most relevant medical department and explain your reasoning. Based on the symptoms, determine if a visit to a doctor is recommended.`,
 });
 
 const suggestDepartmentFlow = ai.defineFlow(

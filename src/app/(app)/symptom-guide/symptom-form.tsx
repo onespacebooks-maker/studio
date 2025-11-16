@@ -10,11 +10,19 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { AlertCircle, CheckCircle2, Lightbulb, Loader2 } from 'lucide-react';
+import {
+  AlertCircle,
+  ArrowRight,
+  CheckCircle2,
+  Lightbulb,
+  Loader2,
+} from 'lucide-react';
+import Link from 'next/link';
 
 const initialState = {
   data: null,
@@ -114,6 +122,15 @@ export function SymptomForm() {
               </AlertDescription>
             </Alert>
           </CardContent>
+          {state.data.isDoctorVisitRecommended && (
+            <CardFooter>
+              <Button asChild className="w-full">
+                <Link href="/appointments">
+                  Schedule Appointment <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </CardFooter>
+          )}
         </Card>
       )}
     </div>
