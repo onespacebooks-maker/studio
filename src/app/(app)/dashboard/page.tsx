@@ -20,6 +20,7 @@ import { AnimatedUsersIcon } from '@/components/ui/animated-users-icon';
 import { motion } from 'framer-motion';
 import { IndianRupeeIcon } from '@/components/ui/IndianRupeeIcon';
 import { AnimatedPillIcon } from '@/components/ui/animated-pill-icon';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const formatCurrency = (amount: number) => {
   return `₹${amount.toLocaleString('en-IN', {
@@ -69,6 +70,11 @@ const appointments = [
     hospital: 'Fortis Clinic',
   },
 ];
+
+const recentTeleconsultations = [
+  { name: 'Dr. Arjun Reddy', speciality: 'Dermatologist', date: '1 day ago', avatarSeed: 'doc2' },
+  { name: 'Dr. Priya Sharma', speciality: 'General Physician', date: '3 days ago', avatarSeed: 'doc1' },
+]
 
 export default function DashboardPage() {
   return (
@@ -197,7 +203,33 @@ export default function DashboardPage() {
           </Card>
 
           <div className="space-y-8">
-            {quickAccess.map((item) => (
+            <Card>
+                <CardHeader>
+                    <CardTitle>Recent Teleconsultations</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                    {recentTeleconsultations.map((consult, i) => (
+                        <div key={i} className="flex items-center gap-4">
+                            <Avatar>
+                                <AvatarImage src={`https://picsum.photos/seed/${consult.avatarSeed}/100`} alt={consult.name} />
+                                <AvatarFallback>{consult.name.charAt(0)}</AvatarFallback>
+                            </Avatar>
+                            <div>
+                                <p className="font-semibold">{consult.name}</p>
+                                <p className="text-sm text-muted-foreground">{consult.speciality}</p>
+                                <p className="text-xs text-muted-foreground">{consult.date}</p>
+                            </div>
+                        </div>
+                    ))}
+                </CardContent>
+                <CardFooter>
+                    <Button variant="outline" size="sm" className="w-full" asChild>
+                        <Link href="/teleconsultation">View All</Link>
+                    </Button>
+                </CardFooter>
+            </Card>
+
+            {quickAccess.slice(0, 2).map((item) => (
               <Link href={item.href} key={item.title}>
                 <Card className="hover:bg-muted transition-colors group">
                   <CardHeader className="flex flex-row items-center gap-4">

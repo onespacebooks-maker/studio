@@ -25,6 +25,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { useToast } from '@/hooks/use-toast';
 import { useState } from 'react';
+import { Separator } from '@/components/ui/separator';
 
 const initialDoctors = [
   {
@@ -61,15 +62,21 @@ const initialDoctors = [
   },
 ];
 
+const initialPastConsultations = [
+    { name: 'Dr. Rina Patel', speciality: 'Gynecologist', date: 'June 15, 2024', avatarSeed: 'doc5' },
+    { name: 'Dr. Alok Verma', speciality: 'Orthopedist', date: 'May 28, 2024', avatarSeed: 'doc6' },
+]
+
 export default function TeleconsultationPage() {
   const [doctors, setDoctors] = useState(initialDoctors);
+  const [pastConsultations, setPastConsultations] = useState(initialPastConsultations);
   const { toast } = useToast();
 
-  const handleBookCall = (doctorNameToBook: string) => {
+  const handleBookCall = (doctorToBook: (typeof initialDoctors)[0]) => {
     setDoctors((prevDoctors) =>
       prevDoctors.map((doctor) => {
         if (
-          doctor.name === doctorNameToBook &&
+          doctor.name === doctorToBook.name &&
           doctor.availability === 'Available Now'
         ) {
           return { ...doctor, availability: 'On a Call' };
@@ -78,9 +85,14 @@ export default function TeleconsultationPage() {
       })
     );
 
+    setPastConsultations(prev => [
+        { name: doctorToBook.name, speciality: doctorToBook.speciality, date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric'}), avatarSeed: doctorToBook.avatarSeed},
+        ...prev
+    ])
+
     toast({
       title: 'Teleconsultation Booked!',
-      description: `Your video call with ${doctorNameToBook} has been scheduled.`,
+      description: `Your video call with ${doctorToBook.name} has been scheduled.`,
     });
   };
 
@@ -156,7 +168,7 @@ export default function TeleconsultationPage() {
                     <AlertDialogFooter>
                       <AlertDialogCancel>Cancel</AlertDialogCancel>
                       <AlertDialogAction
-                        onClick={() => handleBookCall(doc.name)}
+                        onClick={() => handleBookCall(doc)}
                       >
                         Confirm Booking
                       </AlertDialogAction>
@@ -167,6 +179,32 @@ export default function TeleconsultationPage() {
             </Card>
           ))}
         </div>
+        
+        <Separator />
+
+        <Card>
+            <CardHeader>
+                <CardTitle>Consultation History</CardTitle>
+                <CardDescription>Review your past teleconsultations.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+                {pastConsultations.map((consultation, i) => (
+                    <div key={i} className="flex items-center justify-between p-4 border rounded-lg">
+                        <div className="flex items-center gap-4">
+                            <Avatar>
+                                <AvatarImage src={`https://picsum.photos/seed/${consultation.avatarSeed}/100`} alt={consultation.name} />
+                                <AvatarFallback>{consultation.name.charAt(0)}</AvatarFallback>
+                            </Avatar>
+                            <div>
+                                <p className="font-semibold">{consultation.name}</p>
+                                <p className="text-sm text-muted-foreground">{consultation.speciality}</p>
+                            </div>
+                        </div>
+                        <p className="text-sm text-muted-foreground">{consultation.date}</p>
+                    </div>
+                ))}
+            </CardContent>
+        </Card>
       </main>
     </>
   );
