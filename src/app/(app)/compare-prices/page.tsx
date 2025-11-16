@@ -214,25 +214,25 @@ export default function ComparePricesPage() {
                     </div>
                     <div className="p-4 bg-muted/50 rounded-lg space-y-3">
                        <div className="flex justify-between items-center">
-                           <p className="text-muted-foreground">{t('prices.emi.monthlyPayment')}</p>
-                           <p className="text-2xl font-bold flex items-center text-primary">
+                           <div className="text-muted-foreground">{t('prices.emi.monthlyPayment')}</div>
+                           <div className="text-2xl font-bold flex items-center text-primary">
                              <IndianRupeeIcon size={20} className="mr-1" />
                              {formatCurrency(monthlyEMI)}
-                           </p>
+                           </div>
                        </div>
                         <div className="flex justify-between items-center text-xs">
                            <p className="text-muted-foreground">{t('prices.emi.totalInterest')}</p>
-                           <p className="font-medium flex items-center">
+                           <div className="font-medium flex items-center">
                               <IndianRupeeIcon size={12} className="mr-1" />
                               {formatCurrency(totalInterest)}
-                           </p>
+                           </div>
                        </div>
                        <div className="flex justify-between items-center text-xs">
                            <p className="text-muted-foreground">{t('prices.emi.totalPayable')}</p>
-                           <p className="font-medium flex items-center">
+                           <div className="font-medium flex items-center">
                             <IndianRupeeIcon size={12} className="mr-1" />
                             {formatCurrency(totalPayable)}
-                           </p>
+                           </div>
                        </div>
                     </div>
                     <p className="text-xs text-center text-muted-foreground pt-2">
