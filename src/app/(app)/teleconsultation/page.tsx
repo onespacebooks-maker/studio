@@ -24,8 +24,9 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { useToast } from '@/hooks/use-toast';
+import { useState } from 'react';
 
-const doctors = [
+const initialDoctors = [
   {
     name: 'Dr. Priya Sharma',
     speciality: 'General Physician',
@@ -61,14 +62,27 @@ const doctors = [
 ];
 
 export default function TeleconsultationPage() {
-    const { toast } = useToast();
+  const [doctors, setDoctors] = useState(initialDoctors);
+  const { toast } = useToast();
 
-    const handleBookCall = (doctorName: string) => {
-        toast({
-            title: 'Teleconsultation Booked!',
-            description: `Your video call with ${doctorName} has been scheduled.`,
-        });
-    };
+  const handleBookCall = (doctorNameToBook: string) => {
+    setDoctors((prevDoctors) =>
+      prevDoctors.map((doctor) => {
+        if (
+          doctor.name === doctorNameToBook &&
+          doctor.availability === 'Available Now'
+        ) {
+          return { ...doctor, availability: 'On a Call' };
+        }
+        return doctor;
+      })
+    );
+
+    toast({
+      title: 'Teleconsultation Booked!',
+      description: `Your video call with ${doctorNameToBook} has been scheduled.`,
+    });
+  };
 
   return (
     <>
@@ -110,6 +124,8 @@ export default function TeleconsultationPage() {
                   className={`font-semibold ${
                     doc.availability === 'Available Now'
                       ? 'text-green-600'
+                      : doc.availability === 'On a Call'
+                      ? 'text-red-600'
                       : 'text-amber-600'
                   }`}
                 >
@@ -117,27 +133,35 @@ export default function TeleconsultationPage() {
                 </p>
               </CardContent>
               <CardFooter>
-                 <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                        <Button className="w-full">
-                        <AnimatedVideoIcon className="mr-2 h-4 w-4" />
-                        Book Call
-                        </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                        <AlertDialogHeader>
-                        <AlertDialogTitle>Confirm Video Consultation</AlertDialogTitle>
-                        <AlertDialogDescription>
-                            Are you sure you want to book a video call with {doc.name}?
-                        </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction onClick={() => handleBookCall(doc.name)}>
-                            Confirm Booking
-                        </AlertDialogAction>
-                        </AlertDialogFooter>
-                    </AlertDialogContent>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button
+                      className="w-full"
+                      disabled={doc.availability !== 'Available Now'}
+                    >
+                      <AnimatedVideoIcon className="mr-2 h-4 w-4" />
+                      {doc.availability === 'On a Call' ? 'On a Call' : 'Book Call'}
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Confirm Video Consultation
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Are you sure you want to book a video call with{' '}
+                        {doc.name}?
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={() => handleBookCall(doc.name)}
+                      >
+                        Confirm Booking
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
                 </AlertDialog>
               </CardFooter>
             </Card>
