@@ -11,7 +11,7 @@ import { AnimatedDashboardIcon } from './ui/animated-dashboard-icon';
 import { AnimatedUsersIcon } from './ui/animated-users-icon';
 import { AnimatedLightbulbIcon } from './ui/animated-lightbulb-icon';
 import { AnimatedPillIcon } from './ui/animated-pill-icon';
-import { FileText, Stethoscope, UserCircle } from 'lucide-react';
+import { FileText, Stethoscope } from 'lucide-react';
 
 const navItems = [
   { href: '/dashboard', icon: AnimatedDashboardIcon, label: 'Dashboard' },
@@ -38,7 +38,6 @@ const navItems = [
   },
   { href: '/wallet', icon: AnimatedWalletIcon, label: 'Health Wallet' },
   { href: '/government-policies', icon: () => <FileText className="mr-2 h-4 w-4" />, label: 'Government Policies' },
-  { href: '/profile', icon: () => <UserCircle className="mr-2 h-4 w-4" />, label: 'Profile' },
 ];
 
 export function AppSidebar() {
