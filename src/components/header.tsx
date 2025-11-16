@@ -15,6 +15,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuGroup,
 } from '@/components/ui/dropdown-menu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { AnimatedMenuIcon } from './ui/animated-menu-icon';
@@ -26,8 +27,10 @@ import { AnimatedVideoIcon } from './ui/animated-video-icon';
 import { AnimatedWalletIcon } from './ui/animated-wallet-icon';
 import { motion } from 'framer-motion';
 import { AnimatedPillIcon } from './ui/animated-pill-icon';
-import { FileText, Stethoscope } from 'lucide-react';
+import { FileText, Stethoscope, LogIn, UserPlus } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useState, useEffect } from 'react';
+
 
 const navItems = [
   { href: '/dashboard', icon: AnimatedDashboardIcon, label: 'Dashboard' },
@@ -56,6 +59,17 @@ export function Header({ title }: { title: string }) {
   const pathname = usePathname();
   const router = useRouter();
   const { toast } = useToast();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAdminPage, setIsAdminPage] = useState(false);
+
+  useEffect(() => {
+    // This is a mock authentication check.
+    // In a real app, you would check a token, a cookie, or use a library like next-auth.
+    const mockAuth = Math.random() > 0.5; // Simulate user being logged in or not
+    setIsAuthenticated(mockAuth);
+    
+    setIsAdminPage(pathname.startsWith('/admin'));
+  }, [pathname]);
 
   const handleLogout = () => {
     localStorage.removeItem('admin-authenticated');
@@ -63,7 +77,7 @@ export function Header({ title }: { title: string }) {
       title: 'Logged Out',
       description: 'You have been successfully logged out.',
     });
-    router.push('/dashboard');
+    router.push('/login');
   };
   
   return (
@@ -112,19 +126,40 @@ export function Header({ title }: { title: string }) {
         <DropdownMenuTrigger asChild>
           <Button variant="secondary" size="icon" className="rounded-full">
             <Avatar>
-              <AvatarImage src="https://picsum.photos/seed/user/100/100" />
-              <AvatarFallback>A</AvatarFallback>
+              <AvatarImage src={`https://picsum.photos/seed/${isAuthenticated ? 'user' : 'guest'}/100/100`} />
+              <AvatarFallback>{isAuthenticated ? 'A' : 'G'}</AvatarFallback>
             </Avatar>
             <span className="sr-only">Toggle user menu</span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>Profile</DropdownMenuItem>
-          <DropdownMenuItem>Settings</DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
+          {isAdminPage ? (
+              <>
+                <DropdownMenuLabel>Admin Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
+              </>
+          ) : isAuthenticated ? (
+            <>
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => router.push('/dashboard')}>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => setIsAuthenticated(false)}>Logout</DropdownMenuItem>
+            </>
+          ) : (
+            <DropdownMenuGroup>
+                <DropdownMenuItem onClick={() => router.push('/login')}>
+                    <LogIn className="mr-2 h-4 w-4" />
+                    <span>Sign In</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => router.push('/signup')}>
+                    <UserPlus className="mr-2 h-4 w-4" />
+                    <span>Sign Up</span>
+                </DropdownMenuItem>
+            </DropdownMenuGroup>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
     </header>

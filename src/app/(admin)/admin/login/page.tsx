@@ -21,7 +21,7 @@ import { AlertCircle } from 'lucide-react';
 // In a real application, this should be a secure environment variable
 const ADMIN_PASSWORD = 'admin';
 
-export default function LoginPage() {
+export default function AdminLoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
