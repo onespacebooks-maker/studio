@@ -252,7 +252,7 @@ export function PolicyForm() {
               <AlertTitle>Disclaimer</AlertTitle>
               <AlertDescription>
                 This information is AI-generated and for guidance purposes only. Eligibility is determined by official government agencies. Please verify details on the official policy websites.
-              </Aler_description>
+              </AlertDescription>
             </Alert>
         </div>
       )}
