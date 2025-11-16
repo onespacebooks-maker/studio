@@ -116,10 +116,10 @@ export default function MedicinesPage() {
                 <p className="text-sm text-muted-foreground">
                   Pack Size: {med.packSize}
                 </p>
-                <p className="text-2xl font-bold mt-2 flex items-center">
+                <div className="text-2xl font-bold mt-2 flex items-center">
                   <IndianRupeeIcon size={22} className="mr-1" />
                   {formatCurrency(med.price)}
-                </p>
+                </div>
               </CardContent>
               <CardFooter>
                 <Button className="w-full">
