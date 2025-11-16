@@ -2,7 +2,7 @@
 
 import { useActionState, useEffect, useRef } from 'react';
 import { useFormStatus } from 'react-dom';
-import { getPolicySuggestions } from './actions';
+import { checkPolicyEligibility } from './actions';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
@@ -67,7 +67,7 @@ function SubmitButton() {
 
 export function PolicyForm() {
   const [state, formAction] = useActionState(
-    getPolicySuggestions,
+    checkPolicyEligibility,
     initialState
   );
   const formRef = useRef<HTMLFormElement>(null);
