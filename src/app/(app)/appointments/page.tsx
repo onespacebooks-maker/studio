@@ -47,6 +47,7 @@ import { CalendarIcon } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
+import { useToast } from '@/hooks/use-toast';
 
 const upcomingAppointments = [
   {
@@ -90,6 +91,21 @@ const pastAppointments = [
 
 export default function AppointmentsPage() {
   const [date, setDate] = useState<Date | undefined>();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const { toast } = useToast();
+
+  const handleConfirmAppointment = () => {
+    // Here you would typically handle form submission, e.g., send data to a server.
+    // For now, we'll just show a success toast and close the dialog.
+    toast({
+      title: 'Appointment Booked!',
+      description: 'Your appointment has been successfully scheduled.',
+      variant: 'default',
+    });
+    setIsDialogOpen(false); // Close the dialog
+    setDate(undefined); // Reset the date picker
+  };
+  
   return (
     <>
       <Header title="Appointments" />
@@ -103,7 +119,7 @@ export default function AppointmentsPage() {
               View, reschedule, or book new appointments for your family.
             </p>
           </div>
-          <Dialog>
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
               <Button>
                 <AnimatedPlusCircleIcon className="mr-2 h-4 w-4" />
@@ -168,7 +184,7 @@ export default function AppointmentsPage() {
                     Cancel
                   </Button>
                 </DialogClose>
-                <Button type="submit">Confirm Appointment</Button>
+                <Button type="submit" onClick={handleConfirmAppointment}>Confirm Appointment</Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>
