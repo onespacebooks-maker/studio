@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   Avatar,
   AvatarFallback,
@@ -27,6 +27,7 @@ import { AnimatedWalletIcon } from './ui/animated-wallet-icon';
 import { motion } from 'framer-motion';
 import { AnimatedPillIcon } from './ui/animated-pill-icon';
 import { FileText, Stethoscope } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 const navItems = [
   { href: '/dashboard', icon: AnimatedDashboardIcon, label: 'Dashboard' },
@@ -53,6 +54,18 @@ const navItems = [
 
 export function Header({ title }: { title: string }) {
   const pathname = usePathname();
+  const router = useRouter();
+  const { toast } = useToast();
+
+  const handleLogout = () => {
+    localStorage.removeItem('admin-authenticated');
+    toast({
+      title: 'Logged Out',
+      description: 'You have been successfully logged out.',
+    });
+    router.push('/login');
+  };
+  
   return (
     <header className="flex h-16 items-center justify-between gap-4 border-b bg-card px-4 md:px-6">
       <div className="flex items-center gap-4">
@@ -100,7 +113,7 @@ export function Header({ title }: { title: string }) {
           <Button variant="secondary" size="icon" className="rounded-full">
             <Avatar>
               <AvatarImage src="https://picsum.photos/seed/user/100/100" />
-              <AvatarFallback>U</AvatarFallback>
+              <AvatarFallback>A</AvatarFallback>
             </Avatar>
             <span className="sr-only">Toggle user menu</span>
           </Button>
@@ -111,7 +124,7 @@ export function Header({ title }: { title: string }) {
           <DropdownMenuItem>Profile</DropdownMenuItem>
           <DropdownMenuItem>Settings</DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Logout</DropdownMenuItem>
+          <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </header>
