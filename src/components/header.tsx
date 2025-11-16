@@ -28,7 +28,7 @@ import { AnimatedVideoIcon } from './ui/animated-video-icon';
 import { AnimatedWalletIcon } from './ui/animated-wallet-icon';
 import { motion } from 'framer-motion';
 import { AnimatedPillIcon } from './ui/animated-pill-icon';
-import { FileText, Stethoscope, LogIn, UserPlus, LogOut } from 'lucide-react';
+import { FileText, Stethoscope, LogIn, UserPlus, LogOut, UserCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
@@ -55,6 +55,7 @@ const navItems = [
   },
   { href: '/wallet', icon: AnimatedWalletIcon, label: 'Health Wallet' },
   { href: '/government-policies', icon: () => <FileText className="h-5 w-5" />, label: 'Government Policies' },
+  { href: '/profile', icon: () => <UserCircle className="h-5 w-5" />, label: 'Profile' },
 ];
 
 export function Header({ title }: { title: string }) {
@@ -143,7 +144,7 @@ export function Header({ title }: { title: string }) {
             <>
               <DropdownMenuLabel>{user?.name || 'My Account'}</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => router.push('/dashboard')}>Profile</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => router.push('/profile')}>Profile</DropdownMenuItem>
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={signOut}>
