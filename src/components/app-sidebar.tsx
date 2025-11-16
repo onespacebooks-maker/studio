@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -38,6 +39,7 @@ const navItems = [
   },
   { href: '/wallet', icon: AnimatedWalletIcon, label: 'Health Wallet' },
   { href: '/government-policies', icon: () => <FileText className="mr-2 h-4 w-4" />, label: 'Government Policies' },
+  { href: '/family', icon: AnimatedUsersIcon, label: 'Family Members' },
 ];
 
 export function AppSidebar() {
@@ -57,7 +59,7 @@ export function AppSidebar() {
         {navItems.map((item) => (
           <Button
             key={item.href}
-            variant={pathname === item.href ? 'secondary' : 'ghost'}
+            variant={pathname.startsWith(item.href) ? 'secondary' : 'ghost'}
             className="w-full justify-start group"
             asChild
           >
@@ -69,9 +71,11 @@ export function AppSidebar() {
         ))}
       </nav>
       <div className="p-4 border-t">
-        <Button variant="outline" className="w-full justify-start group">
-          <AnimatedUsersIcon />
-          Family Members
+        <Button variant="outline" className="w-full justify-start group" asChild>
+           <Link href="/profile">
+                <AnimatedUsersIcon />
+                My Profile
+           </Link>
         </Button>
       </div>
     </aside>

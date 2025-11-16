@@ -1,3 +1,4 @@
+
 'use client';
 
 import { createContext, useContext, useState, ReactNode } from 'react';
@@ -41,12 +42,20 @@ export type Medicine = {
   stock: number;
 };
 
+export type FamilyMember = {
+  name: string;
+  relationship: string;
+  age: number;
+  avatarSeed: string;
+};
+
 // Context Type
 type AppContextType = {
   upcomingAppointments: Appointment[];
   pastAppointments: PastAppointment[];
   doctors: Doctor[];
   medicines: Medicine[];
+  familyMembers: FamilyMember[];
   addAppointment: (appointment: Appointment) => void;
   cancelAppointment: (index: number) => void;
   addDoctor: (doctor: Doctor) => void;
@@ -55,6 +64,8 @@ type AppContextType = {
   addMedicine: (medicine: Medicine) => void;
   updateMedicine: (medicine: Medicine) => void;
   deleteMedicine: (name: string) => void;
+  addFamilyMember: (member: Omit<FamilyMember, 'avatarSeed'>) => void;
+  deleteFamilyMember: (name: string) => void;
 };
 
 // Context Initialization
@@ -127,6 +138,11 @@ const initialMedicines: Medicine[] = [
   { name: 'Azithromycin 500mg', manufacturer: 'Alembic Pharma', packSize: '3 tablets', price: 119.5, stock: 5 },
 ];
 
+const initialFamilyMembers: FamilyMember[] = [
+    { name: 'Meena Kumar', relationship: 'Spouse', age: 38, avatarSeed: 'family1' },
+    { name: 'Aarav Kumar', relationship: 'Son', age: 12, avatarSeed: 'family2' },
+    { name: 'Ananya Kumar', relationship: 'Daughter', age: 8, avatarSeed: 'family3' },
+];
 
 // Provider Component
 export const AppProvider = ({ children }: { children: ReactNode }) => {
@@ -134,6 +150,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [pastAppointments, setPastAppointments] = useState<PastAppointment[]>(initialPastAppointments);
   const [doctors, setDoctors] = useState<Doctor[]>(initialDoctors);
   const [medicines, setMedicines] = useState<Medicine[]>(initialMedicines);
+  const [familyMembers, setFamilyMembers] = useState<FamilyMember[]>(initialFamilyMembers);
 
   // Appointment Management
   const addAppointment = (appointment: Appointment) => {
@@ -170,12 +187,26 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       setMedicines(prev => prev.filter(med => med.name !== name));
   }
 
+  // Family Member Management
+  const addFamilyMember = (member: Omit<FamilyMember, 'avatarSeed'>) => {
+    const newMember = {
+        ...member,
+        avatarSeed: `family${Math.random()}`
+    };
+    setFamilyMembers(prev => [...prev, newMember]);
+  };
+  
+  const deleteFamilyMember = (name: string) => {
+      setFamilyMembers(prev => prev.filter(member => member.name !== name));
+  };
+
   return (
     <AppContext.Provider value={{ 
         upcomingAppointments, 
         pastAppointments, 
         doctors, 
         medicines,
+        familyMembers,
         addAppointment, 
         cancelAppointment,
         addDoctor,
@@ -184,6 +215,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         addMedicine,
         updateMedicine,
         deleteMedicine,
+        addFamilyMember,
+        deleteFamilyMember,
     }}>
       {children}
     </AppContext.Provider>

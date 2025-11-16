@@ -28,7 +28,7 @@ import { AnimatedVideoIcon } from './ui/animated-video-icon';
 import { AnimatedWalletIcon } from './ui/animated-wallet-icon';
 import { motion } from 'framer-motion';
 import { AnimatedPillIcon } from './ui/animated-pill-icon';
-import { FileText, Stethoscope, LogIn, UserPlus, LogOut, UserCircle } from 'lucide-react';
+import { FileText, Stethoscope, LogIn, UserPlus, LogOut, UserCircle, Users } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
@@ -55,6 +55,7 @@ const navItems = [
   },
   { href: '/wallet', icon: AnimatedWalletIcon, label: 'Health Wallet' },
   { href: '/government-policies', icon: () => <FileText className="h-5 w-5" />, label: 'Government Policies' },
+  { href: '/family', icon: () => <Users className="h-5 w-5" />, label: 'Family Members' },
   { href: '/profile', icon: () => <UserCircle className="h-5 w-5" />, label: 'Profile' },
 ];
 
@@ -108,7 +109,7 @@ export function Header({ title }: { title: string }) {
                   key={item.href}
                   href={item.href}
                   className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary ${
-                    pathname === item.href
+                    pathname.startsWith(item.href)
                       ? 'bg-muted text-primary'
                       : 'text-muted-foreground'
                   }`}
