@@ -41,6 +41,7 @@ export default function LoginPage() {
           title: 'Login Successful',
           description: 'Welcome back! Redirecting to your dashboard...',
         });
+        // In a real app, you would also store a user session token here
         router.push('/dashboard');
       setIsLoading(false);
     }, 1000);
