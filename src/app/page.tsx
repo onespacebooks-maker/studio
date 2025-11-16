@@ -95,7 +95,6 @@ export default function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 placeholder="your.email@example.com"
-                disabled
               />
             </div>
             <div className="space-y-2">
@@ -107,10 +106,9 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 placeholder="********"
-                disabled
               />
             </div>
-            <Button type="submit" className="w-full" disabled={isLoading || true}>
+            <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
