@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Header } from '@/components/header';
@@ -28,6 +29,7 @@ import { IndianRupeeIcon } from '@/components/ui/IndianRupeeIcon';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useTranslation } from '@/context/LanguageContext';
 
 const chartData = [
   { month: 'January', savings: 186 },
@@ -81,17 +83,18 @@ const formatCurrency = (amount: number) => {
 };
 
 export default function WalletPage() {
+    const { t } = useTranslation();
   return (
     <>
-      <Header title="Health Wallet" />
+      <Header title={t('wallet.headerTitle')} />
       <main className="flex-1 space-y-8 p-4 md:p-8">
         <div className="grid gap-8 md:grid-cols-3">
           <div className="md:col-span-1 space-y-8">
             <Card>
               <CardHeader>
-                <CardTitle>Current Balance</CardTitle>
+                <CardTitle>{t('wallet.balance.title')}</CardTitle>
                 <CardDescription>
-                  Your available funds for healthcare expenses.
+                  {t('wallet.balance.description')}
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -103,14 +106,14 @@ export default function WalletPage() {
             </Card>
             <Card>
               <CardHeader>
-                <CardTitle>Add Funds to Wallet</CardTitle>
+                <CardTitle>{t('wallet.addFunds.title')}</CardTitle>
                 <CardDescription>
-                  Top up your wallet using UPI.
+                  {t('wallet.addFunds.description')}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="amount">Amount</Label>
+                  <Label htmlFor="amount">{t('wallet.addFunds.amountLabel')}</Label>
                   <div className="relative">
                     <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">
                       <IndianRupeeIcon size={16} />
@@ -119,20 +122,20 @@ export default function WalletPage() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="upi-id">Your UPI ID</Label>
+                  <Label htmlFor="upi-id">{t('wallet.addFunds.upiLabel')}</Label>
                   <Input id="upi-id" placeholder="yourname@bank" />
                 </div>
               </CardContent>
               <CardFooter>
-                 <Button className="w-full">Add Funds via UPI</Button>
+                 <Button className="w-full">{t('wallet.addFunds.button')}</Button>
               </CardFooter>
             </Card>
           </div>
           <Card className="md:col-span-2">
             <CardHeader>
-              <CardTitle>Monthly Savings</CardTitle>
+              <CardTitle>{t('wallet.savings.title')}</CardTitle>
               <CardDescription>
-                Your micro-savings contributions over the last 6 months.
+                {t('wallet.savings.description')}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -144,7 +147,7 @@ export default function WalletPage() {
                     tickLine={false}
                     tickMargin={10}
                     axisLine={false}
-                    tickFormatter={(value) => value.slice(0, 3)}
+                    tickFormatter={(value) => t(`months.${value.toLowerCase()}`)}
                   />
                    <YAxis tickLine={false} axisLine={false} tickFormatter={(value) => `₹${value}`} />
                   <ChartTooltip
@@ -160,15 +163,15 @@ export default function WalletPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Recent Transactions</CardTitle>
+            <CardTitle>{t('wallet.transactions.title')}</CardTitle>
           </CardHeader>
           <CardContent>
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Description</TableHead>
-                  <TableHead>Date</TableHead>
-                  <TableHead className="text-right">Amount</TableHead>
+                  <TableHead>{t('wallet.transactions.table.description')}</TableHead>
+                  <TableHead>{t('wallet.transactions.table.date')}</TableHead>
+                  <TableHead className="text-right">{t('wallet.transactions.table.amount')}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

@@ -12,38 +12,40 @@ import { AnimatedDashboardIcon } from './ui/animated-dashboard-icon';
 import { AnimatedUsersIcon } from './ui/animated-users-icon';
 import { AnimatedLightbulbIcon } from './ui/animated-lightbulb-icon';
 import { AnimatedPillIcon } from './ui/animated-pill-icon';
-import { FileText, Stethoscope } from 'lucide-react';
-
-const navItems = [
-  { href: '/dashboard', icon: AnimatedDashboardIcon, label: 'Dashboard' },
-  {
-    href: '/symptom-guide',
-    icon: AnimatedLightbulbIcon,
-    label: 'AI Symptom Guide',
-  },
-  {
-    href: '/appointments',
-    icon: AnimatedCalendarDaysIcon,
-    label: 'Appointments',
-  },
-  { href: '/medicines', icon: AnimatedPillIcon, label: 'Medicines' },
-  {
-    href: '/compare-prices',
-    icon: () => <Stethoscope className="mr-2 h-4 w-4" />,
-    label: 'Treatment Prices',
-  },
-  {
-    href: '/teleconsultation',
-    icon: AnimatedVideoIcon,
-    label: 'Teleconsultation',
-  },
-  { href: '/wallet', icon: AnimatedWalletIcon, label: 'Health Wallet' },
-  { href: '/government-policies', icon: () => <FileText className="mr-2 h-4 w-4" />, label: 'Government Policies' },
-  { href: '/family', icon: AnimatedUsersIcon, label: 'Family Members' },
-];
+import { FileText, Stethoscope, UserCircle } from 'lucide-react';
+import { useTranslation } from '@/context/LanguageContext';
 
 export function AppSidebar() {
   const pathname = usePathname();
+  const { t } = useTranslation();
+
+  const navItems = [
+    { href: '/dashboard', icon: AnimatedDashboardIcon, label: t('sidebar.dashboard') },
+    {
+      href: '/symptom-guide',
+      icon: AnimatedLightbulbIcon,
+      label: t('sidebar.symptomGuide'),
+    },
+    {
+      href: '/appointments',
+      icon: AnimatedCalendarDaysIcon,
+      label: t('sidebar.appointments'),
+    },
+    { href: '/medicines', icon: AnimatedPillIcon, label: t('sidebar.medicines') },
+    {
+      href: '/compare-prices',
+      icon: () => <Stethoscope className="mr-2 h-4 w-4" />,
+      label: t('sidebar.treatmentPrices'),
+    },
+    {
+      href: '/teleconsultation',
+      icon: AnimatedVideoIcon,
+      label: t('sidebar.teleconsultation'),
+    },
+    { href: '/wallet', icon: AnimatedWalletIcon, label: t('sidebar.healthWallet') },
+    { href: '/government-policies', icon: () => <FileText className="mr-2 h-4 w-4" />, label: t('sidebar.governmentPolicies') },
+    { href: '/family', icon: AnimatedUsersIcon, label: t('sidebar.familyMembers') },
+  ];
 
   return (
     <aside className="hidden md:flex flex-col w-64 bg-card border-r">
@@ -73,8 +75,8 @@ export function AppSidebar() {
       <div className="p-4 border-t">
         <Button variant="outline" className="w-full justify-start group" asChild>
            <Link href="/profile">
-                <AnimatedUsersIcon />
-                My Profile
+                <UserCircle className="mr-2 h-4 w-4" />
+                {t('sidebar.myProfile')}
            </Link>
         </Button>
       </div>

@@ -34,6 +34,7 @@ import { format } from 'date-fns';
 import { Calendar } from '@/components/ui/calendar';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useAppContext, type Doctor } from '@/context/AppContext';
+import { useTranslation } from '@/context/LanguageContext';
 
 const initialPastConsultations = [
   {
@@ -58,6 +59,7 @@ const timeSlots = [
 
 export default function TeleconsultationPage() {
   const { doctors, updateDoctor } = useAppContext();
+  const { t } = useTranslation();
   const [pastConsultations, setPastConsultations] =
     useState(initialPastConsultations);
   const { toast } = useToast();
@@ -69,18 +71,17 @@ export default function TeleconsultationPage() {
   const [specialityFilter, setSpecialityFilter] = useState('All Departments');
 
   const specialities = [
-    'All Departments',
+    t('teleconsultation.allDepartments'),
     ...Array.from(new Set(doctors.map(d => d.speciality)))
   ];
 
   const handleBookCall = () => {
     if (!selectedDoctor) return;
 
-    // For "Available Now", we can skip date/time check or handle it differently
     if (selectedDoctor.availability !== 'Available Now' && (!date || !time)) {
       toast({
-        title: 'Incomplete Information',
-        description: 'Please select a date and time for the consultation.',
+        title: t('appointments.toast.incompleteTitle'),
+        description: t('teleconsultation.toast.incompleteDescription'),
         variant: 'destructive',
       });
       return;
@@ -101,38 +102,37 @@ export default function TeleconsultationPage() {
     ]);
 
     toast({
-      title: 'Teleconsultation Booked!',
-      description: `Your video call with ${selectedDoctor.name} has been scheduled.`,
+      title: t('teleconsultation.toast.bookedTitle'),
+      description: t('teleconsultation.toast.bookedDescription', { name: selectedDoctor.name }),
     });
 
-    // Reset form and close dialog
     setIsDialogOpen(false);
     setSelectedDoctor(null);
     setDate(undefined);
     setTime('');
   };
   
-  const filteredDoctors = specialityFilter === 'All Departments' 
+  const filteredDoctors = specialityFilter === t('teleconsultation.allDepartments') || specialityFilter === 'All Departments'
     ? doctors 
     : doctors.filter(doc => doc.speciality === specialityFilter);
 
   return (
     <>
-      <Header title="Teleconsultation" />
+      <Header title={t('teleconsultation.headerTitle')} />
       <main className="flex-1 space-y-8 p-4 md:p-8">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div>
             <h2 className="text-3xl font-bold font-headline tracking-tight">
-              Consult a Doctor from Home
+              {t('teleconsultation.pageTitle')}
             </h2>
             <p className="text-muted-foreground">
-              Connect with top specialists via video call at your convenience.
+              {t('teleconsultation.pageDescription')}
             </p>
           </div>
           <div className="w-full md:w-auto">
             <Select value={specialityFilter} onValueChange={setSpecialityFilter}>
                 <SelectTrigger className="w-full md:w-[280px]">
-                    <SelectValue placeholder="Filter by department" />
+                    <SelectValue placeholder={t('teleconsultation.filterPlaceholder')} />
                 </SelectTrigger>
                 <SelectContent>
                     {specialities.map(s => (
@@ -160,10 +160,10 @@ export default function TeleconsultationPage() {
                 </CardHeader>
                 <CardContent className="text-sm text-center space-y-2 flex-grow">
                   <p className="text-muted-foreground">
-                    {doc.experience} of experience
+                    {t('teleconsultation.experience', { years: doc.experience })}
                   </p>
                   <p className="text-muted-foreground">
-                    Speaks: {doc.languages}
+                    {t('teleconsultation.languages', { languages: doc.languages })}
                   </p>
                   <p
                     className={`font-semibold ${
@@ -185,7 +185,7 @@ export default function TeleconsultationPage() {
                       disabled={doc.availability === 'On a Call'}
                     >
                       <AnimatedVideoIcon className="mr-2 h-4 w-4" />
-                       {doc.availability === 'Available Now' ? 'Book Instant Call' : 'Schedule Call'}
+                       {doc.availability === 'Available Now' ? t('teleconsultation.instantCallButton') : t('teleconsultation.scheduleCallButton')}
                     </Button>
                   </DialogTrigger>
                 </CardFooter>
@@ -195,9 +195,9 @@ export default function TeleconsultationPage() {
           {filteredDoctors.length === 0 && (
             <Card className="text-center p-8">
                 <CardHeader>
-                    <CardTitle>No Doctors Found</CardTitle>
+                    <CardTitle>{t('teleconsultation.noDoctors.title')}</CardTitle>
                     <CardDescription>
-                        There are no doctors available in the selected department. Please try another one.
+                        {t('teleconsultation.noDoctors.description')}
                     </CardDescription>
                 </CardHeader>
             </Card>
@@ -205,22 +205,21 @@ export default function TeleconsultationPage() {
 
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
-              <DialogTitle>Schedule Video Consultation</DialogTitle>
+              <DialogTitle>{t('teleconsultation.dialog.title')}</DialogTitle>
               <DialogDescription>
-                Select a date and time for your call with{' '}
-                {selectedDoctor?.name}.
+                {t('teleconsultation.dialog.description', { name: selectedDoctor?.name })}
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-4 py-4">
                {selectedDoctor?.availability === 'Available Now' ? (
                  <div className="text-center p-4 bg-green-100 dark:bg-green-900/50 rounded-md">
-                    <p className="font-semibold text-green-700 dark:text-green-300">This doctor is available for an instant call.</p>
-                    <p className="text-sm text-muted-foreground">You can confirm to start the call immediately.</p>
+                    <p className="font-semibold text-green-700 dark:text-green-300">{t('teleconsultation.dialog.availableNow.title')}</p>
+                    <p className="text-sm text-muted-foreground">{t('teleconsultation.dialog.availableNow.description')}</p>
                  </div>
                ) : (
                 <>
               <div className="grid w-full items-center gap-1.5">
-                <Label htmlFor="date">Consultation Date</Label>
+                <Label htmlFor="date">{t('teleconsultation.dialog.dateLabel')}</Label>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
@@ -231,7 +230,7 @@ export default function TeleconsultationPage() {
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
-                      {date ? format(date, 'PPP') : <span>Pick a date</span>}
+                      {date ? format(date, 'PPP') : <span>{t('appointments.dialog.datePlaceholder')}</span>}
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0">
@@ -248,10 +247,10 @@ export default function TeleconsultationPage() {
                 </Popover>
               </div>
               <div className="grid w-full items-center gap-1.5">
-                <Label htmlFor="time">Time</Label>
+                <Label htmlFor="time">{t('appointments.dialog.timeLabel')}</Label>
                 <Select value={time} onValueChange={setTime}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a time" />
+                    <SelectValue placeholder={t('appointments.dialog.timePlaceholder')} />
                   </SelectTrigger>
                   <SelectContent>
                     {timeSlots.map((slot) => (
@@ -268,11 +267,11 @@ export default function TeleconsultationPage() {
             <DialogFooter>
               <DialogClose asChild>
                 <Button type="button" variant="secondary">
-                  Cancel
+                  {t('common.cancel')}
                 </Button>
               </DialogClose>
               <Button type="submit" onClick={handleBookCall}>
-                Confirm Booking
+                {t('teleconsultation.dialog.confirmButton')}
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -282,9 +281,9 @@ export default function TeleconsultationPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Consultation History</CardTitle>
+            <CardTitle>{t('teleconsultation.history.title')}</CardTitle>
             <CardDescription>
-              Review your past teleconsultations.
+              {t('teleconsultation.history.description')}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">

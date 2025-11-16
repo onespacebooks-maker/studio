@@ -50,6 +50,7 @@ import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { useAppContext } from '@/context/AppContext';
+import { useTranslation } from '@/context/LanguageContext';
 
 const timeSlots = [
     '09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM',
@@ -58,6 +59,7 @@ const timeSlots = [
 
 export default function AppointmentsPage() {
   const { upcomingAppointments, pastAppointments, doctors, addAppointment, cancelAppointment } = useAppContext();
+  const { t } = useTranslation();
   
   const [date, setDate] = useState<Date | undefined>();
   const [time, setTime] = useState('');
@@ -70,8 +72,8 @@ export default function AppointmentsPage() {
   const handleConfirmAppointment = () => {
     if (!patientName || !selectedDoctorValue || !date || !time) {
         toast({
-            title: 'Incomplete Information',
-            description: 'Please fill out all fields to book an appointment.',
+            title: t('appointments.toast.incompleteTitle'),
+            description: t('appointments.toast.incompleteDescription'),
             variant: 'destructive',
         });
         return;
@@ -90,8 +92,8 @@ export default function AppointmentsPage() {
     addAppointment(newAppointment);
 
     toast({
-      title: 'Appointment Booked!',
-      description: 'Your appointment has been successfully scheduled.',
+      title: t('appointments.toast.bookedTitle'),
+      description: t('appointments.toast.bookedDescription'),
       variant: 'default',
     });
     
@@ -105,8 +107,8 @@ export default function AppointmentsPage() {
   const handleCancelAppointment = (indexToCancel: number) => {
     cancelAppointment(indexToCancel);
     toast({
-        title: 'Appointment Canceled',
-        description: 'The appointment has been successfully removed.',
+        title: t('appointments.toast.canceledTitle'),
+        description: t('appointments.toast.canceledDescription'),
         variant: 'default',
       });
   };
@@ -118,41 +120,41 @@ export default function AppointmentsPage() {
 
   return (
     <>
-      <Header title="Appointments" />
+      <Header title={t('appointments.headerTitle')} />
       <main className="flex-1 space-y-8 p-4 md:p-8">
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-3xl font-bold font-headline tracking-tight">
-              Manage Your Appointments
+              {t('appointments.pageTitle')}
             </h2>
             <p className="text-muted-foreground">
-              View, reschedule, or book new appointments for your family.
+              {t('appointments.pageDescription')}
             </p>
           </div>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
               <Button>
                 <AnimatedPlusCircleIcon className="mr-2 h-4 w-4" />
-                Book New Appointment
+                {t('appointments.bookButton')}
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-md">
               <DialogHeader>
-                <DialogTitle>Book a New Appointment</DialogTitle>
+                <DialogTitle>{t('appointments.dialog.title')}</DialogTitle>
                 <DialogDescription>
-                  Fill in the details to schedule your next visit.
+                  {t('appointments.dialog.description')}
                 </DialogDescription>
               </DialogHeader>
               <div className="space-y-4 py-4">
                 <div className="grid w-full items-center gap-1.5">
-                  <Label htmlFor="patient">Patient Name</Label>
-                  <Input id="patient" placeholder="e.g., John Doe" value={patientName} onChange={(e) => setPatientName(e.target.value)} />
+                  <Label htmlFor="patient">{t('appointments.dialog.patientNameLabel')}</Label>
+                  <Input id="patient" placeholder={t('appointments.dialog.patientNamePlaceholder')} value={patientName} onChange={(e) => setPatientName(e.target.value)} />
                 </div>
                 <div className="grid w-full items-center gap-1.5">
-                  <Label htmlFor="doctor">Doctor</Label>
+                  <Label htmlFor="doctor">{t('appointments.dialog.doctorLabel')}</Label>
                   <Select value={selectedDoctorValue} onValueChange={setSelectedDoctorValue}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select a doctor" />
+                      <SelectValue placeholder={t('appointments.dialog.doctorPlaceholder')} />
                     </SelectTrigger>
                     <SelectContent>
                       {doctorOptions.map(doc => (
@@ -162,7 +164,7 @@ export default function AppointmentsPage() {
                   </Select>
                 </div>
                 <div className="grid w-full items-center gap-1.5">
-                  <Label htmlFor="date">Appointment Date</Label>
+                  <Label htmlFor="date">{t('appointments.dialog.dateLabel')}</Label>
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button
@@ -173,7 +175,7 @@ export default function AppointmentsPage() {
                         )}
                       >
                         <CalendarIcon className="mr-2 h-4 w-4" />
-                        {date ? format(date, 'PPP') : <span>Pick a date</span>}
+                        {date ? format(date, 'PPP') : <span>{t('appointments.dialog.datePlaceholder')}</span>}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0">
@@ -188,10 +190,10 @@ export default function AppointmentsPage() {
                   </Popover>
                 </div>
                 <div className="grid w-full items-center gap-1.5">
-                  <Label htmlFor="time">Time</Label>
+                  <Label htmlFor="time">{t('appointments.dialog.timeLabel')}</Label>
                   <Select value={time} onValueChange={setTime}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select a time" />
+                      <SelectValue placeholder={t('appointments.dialog.timePlaceholder')} />
                     </SelectTrigger>
                     <SelectContent>
                       {timeSlots.map(slot => (
@@ -204,10 +206,10 @@ export default function AppointmentsPage() {
               <DialogFooter>
                 <DialogClose asChild>
                   <Button type="button" variant="secondary">
-                    Cancel
+                    {t('common.cancel')}
                   </Button>
                 </DialogClose>
-                <Button type="submit" onClick={handleConfirmAppointment}>Confirm Appointment</Button>
+                <Button type="submit" onClick={handleConfirmAppointment}>{t('appointments.dialog.confirmButton')}</Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>
@@ -215,14 +217,14 @@ export default function AppointmentsPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Upcoming Appointments</CardTitle>
+            <CardTitle>{t('appointments.upcoming.title')}</CardTitle>
             <CardDescription>
-              Here are your scheduled consultations.
+              {t('appointments.upcoming.description')}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             {upcomingAppointments.length === 0 ? (
-                <div className="text-center text-muted-foreground p-8">No upcoming appointments.</div>
+                <div className="text-center text-muted-foreground p-8">{t('appointments.upcoming.none')}</div>
             ) : (
                 upcomingAppointments.map((appt, i) => (
               <div
@@ -238,22 +240,22 @@ export default function AppointmentsPage() {
                   <p className="text-muted-foreground">{appt.hospital}</p>
                 </div>
                 <div className="flex gap-2">
-                  <Button variant="outline">Reschedule</Button>
+                  <Button variant="outline">{t('common.reschedule')}</Button>
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
-                      <Button variant="ghost">Cancel</Button>
+                      <Button variant="ghost">{t('common.cancel')}</Button>
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                       <AlertDialogHeader>
-                        <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                        <AlertDialogTitle>{t('common.areYouSure')}</AlertDialogTitle>
                         <AlertDialogDescription>
-                          This action cannot be undone. This will permanently cancel your appointment.
+                          {t('appointments.cancelDialogDescription')}
                         </AlertDialogDescription>
                       </AlertDialogHeader>
                       <AlertDialogFooter>
-                        <AlertDialogCancel>Go Back</AlertDialogCancel>
+                        <AlertDialogCancel>{t('common.goBack')}</AlertDialogCancel>
                         <AlertDialogAction onClick={() => handleCancelAppointment(i)}>
-                          Yes, Cancel
+                          {t('common.yesCancel')}
                         </AlertDialogAction>
                       </AlertDialogFooter>
                     </AlertDialogContent>
@@ -266,9 +268,9 @@ export default function AppointmentsPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Past Appointments</CardTitle>
+            <CardTitle>{t('appointments.past.title')}</CardTitle>
             <CardDescription>
-              Review your previous consultation history.
+              {t('appointments.past.description')}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -286,15 +288,15 @@ export default function AppointmentsPage() {
                 </div>
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
-                    <Button variant="outline">View Report</Button>
+                    <Button variant="outline">{t('appointments.past.viewReport')}</Button>
                   </AlertDialogTrigger>
                   <AlertDialogContent className="max-w-2xl">
                     <AlertDialogHeader>
                       <AlertDialogTitle className="font-headline text-2xl">
-                        Medical Report
+                        {t('appointments.report.title')}
                       </AlertDialogTitle>
                       <AlertDialogDescription>
-                        Consultation with {appt.doctor} on {appt.time}.
+                        {t('appointments.report.subtitle', {doctor: appt.doctor, time: appt.time})}
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <Separator />
@@ -302,26 +304,26 @@ export default function AppointmentsPage() {
                       <div className="grid grid-cols-3 gap-2">
                         <div>
                           <p className="font-semibold text-muted-foreground">
-                            Patient Name
+                            {t('appointments.report.patientName')}
                           </p>
                           <p>{appt.report.patient}</p>
                         </div>
                         <div>
                           <p className="font-semibold text-muted-foreground">
-                            Age
+                            {t('appointments.report.age')}
                           </p>
                           <p>{appt.report.age}</p>
                         </div>
                         <div>
                           <p className="font-semibold text-muted-foreground">
-                            Gender
+                            {t('appointments.report.gender')}
                           </p>
                           <p>{appt.report.gender}</p>
                         </div>
                       </div>
                       <div>
                         <p className="font-semibold text-muted-foreground">
-                          Diagnosis
+                          {t('appointments.report.diagnosis')}
                         </p>
                         <p className="font-bold text-primary">
                           {appt.report.diagnosis}
@@ -329,26 +331,26 @@ export default function AppointmentsPage() {
                       </div>
                       <div>
                         <p className="font-semibold text-muted-foreground">
-                          Doctor's Notes
+                          {t('appointments.report.notes')}
                         </p>
                         <p>{appt.report.notes}</p>
                       </div>
                       <div>
                         <p className="font-semibold text-muted-foreground">
-                          Prescription
+                          {t('appointments.report.prescription')}
                         </p>
                         <p>{appt.report.prescription}</p>
                       </div>
                       <div>
                         <p className="font-semibold text-muted-foreground">
-                          Follow-up Advice
+                          {t('appointments.report.followUp')}
                         </p>
                         <p>{appt.report.followUp}</p>
                       </div>
                     </div>
                     <Separator />
                     <AlertDialogFooter>
-                      <AlertDialogAction>Close</AlertDialogAction>
+                      <AlertDialogAction>{t('common.close')}</AlertDialogAction>
                     </AlertDialogFooter>
                   </AlertDialogContent>
                 </AlertDialog>

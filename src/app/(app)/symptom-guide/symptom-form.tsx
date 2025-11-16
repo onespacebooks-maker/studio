@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useActionState, useEffect, useRef } from 'react';
@@ -24,6 +25,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { Separator } from '@/components/ui/separator';
+import { useTranslation } from '@/context/LanguageContext';
 
 const initialState = {
   data: null,
@@ -32,16 +34,17 @@ const initialState = {
 
 function SubmitButton() {
   const { pending } = useFormStatus();
+  const { t } = useTranslation();
 
   return (
     <Button type="submit" disabled={pending} className="w-full sm:w-auto">
       {pending ? (
         <>
           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          Analyzing...
+          {t('symptomGuide.form.submitButton.pending')}
         </>
       ) : (
-        'Get Suggestion'
+        t('symptomGuide.form.submitButton.default')
       )}
     </Button>
   );
@@ -53,6 +56,7 @@ export function SymptomForm() {
     initialState
   );
   const formRef = useRef<HTMLFormElement>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (state.data) {
@@ -64,11 +68,11 @@ export function SymptomForm() {
     <div className="space-y-6">
       <form ref={formRef} action={formAction} className="space-y-4">
         <div className="grid w-full gap-1.5">
-          <Label htmlFor="symptoms">Describe your symptoms</Label>
+          <Label htmlFor="symptoms">{t('symptomGuide.form.label')}</Label>
           <Textarea
             name="symptoms"
             id="symptoms"
-            placeholder="e.g., 'I have a persistent cough, chest pain, and difficulty breathing for the last 3 days.'"
+            placeholder={t('symptomGuide.form.placeholder')}
             rows={5}
             required
             minLength={10}
@@ -76,7 +80,7 @@ export function SymptomForm() {
         </div>
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <p className="text-xs text-muted-foreground">
-            Please be as descriptive as possible for a better suggestion.
+            {t('symptomGuide.form.infoNote')}
           </p>
           <SubmitButton />
         </div>
@@ -85,7 +89,7 @@ export function SymptomForm() {
       {state.error && (
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
-          <AlertTitle>Error</AlertTitle>
+          <AlertTitle>{t('common.error')}</AlertTitle>
           <AlertDescription>{state.error}</AlertDescription>
         </Alert>
       )}
@@ -96,27 +100,27 @@ export function SymptomForm() {
             <div className="flex items-center gap-2">
               <CheckCircle2 className="h-6 w-6 text-green-600" />
               <CardTitle className="font-headline text-xl">
-                Suggestion Received
+                {t('symptomGuide.results.title')}
               </CardTitle>
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
               <p className="font-semibold text-muted-foreground">
-                Suggested Department
+                {t('symptomGuide.results.suggestedDepartment')}
               </p>
               <p className="text-2xl font-bold text-primary">
                 {state.data.suggestedDepartment}
               </p>
             </div>
             <div>
-              <p className="font-semibold text-muted-foreground">Reasoning</p>
+              <p className="font-semibold text-muted-foreground">{t('symptomGuide.results.reasoning')}</p>
               <p className="text-foreground">{state.data.reasoning}</p>
             </div>
             <Separator />
             <div>
               <p className="font-semibold text-muted-foreground">
-                Immediate Care Advice
+                {t('symptomGuide.results.careAdvice')}
               </p>
               <div
                 className="prose prose-sm text-foreground max-w-none"
@@ -132,11 +136,9 @@ export function SymptomForm() {
             </div>
             <Alert>
               <Lightbulb className="h-4 w-4" />
-              <AlertTitle>Disclaimer</AlertTitle>
+              <AlertTitle>{t('common.disclaimer')}</AlertTitle>
               <AlertDescription>
-                This is an AI-powered suggestion and not a medical diagnosis.
-                Please consult a qualified healthcare professional for an
-                accurate diagnosis and treatment.
+                {t('symptomGuide.results.disclaimer')}
               </AlertDescription>
             </Alert>
           </CardContent>
@@ -144,7 +146,7 @@ export function SymptomForm() {
             <CardFooter>
               <Button asChild className="w-full">
                 <Link href="/appointments">
-                  Schedule Appointment <ArrowRight className="ml-2 h-4 w-4" />
+                  {t('symptomGuide.results.scheduleButton')} <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
             </CardFooter>

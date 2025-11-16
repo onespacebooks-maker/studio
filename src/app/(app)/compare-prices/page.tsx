@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Header } from '@/components/header';
@@ -19,6 +20,7 @@ import {
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { IndianRupeeIcon } from '@/components/ui/IndianRupeeIcon';
+import { useTranslation } from '@/context/LanguageContext';
 
 const priceData = [
   {
@@ -71,25 +73,25 @@ const formatCurrency = (amount: number) => {
 };
 
 export default function ComparePricesPage() {
+    const { t } = useTranslation();
   return (
     <>
-      <Header title="Treatment Prices" />
+      <Header title={t('prices.headerTitle')} />
       <main className="flex-1 space-y-8 p-4 md:p-8">
         <Card>
           <CardHeader>
-            <CardTitle>Your Covered Treatment Prices</CardTitle>
+            <CardTitle>{t('prices.pageTitle')}</CardTitle>
             <CardDescription>
-              Review the estimated costs for common medical procedures with your
-              insurance plan.
+              {t('prices.pageDescription')}
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Procedure</TableHead>
+                  <TableHead>{t('prices.table.procedure')}</TableHead>
                   <TableHead className="text-right text-primary font-semibold">
-                    Your Price (with Insurance)
+                    {t('prices.table.yourPrice')}
                   </TableHead>
                 </TableRow>
               </TableHeader>
@@ -115,8 +117,7 @@ export default function ComparePricesPage() {
           </CardContent>
           <CardFooter>
             <p className="text-xs text-muted-foreground">
-              *Prices are estimates and may vary based on hospital, room type,
-              and specific medical needs.
+              {t('prices.footerNote')}
             </p>
           </CardFooter>
         </Card>
