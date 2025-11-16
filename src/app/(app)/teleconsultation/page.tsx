@@ -6,11 +6,24 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { AnimatedVideoIcon } from '@/components/ui/animated-video-icon';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { useToast } from '@/hooks/use-toast';
 
 const doctors = [
   {
@@ -48,6 +61,15 @@ const doctors = [
 ];
 
 export default function TeleconsultationPage() {
+    const { toast } = useToast();
+
+    const handleBookCall = (doctorName: string) => {
+        toast({
+            title: 'Teleconsultation Booked!',
+            description: `Your video call with ${doctorName} has been scheduled.`,
+        });
+    };
+
   return (
     <>
       <Header title="Teleconsultation" />
@@ -65,7 +87,7 @@ export default function TeleconsultationPage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {doctors.map((doc) => (
-            <Card key={doc.name}>
+            <Card key={doc.name} className="flex flex-col">
               <CardHeader className="items-center">
                 <Avatar className="w-24 h-24 mb-4">
                   <AvatarImage
@@ -77,7 +99,7 @@ export default function TeleconsultationPage() {
                 <CardTitle>{doc.name}</CardTitle>
                 <CardDescription>{doc.speciality}</CardDescription>
               </CardHeader>
-              <CardContent className="text-sm text-center space-y-2">
+              <CardContent className="text-sm text-center space-y-2 flex-grow">
                 <p className="text-muted-foreground">
                   {doc.experience} of experience
                 </p>
@@ -94,12 +116,30 @@ export default function TeleconsultationPage() {
                   {doc.availability}
                 </p>
               </CardContent>
-              <CardContent>
-                <Button className="w-full">
-                  <AnimatedVideoIcon className="mr-2 h-4 w-4" />
-                  Book Call
-                </Button>
-              </CardContent>
+              <CardFooter>
+                 <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                        <Button className="w-full">
+                        <AnimatedVideoIcon className="mr-2 h-4 w-4" />
+                        Book Call
+                        </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                        <AlertDialogTitle>Confirm Video Consultation</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            Are you sure you want to book a video call with {doc.name}?
+                        </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction onClick={() => handleBookCall(doc.name)}>
+                            Confirm Booking
+                        </AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
+              </CardFooter>
             </Card>
           ))}
         </div>
