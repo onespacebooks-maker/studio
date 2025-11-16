@@ -92,9 +92,13 @@ const pastAppointments = [
 
 const doctors = [
     { value: 'dr-sharma', label: 'Dr. Anjali Sharma (Cardiologist)', speciality: 'Cardiologist', hospital: 'Apollo Hospital, Delhi' },
+    { value: 'dr-reddy', label: 'Dr. Arjun Reddy (Cardiologist)', speciality: 'Cardiologist', hospital: 'Fortis Hospital, Delhi' },
     { value: 'dr-singh', label: 'Dr. Vikram Singh (Dermatologist)', speciality: 'Dermatologist', hospital: 'Fortis Clinic, Mumbai' },
+    { value: 'dr-gupta', label: 'Dr. Isha Gupta (Dermatologist)', speciality: 'Dermatologist', hospital: 'Max Healthcare, Mumbai' },
     { value: 'dr-mehta', label: 'Dr. Priya Mehta (Pediatrician)', speciality: 'Pediatrician', hospital: 'Max Healthcare, Bangalore' },
+    { value: 'dr-khan', label: 'Dr. Sameer Khan (Pediatrician)', speciality: 'Pediatrician', hospital: 'Rainbow Children\'s Hospital, Bangalore' },
     { value: 'dr-desai', label: 'Dr. Rohan Desai (Orthopedist)', speciality: 'Orthopedist', hospital: 'City Hospital, Pune' },
+    { value: 'dr-verma', label: 'Dr. Alok Verma (Orthopedist)', speciality: 'Orthopedist', hospital: 'Sancheti Hospital, Pune' },
 ]
 
 const timeSlots = [
@@ -400,5 +404,3 @@ export default function AppointmentsPage() {
     </>
   );
 }
-
-    

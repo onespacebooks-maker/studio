@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Header } from '@/components/header';
@@ -51,6 +52,14 @@ const initialDoctors: Doctor[] = [
     availability: 'Available in 15 mins',
     avatarSeed: 'doc1',
   },
+    {
+    name: 'Dr. Rohan Kumar',
+    speciality: 'General Physician',
+    experience: '10 years',
+    languages: 'English, Hindi, Punjabi',
+    availability: 'Available tomorrow',
+    avatarSeed: 'doc7',
+  },
   {
     name: 'Dr. Arjun Reddy',
     speciality: 'Dermatologist',
@@ -58,6 +67,14 @@ const initialDoctors: Doctor[] = [
     languages: 'English, Telugu',
     availability: 'Available Now',
     avatarSeed: 'doc2',
+  },
+    {
+    name: 'Dr. Isha Gupta',
+    speciality: 'Dermatologist',
+    experience: '6 years',
+    languages: 'English, Hindi',
+    availability: 'Available Now',
+    avatarSeed: 'doc8',
   },
   {
     name: 'Dr. Meera Iyer',
@@ -68,12 +85,60 @@ const initialDoctors: Doctor[] = [
     avatarSeed: 'doc3',
   },
   {
+    name: 'Dr. Anand Desai',
+    speciality: 'Psychiatrist',
+    experience: '18 years',
+    languages: 'English, Gujarati, Hindi',
+    availability: 'Available in 30 mins',
+    avatarSeed: 'doc9',
+  },
+  {
     name: 'Dr. Sameer Khan',
     speciality: 'Pediatrician',
     experience: '10 years',
     languages: 'English, Hindi, Marathi',
     availability: 'Available Now',
     avatarSeed: 'doc4',
+  },
+  {
+    name: 'Dr. Priya Mehta',
+    speciality: 'Pediatrician',
+    experience: '7 years',
+    languages: 'English, Hindi',
+    availability: 'Available tomorrow',
+    avatarSeed: 'doc10',
+  },
+  {
+    name: 'Dr. Rina Patel',
+    speciality: 'Gynecologist',
+    experience: '14 years',
+    languages: 'English, Gujarati',
+    availability: 'Available Now',
+    avatarSeed: 'doc5',
+  },
+    {
+    name: 'Dr. Sunita Rao',
+    speciality: 'Gynecologist',
+    experience: '20 years',
+    languages: 'English, Kannada, Telugu',
+    availability: 'Available tomorrow',
+    avatarSeed: 'doc11',
+  },
+  {
+    name: 'Dr. Alok Verma',
+    speciality: 'Orthopedist',
+    experience: '11 years',
+    languages: 'English, Hindi',
+    availability: 'Available in 20 mins',
+    avatarSeed: 'doc6',
+  },
+  {
+    name: 'Dr. Rohan Desai',
+    speciality: 'Orthopedist',
+    experience: '9 years',
+    languages: 'English, Marathi, Hindi',
+    availability: 'Available Now',
+    avatarSeed: 'doc12',
   },
 ];
 
