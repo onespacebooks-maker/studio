@@ -11,7 +11,7 @@ export type User = {
 
 type AuthContextType = {
   user: User | null;
-  signIn: (userData: {email: string; name?: string; isSignUp?: boolean}) => boolean;
+  signIn: (userData: {email: string; username?: string; isSignUp?: boolean}) => boolean;
   signOut: () => void;
   isAuthenticated: boolean;
   isLoading: boolean;
@@ -26,30 +26,31 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     // On initial load, try to get user from local storage
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      try {
+    try {
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
         setUser(JSON.parse(storedUser));
-      } catch (error) {
-        console.error("Invalid user data in storage:", error);
-        localStorage.removeItem('user');
       }
+    } catch (error) {
+      console.error("Invalid user data in storage:", error);
+      localStorage.removeItem('user');
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }, []);
 
-  const signIn = (userData: {email: string; name?: string; isSignUp?: boolean}) => {
-    const { email, name, isSignUp } = userData;
+  const signIn = (userData: {email: string; username?: string; isSignUp?: boolean}) => {
+    const { email, username, isSignUp } = userData;
     try {
       // Handle signup
       if (isSignUp) {
-        if (!name) return false; // Name is required for signup
+        if (!username) return false; // Name is required for signup
         const newUser: User = {
-          name: name,
+          name: username,
           email: email,
         };
-        setUser(newUser);
         localStorage.setItem('user', JSON.stringify(newUser));
+        setUser(newUser);
         router.push('/dashboard');
         return true;
       }
@@ -59,7 +60,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (storedUser) {
         const existingUser: User = JSON.parse(storedUser);
         // Check if both email and name match
-        if (existingUser.email === email && existingUser.name === name) {
+        if (existingUser.email === email && existingUser.name === username) {
           setUser(existingUser);
           router.push('/dashboard');
           return true; // Login successful

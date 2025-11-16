@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -28,14 +28,7 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
-  const { user, signIn, isAuthenticated, isLoading: isAuthLoading } = useAuth();
-
-  useEffect(() => {
-    // Redirect to dashboard only if auth has loaded and user is authenticated.
-    if (!isAuthLoading && isAuthenticated) {
-      router.push('/dashboard');
-    }
-  }, [isAuthenticated, isAuthLoading, router]);
+  const { signIn } = useAuth();
 
   const handleEmailLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,7 +43,7 @@ export default function LoginPage() {
                 title: 'Login Successful',
                 description: 'Welcome back!',
             });
-            // The useEffect will handle the redirect
+            // Redirect is handled by AuthContext
         } else {
             setError("Login failed. The username and email do not match any registered user. Please check your credentials or sign up.");
         }
@@ -58,15 +51,6 @@ export default function LoginPage() {
     }, 1000);
   };
   
-  // While checking auth state, or if user is already logged in, show a loader
-  if (isAuthLoading || isAuthenticated) {
-      return (
-        <div className="flex min-h-screen items-center justify-center bg-background p-4">
-            <Loader2 className="h-8 w-8 animate-spin" />
-        </div>
-      );
-  }
-
   return (
     <div className="flex min-h-screen items-center justify-center bg-background p-4">
       <Card className="w-full max-w-md">
