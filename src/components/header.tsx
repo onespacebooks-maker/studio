@@ -26,7 +26,7 @@ import { AnimatedVideoIcon } from './ui/animated-video-icon';
 import { AnimatedWalletIcon } from './ui/animated-wallet-icon';
 import { motion } from 'framer-motion';
 import { AnimatedPillIcon } from './ui/animated-pill-icon';
-import { Stethoscope } from 'lucide-react';
+import { FileText, Stethoscope } from 'lucide-react';
 
 const navItems = [
   { href: '/dashboard', icon: AnimatedDashboardIcon, label: 'Dashboard' },
@@ -48,6 +48,7 @@ const navItems = [
     label: 'Teleconsultation',
   },
   { href: '/wallet', icon: AnimatedWalletIcon, label: 'Health Wallet' },
+  { href: '/government-policies', icon: () => <FileText className="h-5 w-5" />, label: 'Government Policies' },
 ];
 
 export function Header({ title }: { title: string }) {
