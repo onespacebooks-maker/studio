@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -28,7 +28,14 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
-  const { signIn } = useAuth();
+  const { signIn, isAuthenticated, isLoading: isAuthLoading } = useAuth();
+
+  useEffect(() => {
+    // Redirect if already authenticated and not loading
+    if (!isAuthLoading && isAuthenticated) {
+      router.push('/dashboard');
+    }
+  }, [isAuthenticated, isAuthLoading, router]);
 
   const handleEmailLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,9 +48,9 @@ export default function LoginPage() {
         if (success) {
             toast({
                 title: 'Login Successful',
-                description: 'Welcome back!',
+                description: 'Welcome back! Redirecting...',
             });
-            // Redirect is handled by AuthContext
+            // Redirect is handled by the useEffect hook
         } else {
             setError("Login failed. The username and email do not match any registered user. Please check your credentials or sign up.");
         }

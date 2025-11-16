@@ -51,7 +51,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         };
         localStorage.setItem('user', JSON.stringify(newUser));
         setUser(newUser);
-        router.push('/dashboard');
         return true;
       }
 
@@ -59,10 +58,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const storedUser = localStorage.getItem('user');
       if (storedUser) {
         const existingUser: User = JSON.parse(storedUser);
-        // Check if both email and name match
+        // Check if both email and username match
         if (existingUser.email === email && existingUser.name === username) {
           setUser(existingUser);
-          router.push('/dashboard');
           return true; // Login successful
         }
       }
