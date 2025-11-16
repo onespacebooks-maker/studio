@@ -11,7 +11,7 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 
-export const PolicySuggestionInputSchema = z.object({
+const PolicySuggestionInputSchema = z.object({
   name: z.string().describe('The full name of the user.'),
   age: z.number().describe('The age of the user.'),
   gender: z.string().describe('The gender of the user.'),
@@ -21,7 +21,7 @@ export const PolicySuggestionInputSchema = z.object({
 });
 export type PolicySuggestionInput = z.infer<typeof PolicySuggestionInputSchema>;
 
-export const PolicySuggestionSchema = z.object({
+const PolicySuggestionSchema = z.object({
     policyName: z.string().describe("The official name of the government policy."),
     description: z.string().describe("A brief description of the policy."),
     isEligible: z.boolean().describe("Whether the user is likely eligible for this policy based on the provided details."),
@@ -30,7 +30,7 @@ export const PolicySuggestionSchema = z.object({
 });
 export type PolicySuggestion = z.infer<typeof PolicySuggestionSchema>;
 
-export const PolicySuggestionOutputSchema = z.object({
+const PolicySuggestionOutputSchema = z.object({
   policies: z.array(PolicySuggestionSchema),
 });
 export type PolicySuggestionOutput = z.infer<

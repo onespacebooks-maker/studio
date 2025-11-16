@@ -3,9 +3,19 @@
 import {
   getPolicySuggestions,
   type PolicySuggestionInput,
-  type PolicySuggestion,
 } from '@/ai/flows/government-policy-flow';
 import { z } from 'zod';
+
+
+const PolicySuggestionSchema = z.object({
+  policyName: z.string().describe("The official name of the government policy."),
+  description: z.string().describe("A brief description of the policy."),
+  isEligible: z.boolean().describe("Whether the user is likely eligible for this policy based on the provided details."),
+  eligibilityReason: z.string().describe("A clear, concise explanation of why the user is or is not eligible for this policy, referencing their specific data (e.g., 'Eligible because income is below the threshold for this scheme.' or 'Not eligible because this scheme is only for residents of Kerala.')."),
+  bonds: z.array(z.string()).optional().describe("A list of key benefits, requirements, or commitments associated with the policy if the user is eligible. For example, 'Provides health coverage up to 5 lakh per family per year.'"),
+});
+
+export type PolicySuggestion = z.infer<typeof PolicySuggestionSchema>;
 
 const PolicySchema = z.object({
   name: z.string().min(1, "Name is required."),
