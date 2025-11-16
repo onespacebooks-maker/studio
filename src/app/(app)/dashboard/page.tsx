@@ -21,6 +21,7 @@ import { motion } from 'framer-motion';
 import { IndianRupeeIcon } from '@/components/ui/IndianRupeeIcon';
 import { AnimatedPillIcon } from '@/components/ui/animated-pill-icon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useAppointments } from '@/context/AppointmentContext';
 
 const formatCurrency = (amount: number) => {
   return `₹${amount.toLocaleString('en-IN', {
@@ -56,20 +57,6 @@ const quickAccess = [
   },
 ];
 
-const appointments = [
-  {
-    doctor: 'Dr. Anjali Sharma',
-    speciality: 'Cardiologist',
-    time: 'Tomorrow, 10:30 AM',
-    hospital: 'Apollo Hospital',
-  },
-  {
-    doctor: 'Dr. Vikram Singh',
-    speciality: 'Dermatologist',
-    time: 'June 28, 2024, 3:00 PM',
-    hospital: 'Fortis Clinic',
-  },
-];
 
 const recentTeleconsultations = [
   { name: 'Dr. Arjun Reddy', speciality: 'Dermatologist', date: '1 day ago', avatarSeed: 'doc2' },
@@ -77,6 +64,8 @@ const recentTeleconsultations = [
 ]
 
 export default function DashboardPage() {
+  const { upcomingAppointments } = useAppointments();
+  
   return (
     <>
       <Header title="Dashboard" />
@@ -111,9 +100,9 @@ export default function DashboardPage() {
               </motion.div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">2</div>
+              <div className="text-2xl font-bold">{upcomingAppointments.length}</div>
               <p className="text-xs text-muted-foreground">
-                Dr. Sharma tomorrow
+                {upcomingAppointments.length > 0 ? `Next: ${upcomingAppointments[0].doctor.split('(')[0]}` : 'No appointments'}
               </p>
             </CardContent>
           </Card>
@@ -167,20 +156,20 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {appointments.map((appt, i) => (
+                {upcomingAppointments.slice(0, 2).map((appt, i) => (
                   <div
                     key={i}
                     className="flex items-center justify-between p-3 bg-secondary/50 rounded-lg"
                   >
                     <div>
                       <p className="font-semibold">
-                        {appt.doctor} ({appt.speciality})
+                        {appt.doctor}
                       </p>
                       <p className="text-sm text-muted-foreground">
-                        {appt.time}
+                        {appt.speciality}
                       </p>
                       <p className="text-sm text-muted-foreground">
-                        {appt.hospital}
+                        {appt.time} at {appt.hospital}
                       </p>
                     </div>
                     <Button variant="outline" size="sm" asChild>
@@ -188,6 +177,9 @@ export default function DashboardPage() {
                     </Button>
                   </div>
                 ))}
+                {upcomingAppointments.length === 0 && (
+                    <p className="text-muted-foreground text-center py-4">No upcoming appointments.</p>
+                )}
               </div>
             </CardContent>
             <CardFooter>

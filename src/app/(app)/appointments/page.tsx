@@ -49,57 +49,7 @@ import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
-
-const initialUpcomingAppointments = [
-  {
-    doctor: 'Dr. Anjali Sharma',
-    speciality: 'Cardiologist',
-    time: 'Tomorrow at 10:30 AM',
-    hospital: 'Apollo Hospital, Delhi',
-  },
-  {
-    doctor: 'Dr. Vikram Singh',
-    speciality: 'Dermatologist',
-    time: 'June 28, 2024 at 3:00 PM',
-    hospital: 'Fortis Clinic, Mumbai',
-  },
-  {
-    doctor: 'Dr. Priya Mehta (for Aarav)',
-    speciality: 'Pediatrician',
-    time: 'July 2, 2024 at 11:00 AM',
-    hospital: 'Max Healthcare, Bangalore',
-  },
-];
-
-const pastAppointments = [
-  {
-    doctor: 'Dr. Rohan Desai',
-    speciality: 'Orthopedist',
-    time: 'May 15, 2024',
-    hospital: 'City Hospital, Pune',
-    report: {
-      patient: 'Rohan Sharma',
-      age: 42,
-      gender: 'Male',
-      diagnosis: 'Left Knee - Grade 2 Meniscus Tear',
-      notes:
-        'Patient reported sharp pain and swelling in the left knee after a fall. MRI confirms a grade 2 tear of the medial meniscus. Advised conservative treatment with physiotherapy for 6 weeks. NSAIDs prescribed for pain management. Follow-up scheduled to assess progress and determine if surgical intervention is necessary.',
-      prescription: 'Ibuprofen 400mg (as needed for pain)',
-      followUp: 'Follow-up appointment in 6 weeks.',
-    },
-  },
-];
-
-const doctors = [
-    { value: 'dr-sharma', label: 'Dr. Anjali Sharma (Cardiologist)', speciality: 'Cardiologist', hospital: 'Apollo Hospital, Delhi' },
-    { value: 'dr-reddy', label: 'Dr. Arjun Reddy (Cardiologist)', speciality: 'Cardiologist', hospital: 'Fortis Hospital, Delhi' },
-    { value: 'dr-singh', label: 'Dr. Vikram Singh (Dermatologist)', speciality: 'Dermatologist', hospital: 'Fortis Clinic, Mumbai' },
-    { value: 'dr-gupta', label: 'Dr. Isha Gupta (Dermatologist)', speciality: 'Dermatologist', hospital: 'Max Healthcare, Mumbai' },
-    { value: 'dr-mehta', label: 'Dr. Priya Mehta (Pediatrician)', speciality: 'Pediatrician', hospital: 'Max Healthcare, Bangalore' },
-    { value: 'dr-khan', label: 'Dr. Sameer Khan (Pediatrician)', speciality: 'Pediatrician', hospital: 'Rainbow Children\'s Hospital, Bangalore' },
-    { value: 'dr-desai', label: 'Dr. Rohan Desai (Orthopedist)', speciality: 'Orthopedist', hospital: 'City Hospital, Pune' },
-    { value: 'dr-verma', label: 'Dr. Alok Verma (Orthopedist)', speciality: 'Orthopedist', hospital: 'Sancheti Hospital, Pune' },
-]
+import { useAppointments } from '@/context/AppointmentContext';
 
 const timeSlots = [
     '09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM',
@@ -107,7 +57,8 @@ const timeSlots = [
 ];
 
 export default function AppointmentsPage() {
-  const [upcomingAppointments, setUpcomingAppointments] = useState(initialUpcomingAppointments);
+  const { upcomingAppointments, pastAppointments, doctors, addAppointment, cancelAppointment } = useAppointments();
+  
   const [date, setDate] = useState<Date | undefined>();
   const [time, setTime] = useState('');
   const [patientName, setPatientName] = useState('');
@@ -136,7 +87,7 @@ export default function AppointmentsPage() {
         hospital: doctorInfo.hospital,
     };
     
-    setUpcomingAppointments(prev => [...prev, newAppointment]);
+    addAppointment(newAppointment);
 
     toast({
       title: 'Appointment Booked!',
@@ -152,7 +103,7 @@ export default function AppointmentsPage() {
   };
   
   const handleCancelAppointment = (indexToCancel: number) => {
-    setUpcomingAppointments(prev => prev.filter((_, i) => i !== indexToCancel));
+    cancelAppointment(indexToCancel);
     toast({
         title: 'Appointment Canceled',
         description: 'The appointment has been successfully removed.',
