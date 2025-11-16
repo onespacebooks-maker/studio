@@ -44,7 +44,6 @@ export default function LoginPage() {
     // Simulate authentication
     setTimeout(() => {
         // This now correctly uses the signIn function from context
-        // without a hardcoded password check.
         signIn({ email });
         toast({
             title: 'Login Successful',

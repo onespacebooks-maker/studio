@@ -36,9 +36,9 @@ export default function SignupPage() {
     setIsLoading(true);
     setError('');
 
-    // Simulate signup
+    // In a real app, you'd use Firebase Auth here to create a user
+    // For this simulation, we'll just sign them in directly.
     setTimeout(() => {
-      // In a real app, you'd use Firebase Auth here to create a user
       signIn({ email, name });
       toast({
         title: 'Account Created!',
