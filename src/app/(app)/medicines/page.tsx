@@ -14,57 +14,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { SearchIcon, PlusIcon } from 'lucide-react';
 import { IndianRupeeIcon } from '@/components/ui/IndianRupeeIcon';
-
-const allMedicines = [
-  {
-    name: 'Paracetamol 500mg',
-    manufacturer: 'Cipla Ltd.',
-    packSize: '15 tablets',
-    price: 25.5,
-  },
-  {
-    name: 'Atorvastatin 10mg',
-    manufacturer: 'Sun Pharma',
-    packSize: '10 tablets',
-    price: 90.0,
-  },
-  {
-    name: 'Metformin 500mg',
-    manufacturer: 'Mankind Pharma',
-    packSize: '10 tablets',
-    price: 30.0,
-  },
-  {
-    name: 'Amlodipine 5mg',
-    manufacturer: 'Dr. Reddy\'s Labs',
-    packSize: '30 tablets',
-    price: 65.0,
-  },
-  {
-    name: 'Omeprazole 20mg',
-    manufacturer: 'Zydus Cadila',
-    packSize: '15 capsules',
-    price: 55.0,
-  },
-  {
-    name: 'Levocetirizine 5mg',
-    manufacturer: 'Glenmark Pharma',
-    packSize: '10 tablets',
-    price: 45.0,
-  },
-  {
-    name: 'Telmisartan 40mg',
-    manufacturer: 'Lupin Ltd.',
-    packSize: '15 tablets',
-    price: 150.0,
-  },
-  {
-    name: 'Azithromycin 500mg',
-    manufacturer: 'Alembic Pharma',
-    packSize: '3 tablets',
-    price: 119.5,
-  },
-];
+import { useAppContext } from '@/context/AppContext';
 
 const formatCurrency = (amount: number) => {
   return amount.toLocaleString('en-IN', {
@@ -75,8 +25,9 @@ const formatCurrency = (amount: number) => {
 
 export default function MedicinesPage() {
   const [searchTerm, setSearchTerm] = useState('');
+  const { medicines } = useAppContext();
 
-  const filteredMedicines = allMedicines.filter((med) =>
+  const filteredMedicines = medicines.filter((med) =>
     med.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 

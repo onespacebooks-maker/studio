@@ -33,114 +33,7 @@ import { CalendarIcon } from 'lucide-react';
 import { format } from 'date-fns';
 import { Calendar } from '@/components/ui/calendar';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-
-type Doctor = {
-  name: string;
-  speciality: string;
-  experience: string;
-  languages: string;
-  availability: string;
-  avatarSeed: string;
-};
-
-const initialDoctors: Doctor[] = [
-  {
-    name: 'Dr. Priya Sharma',
-    speciality: 'General Physician',
-    experience: '12 years',
-    languages: 'English, Hindi',
-    availability: 'Available in 15 mins',
-    avatarSeed: 'doc1',
-  },
-    {
-    name: 'Dr. Rohan Kumar',
-    speciality: 'General Physician',
-    experience: '10 years',
-    languages: 'English, Hindi, Punjabi',
-    availability: 'Available tomorrow',
-    avatarSeed: 'doc7',
-  },
-  {
-    name: 'Dr. Arjun Reddy',
-    speciality: 'Dermatologist',
-    experience: '8 years',
-    languages: 'English, Telugu',
-    availability: 'Available Now',
-    avatarSeed: 'doc2',
-  },
-    {
-    name: 'Dr. Isha Gupta',
-    speciality: 'Dermatologist',
-    experience: '6 years',
-    languages: 'English, Hindi',
-    availability: 'Available Now',
-    avatarSeed: 'doc8',
-  },
-  {
-    name: 'Dr. Meera Iyer',
-    speciality: 'Psychiatrist',
-    experience: '15 years',
-    languages: 'English, Tamil',
-    availability: 'Available tomorrow',
-    avatarSeed: 'doc3',
-  },
-  {
-    name: 'Dr. Anand Desai',
-    speciality: 'Psychiatrist',
-    experience: '18 years',
-    languages: 'English, Gujarati, Hindi',
-    availability: 'Available in 30 mins',
-    avatarSeed: 'doc9',
-  },
-  {
-    name: 'Dr. Sameer Khan',
-    speciality: 'Pediatrician',
-    experience: '10 years',
-    languages: 'English, Hindi, Marathi',
-    availability: 'Available Now',
-    avatarSeed: 'doc4',
-  },
-  {
-    name: 'Dr. Priya Mehta',
-    speciality: 'Pediatrician',
-    experience: '7 years',
-    languages: 'English, Hindi',
-    availability: 'Available tomorrow',
-    avatarSeed: 'doc10',
-  },
-  {
-    name: 'Dr. Rina Patel',
-    speciality: 'Gynecologist',
-    experience: '14 years',
-    languages: 'English, Gujarati',
-    availability: 'Available Now',
-    avatarSeed: 'doc5',
-  },
-    {
-    name: 'Dr. Sunita Rao',
-    speciality: 'Gynecologist',
-    experience: '20 years',
-    languages: 'English, Kannada, Telugu',
-    availability: 'Available tomorrow',
-    avatarSeed: 'doc11',
-  },
-  {
-    name: 'Dr. Alok Verma',
-    speciality: 'Orthopedist',
-    experience: '11 years',
-    languages: 'English, Hindi',
-    availability: 'Available in 20 mins',
-    avatarSeed: 'doc6',
-  },
-  {
-    name: 'Dr. Rohan Desai',
-    speciality: 'Orthopedist',
-    experience: '9 years',
-    languages: 'English, Marathi, Hindi',
-    availability: 'Available Now',
-    avatarSeed: 'doc12',
-  },
-];
+import { useAppContext, type Doctor } from '@/context/AppContext';
 
 const initialPastConsultations = [
   {
@@ -162,13 +55,9 @@ const timeSlots = [
     '02:00 PM', '02:30 PM', '03:00 PM', '03:30 PM', '04:00 PM', '04:30 PM',
 ];
 
-const specialities = [
-    'All Departments',
-    ...Array.from(new Set(initialDoctors.map(d => d.speciality)))
-];
 
 export default function TeleconsultationPage() {
-  const [doctors, setDoctors] = useState(initialDoctors);
+  const { doctors, updateDoctor } = useAppContext();
   const [pastConsultations, setPastConsultations] =
     useState(initialPastConsultations);
   const { toast } = useToast();
@@ -179,6 +68,10 @@ export default function TeleconsultationPage() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [specialityFilter, setSpecialityFilter] = useState('All Departments');
 
+  const specialities = [
+    'All Departments',
+    ...Array.from(new Set(doctors.map(d => d.speciality)))
+  ];
 
   const handleBookCall = () => {
     if (!selectedDoctor) return;
@@ -193,17 +86,9 @@ export default function TeleconsultationPage() {
       return;
     }
 
-    setDoctors((prevDoctors) =>
-      prevDoctors.map((doctor) => {
-        if (
-          doctor.name === selectedDoctor.name &&
-          doctor.availability === 'Available Now'
-        ) {
-          return { ...doctor, availability: 'On a Call' };
-        }
-        return doctor;
-      })
-    );
+    if(selectedDoctor.availability === 'Available Now') {
+        updateDoctor({ ...selectedDoctor, availability: 'On a Call' });
+    }
 
     setPastConsultations((prev) => [
       {
@@ -227,18 +112,6 @@ export default function TeleconsultationPage() {
     setTime('');
   };
   
-  const handleDialogTrigger = (doctor: Doctor) => {
-    if (doctor.availability !== 'Available Now') {
-       toast({
-           title: 'Doctor Not Available',
-           description: `${doctor.name} is not available for an instant call. Please schedule for a future time.`,
-           variant: 'default'
-       });
-    }
-    setSelectedDoctor(doctor);
-    setIsDialogOpen(true);
-  }
-
   const filteredDoctors = specialityFilter === 'All Departments' 
     ? doctors 
     : doctors.filter(doc => doc.speciality === specialityFilter);
@@ -273,7 +146,7 @@ export default function TeleconsultationPage() {
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredDoctors.map((doc) => (
-              <Card key={doc.name} className="flex flex-col">
+              <Card key={doc.value} className="flex flex-col">
                 <CardHeader className="items-center">
                   <Avatar className="w-24 h-24 mb-4">
                     <AvatarImage

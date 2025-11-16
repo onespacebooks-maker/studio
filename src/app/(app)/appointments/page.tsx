@@ -49,7 +49,7 @@ import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { useAppointments } from '@/context/AppointmentContext';
+import { useAppContext } from '@/context/AppContext';
 
 const timeSlots = [
     '09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM',
@@ -57,18 +57,18 @@ const timeSlots = [
 ];
 
 export default function AppointmentsPage() {
-  const { upcomingAppointments, pastAppointments, doctors, addAppointment, cancelAppointment } = useAppointments();
+  const { upcomingAppointments, pastAppointments, doctors, addAppointment, cancelAppointment } = useAppContext();
   
   const [date, setDate] = useState<Date | undefined>();
   const [time, setTime] = useState('');
   const [patientName, setPatientName] = useState('');
-  const [selectedDoctor, setSelectedDoctor] = useState('');
+  const [selectedDoctorValue, setSelectedDoctorValue] = useState('');
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { toast } = useToast();
 
   const handleConfirmAppointment = () => {
-    if (!patientName || !selectedDoctor || !date || !time) {
+    if (!patientName || !selectedDoctorValue || !date || !time) {
         toast({
             title: 'Incomplete Information',
             description: 'Please fill out all fields to book an appointment.',
@@ -77,11 +77,11 @@ export default function AppointmentsPage() {
         return;
     }
 
-    const doctorInfo = doctors.find(d => d.value === selectedDoctor);
+    const doctorInfo = doctors.find(d => d.value === selectedDoctorValue);
     if (!doctorInfo) return;
 
     const newAppointment = {
-        doctor: patientName ? `${doctorInfo.label.split('(')[0].trim()} (for ${patientName})` : doctorInfo.label.split('(')[0].trim(),
+        doctor: patientName ? `${doctorInfo.name} (for ${patientName})` : doctorInfo.name,
         speciality: doctorInfo.speciality,
         time: `${format(date, 'MMMM d, yyyy')} at ${time}`,
         hospital: doctorInfo.hospital,
@@ -97,7 +97,7 @@ export default function AppointmentsPage() {
     
     setIsDialogOpen(false); 
     setPatientName('');
-    setSelectedDoctor('');
+    setSelectedDoctorValue('');
     setDate(undefined);
     setTime('');
   };
@@ -110,6 +110,11 @@ export default function AppointmentsPage() {
         variant: 'default',
       });
   };
+
+  const doctorOptions = doctors.map(d => ({
+      value: d.value,
+      label: `${d.name} (${d.speciality})`,
+  }));
 
   return (
     <>
@@ -145,12 +150,12 @@ export default function AppointmentsPage() {
                 </div>
                 <div className="grid w-full items-center gap-1.5">
                   <Label htmlFor="doctor">Doctor</Label>
-                  <Select value={selectedDoctor} onValueChange={setSelectedDoctor}>
+                  <Select value={selectedDoctorValue} onValueChange={setSelectedDoctorValue}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select a doctor" />
                     </SelectTrigger>
                     <SelectContent>
-                      {doctors.map(doc => (
+                      {doctorOptions.map(doc => (
                         <SelectItem key={doc.value} value={doc.value}>{doc.label}</SelectItem>
                       ))}
                     </SelectContent>

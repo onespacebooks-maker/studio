@@ -21,7 +21,7 @@ import { motion } from 'framer-motion';
 import { IndianRupeeIcon } from '@/components/ui/IndianRupeeIcon';
 import { AnimatedPillIcon } from '@/components/ui/animated-pill-icon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { useAppointments } from '@/context/AppointmentContext';
+import { useAppContext } from '@/context/AppContext';
 
 const formatCurrency = (amount: number) => {
   return `₹${amount.toLocaleString('en-IN', {
@@ -64,7 +64,7 @@ const recentTeleconsultations = [
 ]
 
 export default function DashboardPage() {
-  const { upcomingAppointments } = useAppointments();
+  const { upcomingAppointments } = useAppContext();
   
   return (
     <>

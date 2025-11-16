@@ -1,5 +1,5 @@
 import { AppSidebar } from '@/components/app-sidebar';
-import { AppointmentProvider } from '@/context/AppointmentContext';
+import { AppProvider } from '@/context/AppContext';
 
 export default function AppLayout({
   children,
@@ -7,11 +7,11 @@ export default function AppLayout({
   children: React.ReactNode;
 }) {
   return (
-    <AppointmentProvider>
+    <AppProvider>
       <div className="flex min-h-screen w-full">
         <AppSidebar />
         <div className="flex flex-col flex-1">{children}</div>
       </div>
-    </AppointmentProvider>
+    </AppProvider>
   );
 }
