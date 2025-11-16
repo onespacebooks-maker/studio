@@ -44,7 +44,7 @@ export default function LoginPage() {
 
     // Simulate authentication
     setTimeout(() => {
-        const success = signIn({ email, name });
+        const success = signIn({ email, username: name });
         if (success) {
             toast({
                 title: 'Login Successful',
