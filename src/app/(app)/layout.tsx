@@ -1,4 +1,3 @@
-
 'use client';
 
 import { AppSidebar } from '@/components/app-sidebar';
@@ -12,37 +11,16 @@ export default function AppLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
-  const [isVerifying, setIsVerifying] = useState(true);
-
-
-  useEffect(() => {
-    // This effect now correctly waits for the AuthContext to be fully resolved.
-    // The `isAuthenticated` state from the context is now the single source of truth.
-    if (isAuthenticated === false) { // Explicitly check for `false` after context has loaded
-        const token = localStorage.getItem('google-auth-token');
-        if (!token) {
-            router.replace('/');
-        } else {
-             // If there is a token but context says not authenticated yet, we might still be loading.
-             // A small delay can help if the context is slow to update.
-             const timer = setTimeout(() => {
-                if (!isAuthenticated) {
-                    // router.replace('/');
-                } else {
-                    setIsVerifying(false);
-                }
-             }, 250);
-             return () => clearTimeout(timer);
-        }
-    } else if (isAuthenticated === true) {
-        setIsVerifying(false);
-    }
-    // If isAuthenticated is null (initial state), we just wait.
-  }, [isAuthenticated, router]);
   
-  if (isVerifying && !isAuthenticated) {
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+        router.replace('/');
+    }
+  }, [isAuthenticated, isLoading, router]);
+  
+  if (isLoading || !isAuthenticated) {
     return (
         <div className="flex h-screen items-center justify-center">
             <Loader className="h-8 w-8" />
@@ -57,4 +35,3 @@ export default function AppLayout({
       </div>
   );
 }
-

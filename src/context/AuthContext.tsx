@@ -16,12 +16,14 @@ type AuthContextType = {
   signIn: (token: string) => void;
   signOut: () => void;
   isAuthenticated: boolean;
+  isLoading: boolean;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -35,6 +37,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         localStorage.removeItem('google-auth-token');
       }
     }
+    setIsLoading(false);
   }, []);
 
   const signIn = (token: string) => {
@@ -57,7 +60,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const isAuthenticated = !!user;
 
   return (
-    <AuthContext.Provider value={{ user, signIn, signOut, isAuthenticated }}>
+    <AuthContext.Provider value={{ user, signIn, signOut, isAuthenticated, isLoading }}>
       {children}
     </AuthContext.Provider>
   );
