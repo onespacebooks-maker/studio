@@ -24,8 +24,9 @@ import { Label } from '@/components/ui/label';
 import { useAppContext, type Medicine } from '@/context/AppContext';
 import { AnimatedPlusCircleIcon } from '@/components/ui/animated-plus-circle-icon';
 import { useToast } from '@/hooks/use-toast';
-import { Trash2 } from 'lucide-react';
+import { Bell, Trash2 } from 'lucide-react';
 import { IndianRupeeIcon } from '@/components/ui/IndianRupeeIcon';
+import { Badge } from '@/components/ui/badge';
 
 export function MedicinesTable() {
   const { medicines, addMedicine, updateMedicine, deleteMedicine } = useAppContext();
@@ -42,6 +43,7 @@ export function MedicinesTable() {
       manufacturer: formData.get('manufacturer') as string,
       packSize: formData.get('packSize') as string,
       price: parseFloat(formData.get('price') as string),
+      stock: parseInt(formData.get('stock') as string, 10),
     };
 
     if (editingMedicine) {
@@ -81,12 +83,25 @@ export function MedicinesTable() {
       });
   }
 
+  const handleNotifyPharmacist = (medicineName: string) => {
+    toast({
+        title: 'Notification Sent',
+        description: `The pharmacist has been notified to restock ${medicineName}.`,
+    })
+  }
+
   const formatCurrency = (amount: number) => {
     return amount.toLocaleString('en-IN', {
       maximumFractionDigits: 2,
       minimumFractionDigits: 2,
     });
   };
+
+  const getStockBadgeVariant = (stock: number): "default" | "secondary" | "destructive" => {
+    if (stock > 20) return "default";
+    if (stock > 10) return "secondary";
+    return "destructive";
+  }
 
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -102,6 +117,7 @@ export function MedicinesTable() {
             <TableRow>
               <TableHead>Name</TableHead>
               <TableHead>Manufacturer</TableHead>
+              <TableHead>Stock</TableHead>
               <TableHead className="text-right">Price</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
@@ -111,8 +127,18 @@ export function MedicinesTable() {
               <TableRow key={med.name}>
                 <TableCell className="font-medium">{med.name}</TableCell>
                 <TableCell>{med.manufacturer}</TableCell>
+                <TableCell>
+                    <Badge variant={getStockBadgeVariant(med.stock)}>
+                        {med.stock} units
+                    </Badge>
+                </TableCell>
                 <TableCell className="text-right">₹{formatCurrency(med.price)}</TableCell>
                 <TableCell className="text-right">
+                    {med.stock <= 20 && (
+                        <Button variant="ghost" size="sm" onClick={() => handleNotifyPharmacist(med.name)}>
+                            <Bell className="h-4 w-4 text-amber-500" />
+                        </Button>
+                    )}
                   <Button
                     variant="ghost"
                     size="sm"
@@ -171,6 +197,16 @@ export function MedicinesTable() {
               />
             </div>
             <div className="space-y-2">
+                <Label htmlFor="stock">Stock</Label>
+                <Input
+                    id="stock"
+                    name="stock"
+                    type="number"
+                    defaultValue={editingMedicine?.stock}
+                    required
+                />
+            </div>
+            <div className="space-y-2 col-span-2">
               <Label htmlFor="price">Price (INR)</Label>
               <div className="relative">
                 <IndianRupeeIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />

@@ -18,22 +18,31 @@ export default function AppLayout({
 
 
   useEffect(() => {
-    // This check runs on the client-side
-    // We give it a moment to ensure the auth state is settled
-    const timer = setTimeout(() => {
+    // This effect now correctly waits for the AuthContext to be fully resolved.
+    // The `isAuthenticated` state from the context is now the single source of truth.
+    if (isAuthenticated === false) { // Explicitly check for `false` after context has loaded
         const token = localStorage.getItem('google-auth-token');
-        if (!isAuthenticated && !token) {
+        if (!token) {
             router.replace('/');
         } else {
-            setIsVerifying(false);
+             // If there is a token but context says not authenticated yet, we might still be loading.
+             // A small delay can help if the context is slow to update.
+             const timer = setTimeout(() => {
+                if (!isAuthenticated) {
+                    // router.replace('/');
+                } else {
+                    setIsVerifying(false);
+                }
+             }, 250);
+             return () => clearTimeout(timer);
         }
-    }, 100); // A small delay can help prevent race conditions on initial load
-
-    return () => clearTimeout(timer);
-
+    } else if (isAuthenticated === true) {
+        setIsVerifying(false);
+    }
+    // If isAuthenticated is null (initial state), we just wait.
   }, [isAuthenticated, router]);
   
-  if (isVerifying) {
+  if (isVerifying && !isAuthenticated) {
     return (
         <div className="flex h-screen items-center justify-center">
             <Loader className="h-8 w-8" />
@@ -48,3 +57,4 @@ export default function AppLayout({
       </div>
   );
 }
+
