@@ -167,7 +167,7 @@ export function PolicyForm() {
             <div className="md:col-span-2 space-y-2">
                 <Label>Document Preview</Label>
                 <div className='relative aspect-video w-full max-w-sm mx-auto border rounded-md overflow-hidden'>
-                    <Image src={imagePreview} alt="Treatment document preview" fill={true} objectFit="contain" />
+                    <Image src={imagePreview} alt="Treatment document preview" fill={true} style={{objectFit: 'contain'}} />
                 </div>
             </div>
           )}
