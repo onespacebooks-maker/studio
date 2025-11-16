@@ -18,7 +18,6 @@ import { useToast } from '@/hooks/use-toast';
 import { HeartIcon } from '@/components/ui/HeartIcon';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle, Loader2 } from 'lucide-react';
-import { GoogleSignInButton } from '@/components/GoogleSignInButton';
 import { useAuth } from '@/context/AuthContext';
 
 export default function LoginPage() {
@@ -28,7 +27,7 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
-  const { isAuthenticated, isLoading: isAuthLoading } = useAuth();
+  const { user, signIn, isAuthenticated, isLoading: isAuthLoading } = useAuth();
 
   useEffect(() => {
     // Redirect to dashboard only if auth has loaded and user is authenticated.
@@ -42,14 +41,23 @@ export default function LoginPage() {
     setIsLoading(true);
     setError('');
 
+    // Simulate authentication
     setTimeout(() => {
-      setError('Email/Password login is not implemented. Please use Google Sign-In.');
-      toast({
-        title: 'Login Method Not Available',
-        description: 'Please sign in using your Google account.',
-        variant: 'destructive',
-      });
-      setIsLoading(false);
+        if (email === 'user@example.com' && password === 'password') {
+            signIn({ email });
+            toast({
+                title: 'Login Successful',
+                description: 'Welcome back!',
+            });
+        } else {
+            setError('Invalid email or password. Please try again.');
+            toast({
+                title: 'Login Failed',
+                description: 'Invalid email or password.',
+                variant: 'destructive',
+            });
+        }
+        setIsLoading(false);
     }, 1000);
   };
   
@@ -115,23 +123,9 @@ export default function LoginPage() {
                   Signing In...
                 </>
               ) : (
-                'Sign In with Email'
+                'Sign In'
               )}
             </Button>
-            
-            <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                    <span className="w-full border-t" />
-                </div>
-                <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-background px-2 text-muted-foreground">
-                    Or continue with
-                    </span>
-                </div>
-            </div>
-
-            <GoogleSignInButton />
-
           </CardContent>
           <CardDescription className="p-6 pt-0 text-center text-sm">
             Don't have an account?{' '}

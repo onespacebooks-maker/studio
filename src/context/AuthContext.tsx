@@ -3,7 +3,6 @@
 
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { jwtDecode } from 'jwt-decode';
 
 export type User = {
   name: string;
@@ -13,7 +12,7 @@ export type User = {
 
 type AuthContextType = {
   user: User | null;
-  signIn: (token: string) => void;
+  signIn: (user: {email: string, name?: string}) => void;
   signOut: () => void;
   isAuthenticated: boolean;
   isLoading: boolean;
@@ -27,33 +26,35 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
 
   useEffect(() => {
-    const storedToken = localStorage.getItem('google-auth-token');
-    if (storedToken) {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
       try {
-        const decodedUser: User = jwtDecode(storedToken);
-        setUser(decodedUser);
+        setUser(JSON.parse(storedUser));
       } catch (error) {
-        console.error("Invalid token:", error);
-        localStorage.removeItem('google-auth-token');
+        console.error("Invalid user data in storage:", error);
+        localStorage.removeItem('user');
       }
     }
     setIsLoading(false);
   }, []);
 
-  const signIn = (token: string) => {
+  const signIn = (userData: {email: string, name?: string}) => {
     try {
-        const decodedUser: User = jwtDecode(token);
-        setUser(decodedUser);
-        localStorage.setItem('google-auth-token', token);
+        const newUser: User = {
+            name: userData.name || userData.email.split('@')[0],
+            email: userData.email,
+        }
+        setUser(newUser);
+        localStorage.setItem('user', JSON.stringify(newUser));
         router.push('/dashboard');
     } catch (error) {
-        console.error("Failed to decode token:", error);
+        console.error("Failed to sign in:", error);
     }
   };
 
   const signOut = () => {
     setUser(null);
-    localStorage.removeItem('google-auth-token');
+    localStorage.removeItem('user');
     router.push('/');
   };
 

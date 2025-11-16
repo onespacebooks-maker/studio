@@ -18,7 +18,8 @@ import { useToast } from '@/hooks/use-toast';
 import { HeartIcon } from '@/components/ui/HeartIcon';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle, Loader2 } from 'lucide-react';
-import { GoogleSignInButton } from '@/components/GoogleSignInButton';
+import { useAuth } from '@/context/AuthContext';
+
 
 export default function SignupPage() {
   const [name, setName] = useState('');
@@ -28,6 +29,7 @@ export default function SignupPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
+  const { signIn } = useAuth();
 
   const handleSignup = (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,6 +39,7 @@ export default function SignupPage() {
     // Simulate signup
     setTimeout(() => {
       // In a real app, you'd use Firebase Auth here to create a user
+      signIn({ email, name });
       toast({
         title: 'Account Created!',
         description: "You've been successfully signed up. Redirecting...",
@@ -110,22 +113,10 @@ export default function SignupPage() {
                   Creating Account...
                 </>
               ) : (
-                'Sign Up with Email'
+                'Sign Up'
               )}
             </Button>
-            <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                    <span className="w-full border-t" />
-                </div>
-                <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-background px-2 text-muted-foreground">
-                    Or continue with
-                    </span>
-                </div>
-            </div>
             
-            <GoogleSignInButton />
-
           </CardContent>
           <CardDescription className="p-6 pt-0 text-center text-sm">
             Already have an account?{' '}

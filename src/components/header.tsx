@@ -123,7 +123,6 @@ export function Header({ title }: { title: string }) {
         <DropdownMenuTrigger asChild>
           <Button variant="secondary" size="icon" className="rounded-full">
             <Avatar>
-              <AvatarImage src={user?.picture} />
               <AvatarFallback>{user ? user.name.charAt(0) : 'G'}</AvatarFallback>
             </Avatar>
             <span className="sr-only">Toggle user menu</span>
