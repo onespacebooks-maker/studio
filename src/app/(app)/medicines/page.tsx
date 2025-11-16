@@ -13,6 +13,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { SearchIcon, PlusIcon } from 'lucide-react';
+import { IndianRupeeIcon } from '@/components/ui/IndianRupeeIcon';
 
 const allMedicines = [
   {
@@ -66,10 +67,10 @@ const allMedicines = [
 ];
 
 const formatCurrency = (amount: number) => {
-  return `₹${amount.toLocaleString('en-IN', {
+  return amount.toLocaleString('en-IN', {
     maximumFractionDigits: 2,
     minimumFractionDigits: 2,
-  })}`;
+  });
 };
 
 export default function MedicinesPage() {
@@ -115,7 +116,8 @@ export default function MedicinesPage() {
                 <p className="text-sm text-muted-foreground">
                   Pack Size: {med.packSize}
                 </p>
-                <p className="text-2xl font-bold mt-2">
+                <p className="text-2xl font-bold mt-2 flex items-center">
+                  <IndianRupeeIcon size={22} className="mr-1" />
                   {formatCurrency(med.price)}
                 </p>
               </CardContent>
