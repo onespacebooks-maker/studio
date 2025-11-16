@@ -14,6 +14,7 @@ import { AnimatedPlusCircleIcon } from '@/components/ui/animated-plus-circle-ico
 import {
   AlertDialog,
   AlertDialogAction,
+  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
@@ -139,6 +140,15 @@ export default function AppointmentsPage() {
     setDate(undefined);
   };
   
+  const handleCancelAppointment = (indexToCancel: number) => {
+    setUpcomingAppointments(prev => prev.filter((_, i) => i !== indexToCancel));
+    toast({
+        title: 'Appointment Canceled',
+        description: 'The appointment has been successfully removed.',
+        variant: 'default',
+      });
+  };
+
   return (
     <>
       <Header title="Appointments" />
@@ -245,7 +255,25 @@ export default function AppointmentsPage() {
                 </div>
                 <div className="flex gap-2">
                   <Button variant="outline">Reschedule</Button>
-                  <Button variant="ghost">Cancel</Button>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button variant="ghost">Cancel</Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          This action cannot be undone. This will permanently cancel your appointment.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Go Back</AlertDialogCancel>
+                        <AlertDialogAction onClick={() => handleCancelAppointment(i)}>
+                          Yes, Cancel
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </div>
               </div>
             ))}
