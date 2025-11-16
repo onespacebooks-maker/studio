@@ -7,12 +7,11 @@ import { useRouter } from 'next/navigation';
 export type User = {
   name: string;
   email: string;
-  picture?: string;
 };
 
 type AuthContextType = {
   user: User | null;
-  signIn: (userData: {email: string, name?: string, isSignUp?: boolean}) => boolean;
+  signIn: (userData: {email: string; name?: string; isSignUp?: boolean}) => boolean;
   signOut: () => void;
   isAuthenticated: boolean;
   isLoading: boolean;
@@ -39,17 +38,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(false);
   }, []);
 
-  const signIn = (userData: {email: string, name?: string, isSignUp?: boolean}) => {
+  const signIn = (userData: {email: string; name?: string; isSignUp?: boolean}) => {
+    const { email, name, isSignUp } = userData;
     try {
       // Handle signup
-      if (userData.isSignUp) {
-        if (!userData.name) return false; // Name is required for signup
+      if (isSignUp) {
+        if (!name) return false; // Name is required for signup
         const newUser: User = {
-          name: userData.name,
-          email: userData.email,
+          name: name,
+          email: email,
         };
         setUser(newUser);
-        // In a real app, you'd save to a DB. Here we use localStorage.
         localStorage.setItem('user', JSON.stringify(newUser));
         router.push('/dashboard');
         return true;
@@ -60,7 +59,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (storedUser) {
         const existingUser: User = JSON.parse(storedUser);
         // Check if both email and name match
-        if (existingUser.email === userData.email && existingUser.name === userData.name) {
+        if (existingUser.email === email && existingUser.name === name) {
           setUser(existingUser);
           router.push('/dashboard');
           return true; // Login successful
