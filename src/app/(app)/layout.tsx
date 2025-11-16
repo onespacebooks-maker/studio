@@ -4,7 +4,7 @@
 import { AppSidebar } from '@/components/app-sidebar';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Loader } from '@/components/ui/loader';
 
 export default function AppLayout({
