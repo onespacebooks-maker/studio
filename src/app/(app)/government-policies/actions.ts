@@ -24,6 +24,7 @@ const PolicySchema = z.object({
   location: z.string().min(1, "Location is required."),
   income: z.coerce.number().min(0, "Income must be a positive number."),
   treatmentDetails: z.string().min(15, 'Please describe the treatment in more detail.'),
+  treatmentPhotoDataUrl: z.string().optional(),
 });
 
 interface FormState {
@@ -42,6 +43,7 @@ export async function checkPolicyEligibility(
     location: formData.get('location'),
     income: formData.get('income'),
     treatmentDetails: formData.get('treatmentDetails'),
+    treatmentPhotoDataUrl: formData.get('treatmentPhotoDataUrl'),
   };
 
   const validationResult = PolicySchema.safeParse(rawData);

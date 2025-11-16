@@ -18,6 +18,7 @@ const PolicySuggestionInputSchema = z.object({
   location: z.string().describe('The state or union territory where the user resides in India.'),
   income: z.number().describe('The annual family income of the user in Indian Rupees (INR).'),
   treatmentDetails: z.string().describe('A description of the medical treatment required or the user\'s situation (e.g., disability, maternity).'),
+  treatmentPhotoDataUrl: z.string().optional().describe("A photo of a relevant treatment document, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'."),
 });
 export type PolicySuggestionInput = z.infer<typeof PolicySuggestionInputSchema>;
 
@@ -47,7 +48,7 @@ const prompt = ai.definePrompt({
   name: 'governmentPolicyPrompt',
   input: { schema: PolicySuggestionInputSchema },
   output: { schema: PolicySuggestionOutputSchema },
-  prompt: `You are an expert on Indian government health and welfare schemes. Based on the user's details, evaluate their eligibility for the following list of major central and state-specific schemes.
+  prompt: `You are an expert on Indian government health and welfare schemes. Based on the user's details and the provided treatment document, evaluate their eligibility for the following list of major central and state-specific schemes.
 
   User Details:
   - Name: {{{name}}}
@@ -55,11 +56,17 @@ const prompt = ai.definePrompt({
   - Gender: {{{gender}}}
   - Location: {{{location}}}
   - Annual Income: {{{income}}} INR
-  - Needs/Treatment: {{{treatmentDetails}}}
+  - Needs/Treatment Description: {{{treatmentDetails}}}
+  
+  {{#if treatmentPhotoDataUrl}}
+  - Uploaded Document:
+  {{media url=treatmentPhotoDataUrl}}
+  Use the information from this document as a primary source for understanding the user's medical condition or situation.
+  {{/if}}
 
   Your task is to return a list of policies. For EACH of the policies listed below, you MUST determine if the user is eligible.
   
-  Provide a clear 'eligibilityReason' for your decision on EACH policy, referencing the user's data. If they are eligible, list the key 'bonds' or benefits.
+  Provide a clear 'eligibilityReason' for your decision on EACH policy, referencing the user's data and the document if available. If they are eligible, list the key 'bonds' or benefits.
 
   List of Policies to Evaluate:
   1.  **Ayushman Bharat (PM-JAY)**:
@@ -72,7 +79,7 @@ const prompt = ai.definePrompt({
       - Key Criteria: For children from birth to 18 years.
       - Benefits: Screening and treatment for 4 'D's: Defects at birth, Deficiencies, Diseases, Development delays.
   4.  **National Policy for Persons with Disabilities**:
-      - Key Criteria: User has a disability (as can be inferred from treatment details).
+      - Key Criteria: User has a disability (as can be inferred from treatment details or the document).
       - Benefits: Varies, includes support for education, employment, and healthcare.
   5.  **Senior Citizen Health Insurance Scheme (SCHIS)**:
       - Key Criteria: For senior citizens (age 60+).

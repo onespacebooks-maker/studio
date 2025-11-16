@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState, useEffect, useRef } from 'react';
+import { useActionState, useEffect, useRef, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { checkPolicyEligibility } from './actions';
 import { Button } from '@/components/ui/button';
@@ -21,6 +21,7 @@ import {
   CheckCircle2,
   FileText,
   Loader2,
+  Upload,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import {
@@ -31,6 +32,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { IndianRupeeIcon } from '@/components/ui/IndianRupeeIcon';
+import Image from 'next/image';
 
 const initialState = {
   data: null,
@@ -71,6 +73,9 @@ export function PolicyForm() {
     initialState
   );
   const formRef = useRef<HTMLFormElement>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [photoDataUrl, setPhotoDataUrl] = useState('');
+
 
   useEffect(() => {
     if (state.data || state.error) {
@@ -78,9 +83,26 @@ export function PolicyForm() {
     }
   }, [state.data, state.error]);
 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const dataUrl = reader.result as string;
+        setImagePreview(dataUrl);
+        setPhotoDataUrl(dataUrl);
+      };
+      reader.readAsDataURL(file);
+    } else {
+        setImagePreview(null);
+        setPhotoDataUrl('');
+    }
+  };
+
   return (
     <div className="space-y-6">
       <form ref={formRef} action={formAction} className="space-y-6">
+        <input type="hidden" name="treatmentPhotoDataUrl" value={photoDataUrl} />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="grid w-full gap-1.5">
             <Label htmlFor="name">Full Name</Label>
@@ -116,12 +138,16 @@ export function PolicyForm() {
               </SelectContent>
             </Select>
           </div>
-          <div className="grid w-full gap-1.5 md:col-span-2">
+          <div className="grid w-full gap-1.5">
             <Label htmlFor="income">Annual Family Income (in INR)</Label>
             <div className='relative'>
                 <IndianRupeeIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                 <Input name="income" id="income" type="number" placeholder="e.g., 250000" required className='pl-8'/>
             </div>
+          </div>
+          <div className="grid w-full gap-1.5">
+            <Label htmlFor="treatmentPhoto">Upload Treatment Document</Label>
+            <Input name="treatmentPhoto" id="treatmentPhoto" type="file" accept="image/*" onChange={handleFileChange} />
           </div>
           <div className="grid w-full gap-1.5 md:col-span-2">
             <Label htmlFor="treatmentDetails">
@@ -131,11 +157,21 @@ export function PolicyForm() {
               name="treatmentDetails"
               id="treatmentDetails"
               placeholder="e.g., 'Requires heart bypass surgery', 'Maternity and childbirth expenses', 'Seeking support for disability'"
-              rows={4}
+              rows={3}
               required
               minLength={15}
             />
           </div>
+
+          {imagePreview && (
+            <div className="md:col-span-2 space-y-2">
+                <Label>Document Preview</Label>
+                <div className='relative aspect-video w-full max-w-sm mx-auto border rounded-md overflow-hidden'>
+                    <Image src={imagePreview} alt="Treatment document preview" layout="fill" objectFit="contain" />
+                </div>
+            </div>
+          )}
+
         </div>
 
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pt-4 border-t">
@@ -216,7 +252,7 @@ export function PolicyForm() {
               <AlertTitle>Disclaimer</AlertTitle>
               <AlertDescription>
                 This information is AI-generated and for guidance purposes only. Eligibility is determined by official government agencies. Please verify details on the official policy websites.
-              </AlertDescription>
+              </Aler_description>
             </Alert>
         </div>
       )}
