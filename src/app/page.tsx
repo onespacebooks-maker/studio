@@ -19,6 +19,8 @@ import { HeartIcon } from '@/components/ui/HeartIcon';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle, Loader2 } from 'lucide-react';
 import { GoogleSignInButton } from '@/components/GoogleSignInButton';
+import { useAuth } from '@/context/AuthContext';
+import { useEffect } from 'react';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -27,22 +29,28 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
+  const { isAuthenticated } = useAuth();
 
-  const handleLogin = (e: React.FormEvent) => {
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push('/dashboard');
+    }
+  }, [isAuthenticated, router]);
+
+
+  const handleEmailLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
 
-    // Simulate authentication
+    // This is a placeholder. In a real app, you would have email/password logic here.
     setTimeout(() => {
-        // In a real app, you'd use Firebase Auth here
-        // For now, let's just log in successfully
+        setError("Email/Password login is not implemented. Please use Google Sign-In.");
         toast({
-          title: 'Login Successful',
-          description: 'Welcome back! Redirecting to your dashboard...',
+          title: 'Login Method Not Available',
+          description: 'Please sign in using your Google account.',
+          variant: 'destructive',
         });
-        // In a real app, you would also store a user session token here
-        router.push('/dashboard');
       setIsLoading(false);
     }, 1000);
   };
@@ -50,7 +58,7 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background p-4">
       <Card className="w-full max-w-md">
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleEmailLogin}>
           <CardHeader className="text-center">
             <div className="flex justify-center items-center gap-2 mb-4">
               <HeartIcon className="text-primary" size={32} />
