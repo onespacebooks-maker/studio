@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Header } from '@/components/header';
@@ -20,7 +21,32 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import { Separator } from '@/components/ui/separator';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Calendar } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { CalendarIcon } from 'lucide-react';
+import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
+import { useState } from 'react';
 
 const upcomingAppointments = [
   {
@@ -63,6 +89,7 @@ const pastAppointments = [
 ];
 
 export default function AppointmentsPage() {
+  const [date, setDate] = useState<Date | undefined>();
   return (
     <>
       <Header title="Appointments" />
@@ -76,10 +103,75 @@ export default function AppointmentsPage() {
               View, reschedule, or book new appointments for your family.
             </p>
           </div>
-          <Button>
-            <AnimatedPlusCircleIcon className="mr-2 h-4 w-4" />
-            Book New Appointment
-          </Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button>
+                <AnimatedPlusCircleIcon className="mr-2 h-4 w-4" />
+                Book New Appointment
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-md">
+              <DialogHeader>
+                <DialogTitle>Book a New Appointment</DialogTitle>
+                <DialogDescription>
+                  Fill in the details to schedule your next visit.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-4 py-4">
+                <div className="grid w-full items-center gap-1.5">
+                  <Label htmlFor="patient">Patient Name</Label>
+                  <Input id="patient" placeholder="e.g., John Doe" />
+                </div>
+                <div className="grid w-full items-center gap-1.5">
+                  <Label htmlFor="doctor">Doctor</Label>
+                  <Select>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a doctor" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="dr-sharma">Dr. Anjali Sharma (Cardiologist)</SelectItem>
+                      <SelectItem value="dr-singh">Dr. Vikram Singh (Dermatologist)</SelectItem>
+                      <SelectItem value="dr-mehta">Dr. Priya Mehta (Pediatrician)</SelectItem>
+                      <SelectItem value="dr-desai">Dr. Rohan Desai (Orthopedist)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="grid w-full items-center gap-1.5">
+                  <Label htmlFor="date">Appointment Date</Label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant={'outline'}
+                        className={cn(
+                          'w-full justify-start text-left font-normal',
+                          !date && 'text-muted-foreground'
+                        )}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {date ? format(date, 'PPP') : <span>Pick a date</span>}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0">
+                      <Calendar
+                        mode="single"
+                        selected={date}
+                        onSelect={setDate}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+              </div>
+              <DialogFooter>
+                <DialogClose asChild>
+                  <Button type="button" variant="secondary">
+                    Cancel
+                  </Button>
+                </DialogClose>
+                <Button type="submit">Confirm Appointment</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </div>
 
         <Card>
