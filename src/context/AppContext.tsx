@@ -38,6 +38,7 @@ export type Medicine = {
   manufacturer: string;
   packSize: string;
   price: number;
+  stock: number;
 };
 
 // Context Type
@@ -116,14 +117,14 @@ const initialDoctors: Doctor[] = [
 ];
 
 const initialMedicines: Medicine[] = [
-  { name: 'Paracetamol 500mg', manufacturer: 'Cipla Ltd.', packSize: '15 tablets', price: 25.5 },
-  { name: 'Atorvastatin 10mg', manufacturer: 'Sun Pharma', packSize: '10 tablets', price: 90.0 },
-  { name: 'Metformin 500mg', manufacturer: 'Mankind Pharma', packSize: '10 tablets', price: 30.0 },
-  { name: 'Amlodipine 5mg', manufacturer: "Dr. Reddy's Labs", packSize: '30 tablets', price: 65.0 },
-  { name: 'Omeprazole 20mg', manufacturer: 'Zydus Cadila', packSize: '15 capsules', price: 55.0 },
-  { name: 'Levocetirizine 5mg', manufacturer: 'Glenmark Pharma', packSize: '10 tablets', price: 45.0 },
-  { name: 'Telmisartan 40mg', manufacturer: 'Lupin Ltd.', packSize: '15 tablets', price: 150.0 },
-  { name: 'Azithromycin 500mg', manufacturer: 'Alembic Pharma', packSize: '3 tablets', price: 119.5 },
+  { name: 'Paracetamol 500mg', manufacturer: 'Cipla Ltd.', packSize: '15 tablets', price: 25.5, stock: 150 },
+  { name: 'Atorvastatin 10mg', manufacturer: 'Sun Pharma', packSize: '10 tablets', price: 90.0, stock: 80 },
+  { name: 'Metformin 500mg', manufacturer: 'Mankind Pharma', packSize: '10 tablets', price: 30.0, stock: 18 },
+  { name: 'Amlodipine 5mg', manufacturer: "Dr. Reddy's Labs", packSize: '30 tablets', price: 65.0, stock: 250 },
+  { name: 'Omeprazole 20mg', manufacturer: 'Zydus Cadila', packSize: '15 capsules', price: 55.0, stock: 9 },
+  { name: 'Levocetirizine 5mg', manufacturer: 'Glenmark Pharma', packSize: '10 tablets', price: 45.0, stock: 75 },
+  { name: 'Telmisartan 40mg', manufacturer: 'Lupin Ltd.', packSize: '15 tablets', price: 150.0, stock: 40 },
+  { name: 'Azithromycin 500mg', manufacturer: 'Alembic Pharma', packSize: '3 tablets', price: 119.5, stock: 5 },
 ];
 
 
