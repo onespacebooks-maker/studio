@@ -3,7 +3,7 @@
 import { AppSidebar } from '@/components/app-sidebar';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Loader } from '@/components/ui/loader';
 
 export default function AppLayout({
@@ -15,11 +15,13 @@ export default function AppLayout({
   const router = useRouter();
   
   useEffect(() => {
+    // Only redirect if loading is complete and the user is not authenticated.
     if (!isLoading && !isAuthenticated) {
         router.replace('/');
     }
   }, [isAuthenticated, isLoading, router]);
   
+  // While loading, or if not authenticated (and waiting for redirect), show a loader.
   if (isLoading || !isAuthenticated) {
     return (
         <div className="flex h-screen items-center justify-center">
@@ -28,6 +30,7 @@ export default function AppLayout({
     )
   }
 
+  // If loading is complete and user is authenticated, render the layout.
   return (
       <div className="flex min-h-screen w-full">
         <AppSidebar />
