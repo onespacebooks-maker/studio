@@ -95,7 +95,7 @@ export const AppointmentProvider = ({ children }: { children: ReactNode }) => {
   const [doctors, setDoctors] = useState<Doctor[]>(initialDoctors);
 
   const addAppointment = (appointment: Appointment) => {
-    setUpcomingAppointments(prev => [...prev, appointment]);
+    setUpcomingAppointments(prev => [appointment, ...prev]);
   };
 
   const cancelAppointment = (index: number) => {
