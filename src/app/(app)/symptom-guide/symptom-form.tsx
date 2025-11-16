@@ -21,40 +21,39 @@ const initialState = {
   error: null,
 };
 
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button type="submit" disabled={pending} className="w-full sm:w-auto">
+      {pending ? (
+        <>
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          Analyzing...
+        </>
+      ) : (
+        'Get Suggestion'
+      )}
+    </Button>
+  );
+}
+
 export function SymptomForm() {
-  const [state, formAction] = useActionState(getDepartmentSuggestion, initialState);
+  const [state, formAction] = useActionState(
+    getDepartmentSuggestion,
+    initialState
+  );
   const formRef = useRef<HTMLFormElement>(null);
 
-  const handleFormAction = (formData: FormData) => {
-    formAction(formData);
-  };
-  
   useEffect(() => {
     if (state.data) {
-        formRef.current?.reset();
+      formRef.current?.reset();
     }
-  }, [state.data])
-
-  function SubmitButton() {
-    const { pending } = useFormStatus();
-  
-    return (
-      <Button type="submit" disabled={pending} className="w-full sm:w-auto">
-        {pending ? (
-          <>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Analyzing...
-          </>
-        ) : (
-          'Get Suggestion'
-        )}
-      </Button>
-    );
-  }
+  }, [state.data]);
 
   return (
     <div className="space-y-6">
-      <form ref={formRef} action={handleFormAction} className="space-y-4">
+      <form ref={formRef} action={formAction} className="space-y-4">
         <div className="grid w-full gap-1.5">
           <Label htmlFor="symptoms">Describe your symptoms</Label>
           <Textarea
