@@ -231,12 +231,25 @@
   "prices": {
     "headerTitle": "Treatment Prices",
     "pageTitle": "Your Covered Treatment Prices",
-    "pageDescription": "Review the estimated costs for common medical procedures with your insurance plan.",
+    "pageDescription": "Review the estimated costs for common medical procedures and explore EMI options.",
     "table": {
       "procedure": "Procedure",
-      "yourPrice": "Your Price (with Insurance)"
+      "yourPrice": "Your Price (with Insurance)",
+      "emiOptions": "Easy EMI Options"
     },
-    "footerNote": "*Prices are estimates and may vary based on hospital, room type, and specific medical needs."
+    "footerNote": "*Prices are estimates and may vary based on hospital, room type, and specific medical needs.",
+    "emi": {
+        "calculateButton": "Calculate EMI",
+        "dialogTitle": "Easy EMI Calculator",
+        "dialogDescription": "Estimate your monthly payments for {procedure}.",
+        "loanAmount": "Loan Amount",
+        "tenure": "Tenure",
+        "months": "Months",
+        "monthlyPayment": "Your Monthly EMI",
+        "totalInterest": "Total Interest Payable",
+        "totalPayable": "Total Amount Payable",
+        "interestRateNote": "Calculations are based on an estimated 13% p.a. interest rate. This is for illustrative purposes only."
+    }
   },
   "teleconsultation": {
     "headerTitle": "Teleconsultation",
