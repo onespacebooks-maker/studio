@@ -97,6 +97,11 @@ const timeSlots = [
     '02:00 PM', '02:30 PM', '03:00 PM', '03:30 PM', '04:00 PM', '04:30 PM',
 ];
 
+const specialities = [
+    'All Departments',
+    ...Array.from(new Set(initialDoctors.map(d => d.speciality)))
+];
+
 export default function TeleconsultationPage() {
   const [doctors, setDoctors] = useState(initialDoctors);
   const [pastConsultations, setPastConsultations] =
@@ -107,6 +112,8 @@ export default function TeleconsultationPage() {
   const [date, setDate] = useState<Date | undefined>();
   const [time, setTime] = useState('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [specialityFilter, setSpecialityFilter] = useState('All Departments');
+
 
   const handleBookCall = () => {
     if (!selectedDoctor) return;
@@ -167,11 +174,15 @@ export default function TeleconsultationPage() {
     setIsDialogOpen(true);
   }
 
+  const filteredDoctors = specialityFilter === 'All Departments' 
+    ? doctors 
+    : doctors.filter(doc => doc.speciality === specialityFilter);
+
   return (
     <>
       <Header title="Teleconsultation" />
       <main className="flex-1 space-y-8 p-4 md:p-8">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div>
             <h2 className="text-3xl font-bold font-headline tracking-tight">
               Consult a Doctor from Home
@@ -180,11 +191,23 @@ export default function TeleconsultationPage() {
               Connect with top specialists via video call at your convenience.
             </p>
           </div>
+          <div className="w-full md:w-auto">
+            <Select value={specialityFilter} onValueChange={setSpecialityFilter}>
+                <SelectTrigger className="w-full md:w-[280px]">
+                    <SelectValue placeholder="Filter by department" />
+                </SelectTrigger>
+                <SelectContent>
+                    {specialities.map(s => (
+                        <SelectItem key={s} value={s}>{s}</SelectItem>
+                    ))}
+                </SelectContent>
+            </Select>
+          </div>
         </div>
 
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {doctors.map((doc) => (
+            {filteredDoctors.map((doc) => (
               <Card key={doc.name} className="flex flex-col">
                 <CardHeader className="items-center">
                   <Avatar className="w-24 h-24 mb-4">
@@ -231,6 +254,16 @@ export default function TeleconsultationPage() {
               </Card>
             ))}
           </div>
+          {filteredDoctors.length === 0 && (
+            <Card className="text-center p-8">
+                <CardHeader>
+                    <CardTitle>No Doctors Found</CardTitle>
+                    <CardDescription>
+                        There are no doctors available in the selected department. Please try another one.
+                    </CardDescription>
+                </CardHeader>
+            </Card>
+          )}
 
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
