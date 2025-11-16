@@ -61,8 +61,12 @@ export function Header({ title }: { title: string }) {
   const pathname = usePathname();
   const router = useRouter();
   const { toast } = useToast();
-  const { user, isAuthenticated, signOut } = useAuth();
+  const { user, signOut } = useAuth();
   const [isAdminPage, setIsAdminPage] = useState(false);
+  
+  // In this simplified version, isAuthenticated can be true if the path is not a login/signup page.
+  const isAuthenticated = !['/', '/signup'].includes(pathname);
+
 
   useEffect(() => {
     setIsAdminPage(pathname.startsWith('/admin'));
@@ -123,7 +127,7 @@ export function Header({ title }: { title: string }) {
         <DropdownMenuTrigger asChild>
           <Button variant="secondary" size="icon" className="rounded-full">
             <Avatar>
-              <AvatarFallback>{user ? user.name.charAt(0) : 'G'}</AvatarFallback>
+              <AvatarFallback>{user ? user.name.charAt(0) : 'A'}</AvatarFallback>
             </Avatar>
             <span className="sr-only">Toggle user menu</span>
           </Button>

@@ -1,7 +1,6 @@
 
 'use client';
 
-import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -14,44 +13,14 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useToast } from '@/hooks/use-toast';
 import { HeartIcon } from '@/components/ui/HeartIcon';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { AlertCircle, Loader2 } from 'lucide-react';
-import { useAuth } from '@/context/AuthContext';
-
 
 export default function SignupPage() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { toast } = useToast();
-  const { signIn } = useAuth();
 
   const handleSignup = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
-    setError('');
-
-    // In a real app, you'd use Firebase Auth here to create a user
-    // For this simulation, we'll just sign them in directly.
-    setTimeout(() => {
-      // Pass isSignUp flag to distinguish from login
-      const success = signIn({ email, name, isSignUp: true });
-      if (success) {
-        toast({
-          title: 'Account Created!',
-          description: "You've been successfully signed up. Redirecting...",
-        });
-        router.push('/dashboard');
-      } else {
-        setError('Could not create account. Please try again.');
-      }
-      setIsLoading(false);
-    }, 1000);
+    router.push('/dashboard');
   };
 
   return (
@@ -71,61 +40,28 @@ export default function SignupPage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            {error && (
-              <Alert variant="destructive">
-                <AlertCircle className="h-4 w-4" />
-                <AlertTitle>Signup Failed</AlertTitle>
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
-            )}
             <div className="space-y-2">
               <Label htmlFor="name">Username</Label>
-              <Input
-                id="name"
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                placeholder="e.g. Aravind"
-              />
+              <Input id="name" type="text" placeholder="e.g. Aravind" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                placeholder="your.email@example.com"
-              />
+              <Input id="email" type="email" placeholder="your.email@example.com" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                placeholder="********"
-              />
+              <Input id="password" type="password" placeholder="********" />
             </div>
-            <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Creating Account...
-                </>
-              ) : (
-                'Sign Up'
-              )}
+            <Button type="submit" className="w-full">
+              Sign Up
             </Button>
-            
           </CardContent>
           <CardDescription className="p-6 pt-0 text-center text-sm">
             Already have an account?{' '}
-            <Link href="/" className="font-semibold text-primary hover:underline">
+            <Link
+              href="/"
+              className="font-semibold text-primary hover:underline"
+            >
               Sign in
             </Link>
           </CardDescription>
