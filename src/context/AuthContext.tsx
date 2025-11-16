@@ -1,3 +1,4 @@
+
 'use client';
 
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
@@ -10,7 +11,7 @@ export type User = {
 
 type AuthContextType = {
   user: User | null;
-  signIn: (userData: {email: string; username?: string; isSignUp?: boolean}) => boolean;
+  signIn: (userData: {credential: string; password?: string; isSignUp?: boolean; name?: string; email?: string;}) => boolean;
   signOut: () => void;
   isAuthenticated: boolean;
   isLoading: boolean;
@@ -38,27 +39,26 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  const signIn = (userData: {email: string; username?: string; isSignUp?: boolean}) => {
-    const { email, username, isSignUp } = userData;
+  const signIn = (userData: {credential?: string, password?: string, isSignUp?: boolean, name?: string, email?: string}) => {
+    const { credential, isSignUp, name, email } = userData;
     try {
       // Handle signup
       if (isSignUp) {
-        if (!username) return false; // Name is required for signup
-        const newUser: User = {
-          name: username,
-          email: email,
-        };
+        if (!name || !email) return false;
+        const newUser: User = { name, email };
         localStorage.setItem('user', JSON.stringify(newUser));
         setUser(newUser);
         return true;
       }
 
       // Handle login
+      if (!credential) return false;
+      
       const storedUser = localStorage.getItem('user');
       if (storedUser) {
         const existingUser: User = JSON.parse(storedUser);
-        // Check if both email and username match
-        if (existingUser.email === email && existingUser.name === username) {
+        // Check if credential matches either email or name
+        if (existingUser.email === credential || existingUser.name === credential) {
           setUser(existingUser);
           return true; // Login successful
         }

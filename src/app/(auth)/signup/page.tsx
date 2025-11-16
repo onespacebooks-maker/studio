@@ -40,12 +40,16 @@ export default function SignupPage() {
     // For this simulation, we'll just sign them in directly.
     setTimeout(() => {
       // Pass isSignUp flag to distinguish from login
-      signIn({ email, name, isSignUp: true });
-      toast({
-        title: 'Account Created!',
-        description: "You've been successfully signed up. Redirecting...",
-      });
-      router.push('/dashboard');
+      const success = signIn({ email, name, isSignUp: true });
+      if (success) {
+        toast({
+          title: 'Account Created!',
+          description: "You've been successfully signed up. Redirecting...",
+        });
+        router.push('/dashboard');
+      } else {
+        setError('Could not create account. Please try again.');
+      }
       setIsLoading(false);
     }, 1000);
   };

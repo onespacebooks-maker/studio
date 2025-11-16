@@ -21,8 +21,7 @@ import { AlertCircle, Loader2 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 
 export default function LoginPage() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [credential, setCredential] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -44,7 +43,7 @@ export default function LoginPage() {
 
     // Simulate authentication
     setTimeout(() => {
-        const success = signIn({ email, username: name });
+        const success = signIn({ credential, password });
         if (success) {
             toast({
                 title: 'Login Successful',
@@ -52,7 +51,7 @@ export default function LoginPage() {
             });
             // Redirect is handled by the useEffect hook
         } else {
-            setError("Login failed. The username and email do not match any registered user. Please check your credentials or sign up.");
+            setError("Login failed. Please check your credentials or sign up.");
         }
         setIsLoading(false);
     }, 1000);
@@ -83,25 +82,14 @@ export default function LoginPage() {
               </Alert>
             )}
              <div className="space-y-2">
-              <Label htmlFor="name">Username</Label>
+              <Label htmlFor="credential">Username or Email</Label>
               <Input
-                id="name"
+                id="credential"
                 type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={credential}
+                onChange={(e) => setCredential(e.target.value)}
                 required
-                placeholder="Your Username"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                placeholder="your.email@example.com"
+                placeholder="aravind or aravind@example.com"
               />
             </div>
             <div className="space-y-2">
