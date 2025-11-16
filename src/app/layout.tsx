@@ -1,8 +1,12 @@
+
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { Playfair_Display, PT_Sans } from 'next/font/google';
 import { cn } from '@/lib/utils';
+import Script from 'next/script';
+import { AppProvider } from '@/context/AppContext';
+import { AuthProvider } from '@/context/AuthContext';
 
 const ptSans = PT_Sans({
   subsets: ['latin'],
@@ -27,6 +31,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <Script src="https://accounts.google.com/gsi/client" async defer strategy="beforeInteractive" />
+      </head>
       <body
         className={cn(
           'font-body antialiased',
@@ -34,8 +41,12 @@ export default function RootLayout({
           playfairDisplay.variable
         )}
       >
-        {children}
-        <Toaster />
+        <AuthProvider>
+          <AppProvider>
+            {children}
+            <Toaster />
+          </AppProvider>
+        </AuthProvider>
       </body>
     </html>
   );

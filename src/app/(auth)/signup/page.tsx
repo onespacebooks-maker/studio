@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -17,6 +18,7 @@ import { useToast } from '@/hooks/use-toast';
 import { HeartIcon } from '@/components/ui/HeartIcon';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle, Loader2 } from 'lucide-react';
+import { GoogleSignInButton } from '@/components/GoogleSignInButton';
 
 export default function SignupPage() {
   const [name, setName] = useState('');
@@ -43,13 +45,6 @@ export default function SignupPage() {
       setIsLoading(false);
     }, 1000);
   };
-  
-  const handleGoogleSignIn = () => {
-    toast({
-        title: "Coming Soon!",
-        description: "Google Sign-In will be available in a future update."
-    })
-  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background p-4">
@@ -128,10 +123,9 @@ export default function SignupPage() {
                     </span>
                 </div>
             </div>
-            <Button variant="outline" className="w-full" type="button" onClick={handleGoogleSignIn}>
-                <svg className="mr-2 h-4 w-4" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512"><path fill="currentColor" d="M488 261.8C488 403.3 381.5 512 244 512 111.8 512 0 400.2 0 261.8S111.8 11.6 244 11.6c67.8 0 120.9 25.9 166.4 68.8L344.4 156c-40.4-38.2-90.1-62-154.4-62-108.8 0-197.3 90.1-197.3 200.2s88.5 200.2 197.3 200.2c114.7 0 174.5-80.3 181.8-122H244v-91h244z"></path></svg>
-                Sign up with Google
-            </Button>
+            
+            <GoogleSignInButton />
+
           </CardContent>
           <CardDescription className="p-6 pt-0 text-center text-sm">
             Already have an account?{' '}
