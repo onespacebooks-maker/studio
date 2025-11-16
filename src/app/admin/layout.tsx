@@ -1,6 +1,6 @@
 import { AppProvider } from '@/context/AppContext';
 
-export default function AppLayout({
+export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
