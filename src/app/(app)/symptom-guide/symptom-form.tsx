@@ -23,6 +23,7 @@ import {
   Loader2,
 } from 'lucide-react';
 import Link from 'next/link';
+import { Separator } from '@/components/ui/separator';
 
 const initialState = {
   data: null,
@@ -111,6 +112,23 @@ export function SymptomForm() {
             <div>
               <p className="font-semibold text-muted-foreground">Reasoning</p>
               <p className="text-foreground">{state.data.reasoning}</p>
+            </div>
+            <Separator />
+            <div>
+              <p className="font-semibold text-muted-foreground">
+                Immediate Care Advice
+              </p>
+              <div
+                className="prose prose-sm text-foreground max-w-none"
+                dangerouslySetInnerHTML={{
+                  __html: state.data.careAdvice
+                    .replace(/\n/g, '<br />')
+                    .replace(
+                      /\d+\./g,
+                      (match) => `<br /><strong>${match}</strong>`
+                    ),
+                }}
+              />
             </div>
             <Alert>
               <Lightbulb className="h-4 w-4" />
