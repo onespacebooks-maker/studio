@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Header } from '@/components/header';
 import {
@@ -22,17 +22,18 @@ import { Loader } from '@/components/ui/loader';
 
 export default function AdminPage() {
   const router = useRouter();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const isAuthenticated = localStorage.getItem('admin-authenticated') === 'true';
-    if (!isAuthenticated) {
+    const isAdminAuthenticated = localStorage.getItem('admin-authenticated') === 'true';
+    if (!isAdminAuthenticated) {
       router.replace('/login');
+    } else {
+      setIsAuthenticated(true);
     }
   }, [router]);
 
-  // This is a simple check, a more robust solution would involve a loading state
-  // and checking on the server side or with a dedicated auth context.
-  if (typeof window !== 'undefined' && localStorage.getItem('admin-authenticated') !== 'true') {
+  if (!isAuthenticated) {
     return (
       <div className="flex h-screen items-center justify-center">
         <Loader className="h-8 w-8" />
