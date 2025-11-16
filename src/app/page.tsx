@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -20,7 +20,6 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle, Loader2 } from 'lucide-react';
 import { GoogleSignInButton } from '@/components/GoogleSignInButton';
 import { useAuth } from '@/context/AuthContext';
-import { useEffect } from 'react';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -29,32 +28,40 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isLoading: isAuthLoading } = useAuth();
 
   useEffect(() => {
-    if (isAuthenticated) {
+    // Redirect to dashboard only if auth has loaded and user is authenticated.
+    if (!isAuthLoading && isAuthenticated) {
       router.push('/dashboard');
     }
-  }, [isAuthenticated, router]);
-
+  }, [isAuthenticated, isAuthLoading, router]);
 
   const handleEmailLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
 
-    // This is a placeholder. In a real app, you would have email/password logic here.
     setTimeout(() => {
-        setError("Email/Password login is not implemented. Please use Google Sign-In.");
-        toast({
-          title: 'Login Method Not Available',
-          description: 'Please sign in using your Google account.',
-          variant: 'destructive',
-        });
+      setError('Email/Password login is not implemented. Please use Google Sign-In.');
+      toast({
+        title: 'Login Method Not Available',
+        description: 'Please sign in using your Google account.',
+        variant: 'destructive',
+      });
       setIsLoading(false);
     }, 1000);
   };
   
+  // While checking auth state, or if user is already logged in, show a loader
+  if (isAuthLoading || isAuthenticated) {
+      return (
+        <div className="flex min-h-screen items-center justify-center bg-background p-4">
+            <Loader2 className="h-8 w-8 animate-spin" />
+        </div>
+      );
+  }
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-background p-4">
       <Card className="w-full max-w-md">
@@ -88,6 +95,7 @@ export default function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 placeholder="your.email@example.com"
+                disabled
               />
             </div>
             <div className="space-y-2">
@@ -99,9 +107,10 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 placeholder="********"
+                disabled
               />
             </div>
-            <Button type="submit" className="w-full" disabled={isLoading}>
+            <Button type="submit" className="w-full" disabled={isLoading || true}>
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

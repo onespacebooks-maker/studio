@@ -74,7 +74,7 @@ export function Header({ title }: { title: string }) {
       title: 'Logged Out',
       description: 'You have been successfully logged out.',
     });
-    router.push('/dashboard');
+    router.push('/');
   };
   
   return (
