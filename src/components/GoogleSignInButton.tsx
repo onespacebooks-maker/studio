@@ -6,7 +6,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 
 // IMPORTANT: Replace this with your actual Google Client ID
-const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com';
+const GOOGLE_CLIENT_ID = '708444926819-3vm66sorgriapree2dmi7st5o2q53316.apps.googleusercontent.com';
 
 export function GoogleSignInButton() {
   const { signIn } = useAuth();
