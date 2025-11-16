@@ -21,6 +21,7 @@ import { AlertCircle, Loader2 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 
 export default function LoginPage() {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -43,12 +44,16 @@ export default function LoginPage() {
 
     // Simulate authentication
     setTimeout(() => {
-        // This now correctly uses the signIn function from context
-        signIn({ email });
-        toast({
-            title: 'Login Successful',
-            description: 'Welcome back!',
-        });
+        const success = signIn({ email, name });
+        if (success) {
+            toast({
+                title: 'Login Successful',
+                description: 'Welcome back!',
+            });
+            // The useEffect will handle the redirect
+        } else {
+            setError("Login failed. The username and email do not match any registered user. Please check your credentials or sign up.");
+        }
         setIsLoading(false);
     }, 1000);
   };
@@ -86,6 +91,17 @@ export default function LoginPage() {
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
             )}
+             <div className="space-y-2">
+              <Label htmlFor="name">Username</Label>
+              <Input
+                id="name"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                placeholder="Your Username"
+              />
+            </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input

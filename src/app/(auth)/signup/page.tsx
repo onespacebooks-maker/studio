@@ -29,7 +29,7 @@ export default function SignupPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
-  const { signIn } = useAuth();
+  const { signIn } from useAuth();
 
   const handleSignup = (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,7 +39,8 @@ export default function SignupPage() {
     // In a real app, you'd use Firebase Auth here to create a user
     // For this simulation, we'll just sign them in directly.
     setTimeout(() => {
-      signIn({ email, name });
+      // Pass isSignUp flag to distinguish from login
+      signIn({ email, name, isSignUp: true });
       toast({
         title: 'Account Created!',
         description: "You've been successfully signed up. Redirecting...",
@@ -74,14 +75,14 @@ export default function SignupPage() {
               </Alert>
             )}
             <div className="space-y-2">
-              <Label htmlFor="name">Full Name</Label>
+              <Label htmlFor="name">Username</Label>
               <Input
                 id="name"
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                placeholder="John Doe"
+                placeholder="e.g. Aravind"
               />
             </div>
             <div className="space-y-2">
