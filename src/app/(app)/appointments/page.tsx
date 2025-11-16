@@ -49,7 +49,7 @@ import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 
-const upcomingAppointments = [
+const initialUpcomingAppointments = [
   {
     doctor: 'Dr. Anjali Sharma',
     speciality: 'Cardiologist',
@@ -89,21 +89,54 @@ const pastAppointments = [
   },
 ];
 
+const doctors = [
+    { value: 'dr-sharma', label: 'Dr. Anjali Sharma (Cardiologist)', speciality: 'Cardiologist', hospital: 'Apollo Hospital, Delhi' },
+    { value: 'dr-singh', label: 'Dr. Vikram Singh (Dermatologist)', speciality: 'Dermatologist', hospital: 'Fortis Clinic, Mumbai' },
+    { value: 'dr-mehta', label: 'Dr. Priya Mehta (Pediatrician)', speciality: 'Pediatrician', hospital: 'Max Healthcare, Bangalore' },
+    { value: 'dr-desai', label: 'Dr. Rohan Desai (Orthopedist)', speciality: 'Orthopedist', hospital: 'City Hospital, Pune' },
+]
+
 export default function AppointmentsPage() {
+  const [upcomingAppointments, setUpcomingAppointments] = useState(initialUpcomingAppointments);
   const [date, setDate] = useState<Date | undefined>();
+  const [patientName, setPatientName] = useState('');
+  const [selectedDoctor, setSelectedDoctor] = useState('');
+
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { toast } = useToast();
 
   const handleConfirmAppointment = () => {
-    // Here you would typically handle form submission, e.g., send data to a server.
-    // For now, we'll just show a success toast and close the dialog.
+    if (!patientName || !selectedDoctor || !date) {
+        toast({
+            title: 'Incomplete Information',
+            description: 'Please fill out all fields to book an appointment.',
+            variant: 'destructive',
+        });
+        return;
+    }
+
+    const doctorInfo = doctors.find(d => d.value === selectedDoctor);
+    if (!doctorInfo) return;
+
+    const newAppointment = {
+        doctor: patientName ? `${doctorInfo.label.split('(')[0].trim()} (for ${patientName})` : doctorInfo.label.split('(')[0].trim(),
+        speciality: doctorInfo.speciality,
+        time: format(date, 'MMMM d, yyyy \'at\' h:mm a'),
+        hospital: doctorInfo.hospital,
+    };
+    
+    setUpcomingAppointments(prev => [...prev, newAppointment]);
+
     toast({
       title: 'Appointment Booked!',
       description: 'Your appointment has been successfully scheduled.',
       variant: 'default',
     });
-    setIsDialogOpen(false); // Close the dialog
-    setDate(undefined); // Reset the date picker
+    
+    setIsDialogOpen(false); 
+    setPatientName('');
+    setSelectedDoctor('');
+    setDate(undefined);
   };
   
   return (
@@ -136,19 +169,18 @@ export default function AppointmentsPage() {
               <div className="space-y-4 py-4">
                 <div className="grid w-full items-center gap-1.5">
                   <Label htmlFor="patient">Patient Name</Label>
-                  <Input id="patient" placeholder="e.g., John Doe" />
+                  <Input id="patient" placeholder="e.g., John Doe" value={patientName} onChange={(e) => setPatientName(e.target.value)} />
                 </div>
                 <div className="grid w-full items-center gap-1.5">
                   <Label htmlFor="doctor">Doctor</Label>
-                  <Select>
+                  <Select value={selectedDoctor} onValueChange={setSelectedDoctor}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select a doctor" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="dr-sharma">Dr. Anjali Sharma (Cardiologist)</SelectItem>
-                      <SelectItem value="dr-singh">Dr. Vikram Singh (Dermatologist)</SelectItem>
-                      <SelectItem value="dr-mehta">Dr. Priya Mehta (Pediatrician)</SelectItem>
-                      <SelectItem value="dr-desai">Dr. Rohan Desai (Orthopedist)</SelectItem>
+                      {doctors.map(doc => (
+                        <SelectItem key={doc.value} value={doc.value}>{doc.label}</SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>
