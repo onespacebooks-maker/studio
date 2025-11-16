@@ -43,20 +43,13 @@ export default function LoginPage() {
 
     // Simulate authentication
     setTimeout(() => {
-        if (email === 'user@example.com' && password === 'password') {
-            signIn({ email });
-            toast({
-                title: 'Login Successful',
-                description: 'Welcome back!',
-            });
-        } else {
-            setError('Invalid email or password. Please try again.');
-            toast({
-                title: 'Login Failed',
-                description: 'Invalid email or password.',
-                variant: 'destructive',
-            });
-        }
+        // This now correctly uses the signIn function from context
+        // without a hardcoded password check.
+        signIn({ email });
+        toast({
+            title: 'Login Successful',
+            description: 'Welcome back!',
+        });
         setIsLoading(false);
     }, 1000);
   };
