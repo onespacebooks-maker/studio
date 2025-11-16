@@ -26,6 +26,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
 
   useEffect(() => {
+    // On initial load, try to get user from local storage
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       try {
@@ -39,13 +40,45 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const signIn = (userData: {email: string, name?: string}) => {
+    // This function handles both login and signup.
+    // If name is provided, it's a signup or a login where we have the name.
+    // If name is not provided, it's a login, and we should rely on what's in storage.
     try {
-        const newUser: User = {
-            name: userData.name || userData.email.split('@')[0],
-            email: userData.email,
+        let userToStore: User;
+        
+        // This is a SIGNUP if a name is provided that wasn't there before
+        if (userData.name) {
+            userToStore = {
+                name: userData.name,
+                email: userData.email,
+            };
+        } else {
+            // This is a LOGIN. Try to find user in localStorage.
+            const storedUser = localStorage.getItem('user');
+            if (storedUser) {
+                const parsedUser: User = JSON.parse(storedUser);
+                // Make sure the email matches
+                if (parsedUser.email === userData.email) {
+                    userToStore = parsedUser;
+                } else {
+                    // This case is unlikely but handles weird state. Default to email-based name.
+                     userToStore = {
+                        name: userData.email.split('@')[0],
+                        email: userData.email,
+                    };
+                }
+            } else {
+                 // If no user in storage on login, create a temporary one.
+                 // This might happen on the very first login before signup is forced.
+                 userToStore = {
+                    name: userData.email.split('@')[0],
+                    email: userData.email,
+                };
+            }
         }
-        setUser(newUser);
-        localStorage.setItem('user', JSON.stringify(newUser));
+
+        setUser(userToStore);
+        localStorage.setItem('user', JSON.stringify(userToStore));
         router.push('/dashboard');
     } catch (error) {
         console.error("Failed to sign in:", error);
