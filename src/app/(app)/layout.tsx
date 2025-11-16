@@ -14,22 +14,26 @@ export default function AppLayout({
 }) {
   const { isAuthenticated } = useAuth();
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isVerifying, setIsVerifying] = useState(true);
 
 
   useEffect(() => {
     // This check runs on the client-side
-    if (typeof window !== 'undefined') {
+    // We give it a moment to ensure the auth state is settled
+    const timer = setTimeout(() => {
         const token = localStorage.getItem('google-auth-token');
-        if (!token) {
+        if (!isAuthenticated && !token) {
             router.replace('/');
         } else {
-            setIsLoading(false);
+            setIsVerifying(false);
         }
-    }
+    }, 100); // A small delay can help prevent race conditions on initial load
+
+    return () => clearTimeout(timer);
+
   }, [isAuthenticated, router]);
   
-  if (isLoading) {
+  if (isVerifying) {
     return (
         <div className="flex h-screen items-center justify-center">
             <Loader className="h-8 w-8" />
