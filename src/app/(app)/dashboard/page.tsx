@@ -22,6 +22,7 @@ import { IndianRupeeIcon } from '@/components/ui/IndianRupeeIcon';
 import { AnimatedPillIcon } from '@/components/ui/animated-pill-icon';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useAppContext } from '@/context/AppContext';
+import { useTranslation } from '@/context/LanguageContext';
 
 const formatCurrency = (amount: number) => {
   return `₹${amount.toLocaleString('en-IN', {
@@ -30,51 +31,51 @@ const formatCurrency = (amount: number) => {
   })}`;
 };
 
-const quickAccess = [
-  {
-    title: 'AI Symptom Guide',
-    description: 'Confused about your symptoms?',
-    icon: AnimatedBotIcon,
-    href: '/symptom-guide',
-  },
-  {
-    title: 'Book an Appointment',
-    description: 'Find top doctors near you.',
-    icon: AnimatedCalendarDaysIcon,
-    href: '/appointments',
-  },
-  {
-    title: 'Compare Treatment Prices',
-    description: 'Check costs for treatments.',
-    icon: AnimatedPillIcon,
-    href: '/compare-prices',
-  },
-  {
-    title: 'Start a Teleconsultation',
-    description: 'Consult a doctor from home.',
-    icon: AnimatedVideoIcon,
-    href: '/teleconsultation',
-  },
-];
-
-
-const recentTeleconsultations = [
-  { name: 'Dr. Arjun Reddy', speciality: 'Dermatologist', date: '1 day ago', avatarSeed: 'doc2' },
-  { name: 'Dr. Priya Sharma', speciality: 'General Physician', date: '3 days ago', avatarSeed: 'doc1' },
-]
-
 export default function DashboardPage() {
   const { upcomingAppointments } = useAppContext();
-  
+  const { t } = useTranslation();
+
+  const quickAccess = [
+    {
+      title: t('dashboard.quickAccess.symptomGuide.title'),
+      description: t('dashboard.quickAccess.symptomGuide.description'),
+      icon: AnimatedBotIcon,
+      href: '/symptom-guide',
+    },
+    {
+      title: t('dashboard.quickAccess.bookAppointment.title'),
+      description: t('dashboard.quickAccess.bookAppointment.description'),
+      icon: AnimatedCalendarDaysIcon,
+      href: '/appointments',
+    },
+    {
+      title: t('dashboard.quickAccess.comparePrices.title'),
+      description: t('dashboard.quickAccess.comparePrices.description'),
+      icon: AnimatedPillIcon,
+      href: '/compare-prices',
+    },
+    {
+      title: t('dashboard.quickAccess.teleconsultation.title'),
+      description: t('dashboard.quickAccess.teleconsultation.description'),
+      icon: AnimatedVideoIcon,
+      href: '/teleconsultation',
+    },
+  ];
+
+  const recentTeleconsultations = [
+    { name: 'Dr. Arjun Reddy', speciality: 'Dermatologist', date: '1 day ago', avatarSeed: 'doc2' },
+    { name: 'Dr. Priya Sharma', speciality: 'General Physician', date: '3 days ago', avatarSeed: 'doc1' },
+  ]
+
   return (
     <>
-      <Header title="Dashboard" />
+      <Header title={t('dashboard.title')} />
       <main className="flex-1 space-y-8 p-4 md:p-8">
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
-                Health Wallet
+                {t('dashboard.cards.healthWallet.title')}
               </CardTitle>
               <motion.div initial="initial" whileHover="hover">
                 <AnimatedWalletIcon />
@@ -86,14 +87,14 @@ export default function DashboardPage() {
                 5,231.89
               </div>
               <p className="text-xs text-muted-foreground">
-                +20.1% from last month
+                {t('dashboard.cards.healthWallet.subtitle')}
               </p>
             </CardContent>
           </Card>
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
-                Upcoming Appointments
+                {t('dashboard.cards.upcomingAppointments.title')}
               </CardTitle>
               <motion.div initial="initial" whileHover="hover">
                 <AnimatedCalendarDaysIcon />
@@ -102,14 +103,14 @@ export default function DashboardPage() {
             <CardContent>
               <div className="text-2xl font-bold">{upcomingAppointments.length}</div>
               <p className="text-xs text-muted-foreground">
-                {upcomingAppointments.length > 0 ? `Next: ${upcomingAppointments[0].doctor.split('(')[0]}` : 'No appointments'}
+                {upcomingAppointments.length > 0 ? `${t('dashboard.cards.upcomingAppointments.next')}: ${upcomingAppointments[0].doctor.split('(')[0]}` : t('dashboard.cards.upcomingAppointments.none')}
               </p>
             </CardContent>
           </Card>
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
-                Family Members
+                {t('dashboard.cards.familyMembers.title')}
               </CardTitle>
               <motion.div initial="initial" whileHover="hover">
                 <AnimatedUsersIcon />
@@ -118,13 +119,13 @@ export default function DashboardPage() {
             <CardContent>
               <div className="text-2xl font-bold">4</div>
               <p className="text-xs text-muted-foreground">
-                2 adults, 2 children
+                {t('dashboard.cards.familyMembers.subtitle')}
               </p>
             </CardContent>
           </Card>
           <Card className="bg-primary text-primary-foreground">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Need Help?</CardTitle>
+              <CardTitle className="text-sm font-medium">{t('dashboard.cards.needHelp.title')}</CardTitle>
               <motion.div
                 initial="initial"
                 whileHover="hover"
@@ -135,12 +136,12 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent>
               <p className="text-sm">
-                Try our AI Symptom Guide to find the right specialist.
+                {t('dashboard.cards.needHelp.description')}
               </p>
             </CardContent>
             <CardFooter>
               <Button variant="secondary" size="sm" className="w-full" asChild>
-                <Link href="/symptom-guide">Start Guide</Link>
+                <Link href="/symptom-guide">{t('dashboard.cards.needHelp.button')}</Link>
               </Button>
             </CardFooter>
           </Card>
@@ -149,9 +150,9 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <Card className="lg:col-span-2">
             <CardHeader>
-              <CardTitle>Upcoming Appointments</CardTitle>
+              <CardTitle>{t('dashboard.upcomingAppointments.title')}</CardTitle>
               <CardDescription>
-                Manage your and your family's upcoming visits.
+                {t('dashboard.upcomingAppointments.description')}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -173,19 +174,19 @@ export default function DashboardPage() {
                       </p>
                     </div>
                     <Button variant="outline" size="sm" asChild>
-                      <Link href="/appointments">Details</Link>
+                      <Link href="/appointments">{t('dashboard.upcomingAppointments.detailsButton')}</Link>
                     </Button>
                   </div>
                 ))}
                 {upcomingAppointments.length === 0 && (
-                    <p className="text-muted-foreground text-center py-4">No upcoming appointments.</p>
+                    <p className="text-muted-foreground text-center py-4">{t('dashboard.upcomingAppointments.none')}</p>
                 )}
               </div>
             </CardContent>
             <CardFooter>
               <Button asChild>
                 <Link href="/appointments">
-                  View All Appointments{' '}
+                  {t('dashboard.upcomingAppointments.viewAllButton')}{' '}
                   <motion.div whileHover={{ x: 5 }}>
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </motion.div>
@@ -197,7 +198,7 @@ export default function DashboardPage() {
           <div className="space-y-8">
             <Card>
                 <CardHeader>
-                    <CardTitle>Recent Teleconsultations</CardTitle>
+                    <CardTitle>{t('dashboard.recentTeleconsultations.title')}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                     {recentTeleconsultations.map((consult, i) => (
@@ -216,7 +217,7 @@ export default function DashboardPage() {
                 </CardContent>
                 <CardFooter>
                     <Button variant="outline" size="sm" className="w-full" asChild>
-                        <Link href="/teleconsultation">View All</Link>
+                        <Link href="/teleconsultation">{t('dashboard.recentTeleconsultations.viewAllButton')}</Link>
                     </Button>
                 </CardFooter>
             </Card>

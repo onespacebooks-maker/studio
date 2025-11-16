@@ -17,6 +17,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
   DropdownMenuGroup,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
+  DropdownMenuPortal,
 } from '@/components/ui/dropdown-menu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { AnimatedMenuIcon } from './ui/animated-menu-icon';
@@ -28,10 +32,11 @@ import { AnimatedVideoIcon } from './ui/animated-video-icon';
 import { AnimatedWalletIcon } from './ui/animated-wallet-icon';
 import { motion } from 'framer-motion';
 import { AnimatedPillIcon } from './ui/animated-pill-icon';
-import { FileText, Stethoscope, LogIn, UserPlus, LogOut, UserCircle, Users } from 'lucide-react';
+import { FileText, Stethoscope, LogIn, UserPlus, LogOut, UserCircle, Users, Languages } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
+import { useTranslation } from '@/context/LanguageContext';
 
 
 const navItems = [
@@ -56,7 +61,6 @@ const navItems = [
   { href: '/wallet', icon: AnimatedWalletIcon, label: 'Health Wallet' },
   { href: '/government-policies', icon: () => <FileText className="h-5 w-5" />, label: 'Government Policies' },
   { href: '/family', icon: () => <Users className="h-5 w-5" />, label: 'Family Members' },
-  { href: '/profile', icon: () => <UserCircle className="h-5 w-5" />, label: 'Profile' },
 ];
 
 export function Header({ title }: { title: string }) {
@@ -65,9 +69,9 @@ export function Header({ title }: { title: string }) {
   const { toast } = useToast();
   const { user, signOut } = useAuth();
   const [isAdminPage, setIsAdminPage] = useState(false);
+  const { setLanguage } = useTranslation();
   
-  // In this simplified version, isAuthenticated can be true if the path is not a login/signup page.
-  const isAuthenticated = !['/', '/signup'].includes(pathname);
+  const isAuthenticated = !!user;
 
 
   useEffect(() => {
@@ -118,6 +122,17 @@ export function Header({ title }: { title: string }) {
                   {item.label}
                 </Link>
               ))}
+               <Link
+                  href="/profile"
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary ${
+                    pathname.startsWith('/profile')
+                      ? 'bg-muted text-primary'
+                      : 'text-muted-foreground'
+                  }`}
+                >
+                  <UserCircle className="h-5 w-5" />
+                  My Profile
+                </Link>
             </nav>
           </SheetContent>
         </Sheet>
@@ -125,6 +140,21 @@ export function Header({ title }: { title: string }) {
           {title}
         </h1>
       </div>
+      <div className="flex items-center gap-2">
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+           <Button variant="outline" size="icon">
+              <Languages className="h-5 w-5" />
+              <span className="sr-only">Change language</span>
+            </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={() => setLanguage('en')}>English</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setLanguage('hi')}>हिन्दी</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setLanguage('ta')}>தமிழ்</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="secondary" size="icon" className="rounded-full">
@@ -145,7 +175,10 @@ export function Header({ title }: { title: string }) {
             <>
               <DropdownMenuLabel>{user?.name || 'My Account'}</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => router.push('/profile')}>Profile</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => router.push('/profile')}>
+                <UserCircle className="mr-2 h-4 w-4" />
+                Profile
+                </DropdownMenuItem>
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={signOut}>
@@ -167,6 +200,7 @@ export function Header({ title }: { title: string }) {
           )}
         </DropdownMenuContent>
       </DropdownMenu>
+      </div>
     </header>
   );
 }

@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import Script from 'next/script';
 import { AppProvider } from '@/context/AppContext';
 import { AuthProvider } from '@/context/AuthContext';
+import { LanguageProvider } from '@/context/LanguageContext';
 
 const ptSans = PT_Sans({
   subsets: ['latin'],
@@ -41,12 +42,14 @@ export default function RootLayout({
           playfairDisplay.variable
         )}
       >
-        <AuthProvider>
-          <AppProvider>
-            {children}
-            <Toaster />
-          </AppProvider>
-        </AuthProvider>
+        <LanguageProvider>
+          <AuthProvider>
+            <AppProvider>
+              {children}
+              <Toaster />
+            </AppProvider>
+          </AuthProvider>
+        </LanguageProvider>
       </body>
     </html>
   );
