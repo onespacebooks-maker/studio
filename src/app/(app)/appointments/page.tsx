@@ -97,9 +97,15 @@ const doctors = [
     { value: 'dr-desai', label: 'Dr. Rohan Desai (Orthopedist)', speciality: 'Orthopedist', hospital: 'City Hospital, Pune' },
 ]
 
+const timeSlots = [
+    '09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM',
+    '02:00 PM', '02:30 PM', '03:00 PM', '03:30 PM', '04:00 PM', '04:30 PM',
+];
+
 export default function AppointmentsPage() {
   const [upcomingAppointments, setUpcomingAppointments] = useState(initialUpcomingAppointments);
   const [date, setDate] = useState<Date | undefined>();
+  const [time, setTime] = useState('');
   const [patientName, setPatientName] = useState('');
   const [selectedDoctor, setSelectedDoctor] = useState('');
 
@@ -107,7 +113,7 @@ export default function AppointmentsPage() {
   const { toast } = useToast();
 
   const handleConfirmAppointment = () => {
-    if (!patientName || !selectedDoctor || !date) {
+    if (!patientName || !selectedDoctor || !date || !time) {
         toast({
             title: 'Incomplete Information',
             description: 'Please fill out all fields to book an appointment.',
@@ -122,7 +128,7 @@ export default function AppointmentsPage() {
     const newAppointment = {
         doctor: patientName ? `${doctorInfo.label.split('(')[0].trim()} (for ${patientName})` : doctorInfo.label.split('(')[0].trim(),
         speciality: doctorInfo.speciality,
-        time: format(date, 'MMMM d, yyyy \'at\' h:mm a'),
+        time: `${format(date, 'MMMM d, yyyy')} at ${time}`,
         hospital: doctorInfo.hospital,
     };
     
@@ -138,6 +144,7 @@ export default function AppointmentsPage() {
     setPatientName('');
     setSelectedDoctor('');
     setDate(undefined);
+    setTime('');
   };
   
   const handleCancelAppointment = (indexToCancel: number) => {
@@ -215,9 +222,23 @@ export default function AppointmentsPage() {
                         selected={date}
                         onSelect={setDate}
                         initialFocus
+                        disabled={(date) => date < new Date(new Date().setHours(0,0,0,0))}
                       />
                     </PopoverContent>
                   </Popover>
+                </div>
+                <div className="grid w-full items-center gap-1.5">
+                  <Label htmlFor="time">Time</Label>
+                  <Select value={time} onValueChange={setTime}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a time" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {timeSlots.map(slot => (
+                        <SelectItem key={slot} value={slot}>{slot}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
               <DialogFooter>
@@ -240,7 +261,10 @@ export default function AppointmentsPage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            {upcomingAppointments.map((appt, i) => (
+            {upcomingAppointments.length === 0 ? (
+                <div className="text-center text-muted-foreground p-8">No upcoming appointments.</div>
+            ) : (
+                upcomingAppointments.map((appt, i) => (
               <div
                 key={i}
                 className="p-4 border rounded-lg flex flex-wrap justify-between items-center gap-4"
@@ -276,7 +300,7 @@ export default function AppointmentsPage() {
                   </AlertDialog>
                 </div>
               </div>
-            ))}
+            )))}
           </CardContent>
         </Card>
 
@@ -376,3 +400,5 @@ export default function AppointmentsPage() {
     </>
   );
 }
+
+    
