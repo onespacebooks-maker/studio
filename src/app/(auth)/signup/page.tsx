@@ -29,7 +29,7 @@ export default function SignupPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
-  const { signIn } from useAuth();
+  const { signIn } = useAuth();
 
   const handleSignup = (e: React.FormEvent) => {
     e.preventDefault();
